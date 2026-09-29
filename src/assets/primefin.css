@@ -1,0 +1,263 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+/* PrimeFin theme overrides (P3). */
+
+/* PrimeFin cosmetic overrides — loaded after the base + theme stylesheets.
+ * 1. One uniform enterprise typeface stack across every page.
+ * 2. Quiet, centered footer brand line.
+ * Icon glyph fonts are deliberately never overridden.
+ */
+:root {
+  --primefin-font: 'Inter', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --primefin-brand: #1074b9;
+  --primefin-muted: #5b6b7c;
+}
+
+html body,
+html body button,
+html body input,
+html body select,
+html body textarea,
+.mat-typography,
+.mat-mdc-button,
+.mat-mdc-raised-button,
+.mat-mdc-outlined-button,
+.mat-mdc-unelevated-button,
+.mat-mdc-menu-item,
+.mat-mdc-tab,
+.mat-mdc-form-field,
+.mat-mdc-select,
+.mat-mdc-input-element,
+.mat-mdc-card-title,
+.mat-mdc-card-subtitle,
+.mat-mdc-table,
+.mat-mdc-paginator,
+.mat-mdc-dialog-container,
+.mat-mdc-snack-bar-container,
+.mdc-list-item {
+  font-family: var(--primefin-font) !important;
+}
+
+/* Tabular numerals keep data-dense surfaces (tables, dashboard metrics) aligned. */
+.mat-mdc-table .mat-mdc-cell,
+.mat-mdc-table .mat-mdc-header-cell,
+.metric-value,
+.detail-value {
+  font-feature-settings:
+    'tnum' 1,
+    'cv05' 1;
+}
+
+/* Icon ligatures must keep their glyph fonts — never the text stack. */
+.material-icons,
+.material-icons-outlined,
+.material-symbols-outlined,
+.material-symbols-rounded,
+.m3-icon,
+mat-icon {
+  font-family: 'Material Symbols Outlined', 'Material Icons' !important;
+}
+
+/* App footer: single centered brand line. */
+mifosx-footer {
+  display: block;
+  text-align: center;
+  color: var(--primefin-muted);
+  font-size: 12px;
+  line-height: 1.6;
+  padding: 10px 16px 14px;
+}
+
+/* Login page footer line. */
+.resources-branding {
+  text-align: center;
+}
+.resources-branding .branding-text {
+  color: var(--primefin-muted);
+  font-size: 12.5px;
+}
+.branding-text a {
+  color: var(--primefin-brand);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* Content column: flex layout pins the footer to the viewport bottom on
+ * short pages; on long pages it flows naturally after the content. */
+mat-sidenav-content.mat-sidenav-content {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+mat-sidenav-content.mat-sidenav-content > mifosx-content {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Retired login chrome: marketing link row + reload button (all pages). */
+.resources-links,
+.reload-button {
+  display: none !important;
+}
+
+/* Login panel: wallet-teal gradient sampled from the PrimeFin mark.
+ * Light: bright lagoon teal. Dark: deep-sea variant for dark mode. */
+.login-panel {
+  background: linear-gradient(135deg, #0a6d8c 0%, #0690a6 52%, #0bb5a4 100%) !important;
+}
+body.dark-theme .login-panel {
+  background: linear-gradient(135deg, #062a38 0%, #074e63 60%, #0a6f76 100%) !important;
+}
+.login-panel .login-card {
+  box-shadow: 0 12px 40px rgba(4, 42, 56, 0.22);
+}
+/* Footer line stays legible on the gradient panel. */
+.login-panel .resources-branding .branding-text {
+  color: rgba(255, 255, 255, 0.88);
+}
+
+/* ---- PrimeFin chrome: navbar / sidebar / buttons -----------------------
+ * One wallet-teal gradient family across navbar, sidebar and buttons.
+ * Sidebar is a deliberately lighter tint; dark mode gets deep-sea tones.
+ */
+:root {
+  --primefin-bar: linear-gradient(135deg, #0a6d8c 0%, #0690a6 55%, #0bb5a4 100%);
+  --primefin-rail: linear-gradient(180deg, #cfe9ec 0%, #e9f5f6 100%);
+  --primefin-rail-dark: linear-gradient(180deg, #0a3a48 0%, #0d4b5c 100%);
+  --primefin-rail-width: 76px;
+}
+
+/* Top navbar: gradient, white chrome. */
+mat-toolbar.mat-toolbar.mat-primary {
+  background: var(--primefin-bar) !important;
+  color: #fff !important;
+}
+/* Never let the tab strip push the profile cluster off-screen:
+ * tabs scroll, right cluster stays pinned. */
+mat-toolbar.mat-toolbar .tab-nav-bar {
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+mat-toolbar.mat-toolbar .tab-nav-bar::-webkit-scrollbar {
+  display: none;
+}
+mat-toolbar.mat-toolbar .toolbar-spacer {
+  flex: 1 1 auto;
+  min-width: 8px;
+}
+mat-toolbar.mat-toolbar > div:last-child,
+mat-toolbar.mat-toolbar > button:last-child {
+  flex-shrink: 0;
+}
+
+/* Sidebar rail: wider than stock 64px so glyphs never clip — compact mode
+ * only, so the hamburger can still expand/collapse the rail. Angular owns
+ * the content margin via inline style; never override it here. */
+mat-sidenav.sidebar-panel.sidebar-compact {
+  width: var(--primefin-rail-width);
+  min-width: var(--primefin-rail-width);
+}
+/* Collapsed rail is icons-only: hide the text labels (they render as
+ * clipped stubs like "Da:"). Full mode keeps its labels. */
+mat-sidenav.sidebar-panel.sidebar-compact .mat-line {
+  display: none;
+}
+/* Home route owns no cards by design (welcome card retired): hide at the
+ * CSS layer so it never flashes on refresh before scripts run. */
+mifosx-home mat-card {
+  display: none !important;
+}
+mat-sidenav.sidebar-panel {
+  background: var(--primefin-rail) !important;
+  border-right: 1px solid rgba(10, 109, 140, 0.16);
+}
+body.dark-theme mat-sidenav.sidebar-panel {
+  background: var(--primefin-rail-dark) !important;
+  border-right-color: rgba(255, 255, 255, 0.1);
+}
+
+/* ALL buttons wear the navbar gradient (icon + disabled buttons exempt). */
+.mat-mdc-button-base:not(.mat-mdc-icon-button):not(:disabled),
+button.mat-mdc-button-base:not(.mat-mdc-icon-button):not(:disabled),
+.mdc-button:not(.mdc-icon-button):not(:disabled) {
+  background: var(--primefin-bar) !important;
+  color: #fff !important;
+  border-color: transparent !important;
+}
+.mat-mdc-button-base:not(.mat-mdc-icon-button):not(:disabled) .mdc-button__label,
+.mat-mdc-button-base:not(.mat-mdc-icon-button):not(:disabled) .mdc-button__label span {
+  color: #fff !important;
+}
+/* Material-Web (M3) filled buttons, e.g. login submit: gradient host,
+ * transparent container var so the gradient shows through. */
+md-filled-button:not([disabled]) {
+  background: var(--primefin-bar) !important;
+  border-radius: 999px;
+  --md-filled-button-container-color: transparent;
+  --md-filled-button-label-text-color: #fff;
+  --md-filled-button-hover-state-layer-opacity: 0.08;
+  --md-filled-button-pressed-state-layer-opacity: 0.12;
+}
+
+/* PrimeFin: loan detail header keeps the pill background, hue-matched to the
+   /loans list status colors (component palette restored by removing the
+   overrides below). */
+
+/* PrimeFin 2026-09-28: pill-rounded action buttons on loan-product screens
+   (refined below under .product-card scope). */
+mifosx-loan-products button.mat-mdc-button-base:not(.mat-mdc-icon-button),
+mifosx-create-loan-product button.mat-mdc-button-base:not(.mat-mdc-icon-button),
+mifosx-create-loan-product-classic button.mat-mdc-button-base:not(.mat-mdc-icon-button) {
+  border-radius: 12px;
+}
+
+/* PrimeFin 2026-09-28b: loan-product selection screen fixes (verified via DOM).
+   - Active chip was primary blue via --lp-accent -> theme teal.
+   - Create CTA was 4px rect with a CSS -> arrow; now pill, arrow removed. */
+.product-chip--active {
+  background: #ecf4f9 !important;
+  color: #0a6d8c !important;
+  border: 1px solid rgba(10, 109, 140, 0.35) !important;
+}
+.product-card .product-card__cta.mat-mdc-button {
+  border-radius: 999px;
+  background: linear-gradient(135deg, #0a6d8c 0%, #0690a6 55%, #0bb5a4 100%) !important;
+  color: #fff !important;
+  padding: 8px 16px !important;
+}
+.product-card .product-card__cta.mat-mdc-button .mdc-button__label {
+  color: #fff !important;
+}
+.product-card__cta.mat-mdc-button:after {
+  content: none !important;
+}
+
+/* PrimeFin: account header tabs uniform darker teal with white text (all pages).
+   Doubled classes out-specificity the component !important rules. */
+mat-card-header.header.header {
+  background-color: #0690a6 !important;
+  color: #fff !important;
+}
+mat-card-header.header.header .mat-mdc-card-title.mat-mdc-card-title,
+mat-card-header.header.header .mat-mdc-card-subtitle.mat-mdc-card-subtitle,
+mat-card-header.header.header :is(b, td, p, a, div):not(.account-status-pill),
+mat-card-header.header.header span:not(.account-status-pill) {
+  color: #fff !important;
+}
+
+/* (retired 2026-09-28: list-style text pills replaced by pill backgrounds;
+   block kept as a placeholder so history stays readable.) */
+
+/* PrimeFin: overpaid pill orange to match the /loans list theme
+   (shared palette says purple; the list theme says orange). */
+mifosx-loans-view mat-card-header.header.header .account-status-pill.status-overpaid {
+  background-color: #ffa500 !important;
+}

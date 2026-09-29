@@ -8,26 +8,29 @@
 
 <!doctype html>
 
-<html lang="en" class="h-full bg-gray-100">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>{{'APP_NAME' | translate}}</title>
+    <title>PrimeFin</title>
     <base href="/" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="mobile-web-app-capable" content="yes" />
 
-    <link rel="icon" type="image/x-icon" href="favicon.ico" />
-    <link rel="icon" type="image/png" href="assets/images/MifosX_logo.png" sizes="182x184" />
-    <link rel="apple-touch-icon" type="image/png" href="apple-touch-icon.png" sizes="182x184" />
+    <link rel="icon" type="image/png" href="assets/images/PrimeFin_logo.png" sizes="182x184" />
+    <link rel="apple-touch-icon" type="image/png" href="apple-touch-icon.png" sizes="180x180" />
     <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#1074b9" />
 
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@300;400&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&family=Material+Icons&display=block"
       rel="stylesheet"
     />
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Mono:300" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" media="print" onload="this.media = 'all'" />
+    <link rel="stylesheet" href="mifosx-theme.css" />
+    <link rel="stylesheet" href="assets/primefin.css?v=16" />
     <!-- Load environment variables -->
   </head>
   <body class="h-full">
@@ -117,5 +120,105 @@
         ></lottie-player>
       </div>
     </mifosx-web-app>
+    <script>
+      // PrimeFin: swap brand logos for dark mode (app toggle + OS preference).
+      // Update footer branding text when mifosx-footer renders.
+      (function () {
+        function isDark() {
+          return (
+            document.body.classList.contains('dark-theme') ||
+            (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)
+          );
+        }
+        function applyLogos() {
+          var dark = isDark();
+          document.querySelectorAll('img').forEach(function (im) {
+            var s = im.getAttribute('src') || '';
+            var m = s.match(/(PrimeFin_logo|primefin-lg-logo|MifosX_logo)(_dark)?\.png$/);
+            if (m) {
+              var base = s.slice(0, s.length - m[0].length);
+              var name = m[1];
+              var suffix = dark ? '_dark' : '';
+              var want = base + name + suffix + '.png';
+              if (s !== want) {
+                im.setAttribute('src', want);
+              }
+            }
+          });
+        }
+        function brandLine() {
+          return 'PrimeFin ' + new Date().getFullYear() + ' · Powered by Mifos® Initiative and Apache Fineract';
+        }
+        function patchBrandingText(el) {
+          if (el.dataset.pfBranded === '1') {
+            return;
+          }
+          el.textContent =
+            'PrimeFin ' + new Date().getFullYear() + ' · Powered by Mifos® Initiative and Apache Fineract';
+          el.dataset.pfBranded = '1';
+        }
+        function updateFooter() {
+          document.querySelectorAll('mifosx-footer').forEach(function (footer) {
+            if (footer.dataset.pfBranded !== '1') {
+              footer.textContent = brandLine();
+              footer.dataset.pfBranded = '1';
+            }
+          });
+          document.querySelectorAll('.branding-text').forEach(patchBrandingText);
+        }
+        function hideHomeExtras() {
+          if ((location.hash || '').indexOf('/home') === -1) {
+            return;
+          }
+          document.querySelectorAll('button').forEach(function (b) {
+            if ((b.innerText || '').trim() === 'Global Financial Dashboard' && b.dataset.pfHidden !== '1') {
+              b.style.display = 'none';
+              b.dataset.pfHidden = '1';
+            }
+          });
+        }
+        function hideRetiredWidgets() {
+          if ((location.hash || '').indexOf('/dashboard') === -1) {
+            return;
+          }
+          document.querySelectorAll('mifosx-dashboard-widget').forEach(function (w) {
+            if (w.dataset.pfHidden === '1') {
+              return;
+            }
+            var title = w.innerText || '';
+            if (title.indexOf('Georeference Map') !== -1) {
+              var card = w.closest('mat-card');
+              (card || w).style.display = 'none';
+              w.dataset.pfHidden = '1';
+            }
+          });
+        }
+        function apply() {
+          applyLogos();
+          updateFooter();
+          hideHomeExtras();
+          hideRetiredWidgets();
+        }
+        if (window.matchMedia) {
+          try {
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', apply);
+          } catch (e) {
+            /* older browsers */
+          }
+        }
+        var observer = new MutationObserver(function (mutations) {
+          mutations.forEach(function (mutation) {
+            mutation.addedNodes.forEach(function (node) {
+              if (node.nodeType === 1 && (node.tagName === 'MIFOSX-FOOTER' || node.querySelector('mifosx-footer'))) {
+                apply();
+              }
+            });
+          });
+        });
+        observer.observe(document.documentElement, { childList: true, subtree: true });
+        setInterval(apply, 2000);
+        apply();
+      })();
+    </script>
   </body>
 </html>
