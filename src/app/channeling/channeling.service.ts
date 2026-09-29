@@ -161,4 +161,24 @@ export class ChannelingService {
   deleteWindow(windowId: number): Observable<any> {
     return this.http.delete(`/v2/channel-windows/${windowId}`);
   }
+
+  /**
+   * @param partnerCode Partner code (optional; all files when omitted).
+   * @returns Staged channel files with row counts.
+   */
+  getFiles(partnerCode?: string): Observable<any> {
+    let params = new HttpParams();
+    if (partnerCode !== undefined) {
+      params = params.set('partnerCode', partnerCode);
+    }
+    return this.http.get('/v2/channel-files', { params });
+  }
+
+  /**
+   * @param fileId Staged file id.
+   * @returns Staged rows of the file.
+   */
+  getFileRows(fileId: number): Observable<any> {
+    return this.http.get(`/v2/channel-files/${fileId}/rows`);
+  }
 }

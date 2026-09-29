@@ -12,8 +12,14 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MatCard, MatCardTitle, MatCardContent } from '@angular/material/card';
 import { MatButton } from '@angular/material/button';
+import { MatTabGroup, MatTab } from '@angular/material/tabs';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { ProductsTabComponent } from './products-tab/products-tab.component';
+import { RatesTabComponent } from './rates-tab/rates-tab.component';
+import { CapsTabComponent } from './caps-tab/caps-tab.component';
+import { WindowsTabComponent } from './windows-tab/windows-tab.component';
+import { FilesTabComponent } from './files-tab/files-tab.component';
 
 /**
  * Channel partner detail shell. Product/rate/cap/window tabs land in slice 2.
@@ -29,7 +35,14 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatCard,
     MatCardTitle,
     MatCardContent,
-    MatButton
+    MatButton,
+    MatTabGroup,
+    MatTab,
+    ProductsTabComponent,
+    RatesTabComponent,
+    CapsTabComponent,
+    WindowsTabComponent,
+    FilesTabComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })

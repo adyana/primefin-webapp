@@ -967,7 +967,11 @@
       "Convert": "Convertir",
       "Deleting": "Suppression",
       "Inactivate": "Désactiver",
-      "Create Partner": "Create Partner"
+      "Create Partner": "Create Partner",
+      "Map Product": "Map Product",
+      "Add Band": "Add Band",
+      "Add Cap": "Add Cap",
+      "Add Window": "Add Window"
     },
     "catalogs": {
       "% Amount": "Montant",
@@ -1981,7 +1985,12 @@
       "Services": "Services",
       "Schedules": "Horaires",
       "Reference": "Référence",
-      "Create Channel Partner": "Create Channel Partner"
+      "Create Channel Partner": "Create Channel Partner",
+      "Products": "Products",
+      "Rate Bands": "Rate Bands",
+      "Caps": "Caps",
+      "Windows": "Windows",
+      "Files": "Files"
     },
     "inputs": {
       "Returned": "Retourné",
@@ -4069,7 +4078,28 @@
       "Partner Name": "Partner Name",
       "SFTP Username": "SFTP Username",
       "PGP Key Reference": "PGP Key Reference",
-      "Contact": "Contact"
+      "Contact": "Contact",
+      "Partner Product Code": "Partner Product Code",
+      "Our Product Id": "Our Product Id",
+      "Mapped Product": "Mapped Product",
+      "Risk Band": "Risk Band",
+      "BPS": "BPS",
+      "Scope": "Scope",
+      "Partner Scope": "Partner",
+      "Global Scope": "Global",
+      "Max Amount": "Max Amount",
+      "Stream": "Stream",
+      "Disb Stream": "Disbursements",
+      "Pay Stream": "Payments",
+      "Filename": "Filename",
+      "File Type": "File Type",
+      "Received On": "Received On",
+      "Received": "Received",
+      "Accepted": "Accepted",
+      "Suspense": "Suspense",
+      "Line": "Line",
+      "Partner Ref": "Partner Ref",
+      "Our Ref": "Our Ref"
     },
     "links": {
       "Community": "Communauté",

@@ -1,0 +1,65 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="container">
+  <form [formGroup]="capForm" (ngSubmit)="submit()">
+    <div class="layout-row gap-20px responsive-column">
+      <mat-form-field class="flex-fill">
+        <mat-label>{{ 'labels.inputs.Scope' | translate }}</mat-label>
+        <mat-select formControlName="scope" required>
+          <mat-option value="PARTNER">{{ 'labels.inputs.Partner Scope' | translate }}</mat-option>
+          <mat-option value="GLOBAL">{{ 'labels.inputs.Global Scope' | translate }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="flex-fill">
+        <mat-label>{{ 'labels.inputs.Max Amount' | translate }}</mat-label>
+        <input matInput formControlName="maxAmount" required />
+      </mat-form-field>
+
+      <div class="in-block">
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="!capForm.valid"
+          *mifosxHasPermission="'CREATE_CHANNEL'"
+        >
+          <fa-icon icon="plus" class="m-r-10"></fa-icon>
+          {{ 'labels.buttons.Add Cap' | translate }}
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <div class="mat-elevation-z8 table-container m-t-20">
+    <table mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="scope">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Scope' | translate }}</th>
+        <td mat-cell *matCellDef="let row">{{ row.scope }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="maxAmount">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Max Amount' | translate }}</th>
+        <td mat-cell *matCellDef="let row">{{ row.maxAmount }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
+        <td mat-cell *matCellDef="let row">
+          <button mat-icon-button color="warn" (click)="remove(row.id)" *mifosxHasPermission="'CREATE_CHANNEL'">
+            <fa-icon icon="trash"></fa-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+</div>

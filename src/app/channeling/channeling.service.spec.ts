@@ -90,6 +90,27 @@ describe('ChannelingService', () => {
     expect(await windowsPromise).toEqual([]);
   });
 
+  it('should list staged files scoped by partner code', async () => {
+    const resultPromise = firstValueFrom(service.getFiles('acme'));
+
+    const req = httpMock.expectOne(
+      (request) =>
+        request.url === '/v2/channel-files' && request.method === 'GET' && request.params.get('partnerCode') === 'acme'
+    );
+    req.flush([{ id: 1, filename: 'CH_DISB_acme_001.csv' }]);
+
+    expect(await resultPromise).toEqual([{ id: 1, filename: 'CH_DISB_acme_001.csv' }]);
+  });
+
+  it('should list rows of one staged file', async () => {
+    const resultPromise = firstValueFrom(service.getFileRows(4));
+
+    const req = httpMock.expectOne((request) => request.url === '/v2/channel-files/4/rows' && request.method === 'GET');
+    req.flush([{ lineNo: 2, status: 'POSTED' }]);
+
+    expect(await resultPromise).toEqual([{ lineNo: 2, status: 'POSTED' }]);
+  });
+
   it('should delete config rows by id', async () => {
     const results = Promise.all([
       firstValueFrom(service.deleteProduct(9)),

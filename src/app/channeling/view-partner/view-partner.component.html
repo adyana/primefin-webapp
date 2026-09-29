@@ -43,6 +43,23 @@
         </div>
       </mat-card-content>
     </mat-card>
+    <mat-tab-group class="m-t-20">
+      <mat-tab label="{{ 'labels.heading.Products' | translate }}">
+        <mifosx-products-tab [partnerId]="partnerData.id"></mifosx-products-tab>
+      </mat-tab>
+      <mat-tab label="{{ 'labels.heading.Rate Bands' | translate }}">
+        <mifosx-rates-tab [partnerId]="partnerData.id"></mifosx-rates-tab>
+      </mat-tab>
+      <mat-tab label="{{ 'labels.heading.Caps' | translate }}">
+        <mifosx-caps-tab [partnerId]="partnerData.id"></mifosx-caps-tab>
+      </mat-tab>
+      <mat-tab label="{{ 'labels.heading.Windows' | translate }}">
+        <mifosx-windows-tab [partnerId]="partnerData.id"></mifosx-windows-tab>
+      </mat-tab>
+      <mat-tab label="{{ 'labels.heading.Files' | translate }}">
+        <mifosx-files-tab [partnerCode]="partnerData.code"></mifosx-files-tab>
+      </mat-tab>
+    </mat-tab-group>
   } @else {
     <mat-card>
       <mat-card-content>
