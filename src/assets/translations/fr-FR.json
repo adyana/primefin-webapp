@@ -966,7 +966,8 @@
       "Post Dividends": "Comptabiliser les dividendes",
       "Convert": "Convertir",
       "Deleting": "Suppression",
-      "Inactivate": "Désactiver"
+      "Inactivate": "Désactiver",
+      "Create Partner": "Create Partner"
     },
     "catalogs": {
       "% Amount": "Montant",
@@ -1979,7 +1980,8 @@
       "Deposit Details": "Détails du dépôt",
       "Services": "Services",
       "Schedules": "Horaires",
-      "Reference": "Référence"
+      "Reference": "Référence",
+      "Create Channel Partner": "Create Channel Partner"
     },
     "inputs": {
       "Returned": "Retourné",
@@ -4062,7 +4064,12 @@
       "PERSON": "Personne physique",
       "Payment": "Paiement",
       "Export Date": "Date d'export",
-      "Label": "Libellé"
+      "Label": "Libellé",
+      "Partner Code": "Partner Code",
+      "Partner Name": "Partner Name",
+      "SFTP Username": "SFTP Username",
+      "PGP Key Reference": "PGP Key Reference",
+      "Contact": "Contact"
     },
     "links": {
       "Community": "Communauté",
@@ -4220,7 +4227,8 @@
       "Manage Dashboards": "Gérer les tableaux de bord",
       "Link to payment system": "Lier au système de paiement",
       "Interbank Transfer": "Virement interbancaire",
-      "Reporting Dashboard": "Tableau de bord des rapports"
+      "Reporting Dashboard": "Tableau de bord des rapports",
+      "Channeling": "Channeling"
     },
     "placeholders": {
       "Add new server": "Ajouter un nouveau serveur",
@@ -5530,7 +5538,8 @@
       "Closed": "Clôturé",
       "Dashboard Export": "Export du tableau de bord",
       "Generated on": "Généré le",
-      "Automated export": "Ceci est un export automatique du tableau de bord global Mifos X"
+      "Automated export": "Ceci est un export automatique du tableau de bord global Mifos X",
+      "Unknown Partner": "Unknown partner code."
     },
     "permissions": {
       "actions": {

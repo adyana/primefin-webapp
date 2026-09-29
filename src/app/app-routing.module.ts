@@ -33,6 +33,10 @@ const routes: Routes = [
     loadChildren: () => import('./centers/centers.module').then((m) => m.CentersModule)
   },
   {
+    path: 'channeling',
+    loadChildren: () => import('./channeling/channeling.module').then((m) => m.ChannelingModule)
+  },
+  {
     path: 'clients',
     loadChildren: () => import('./clients/clients.module').then((m) => m.ClientsModule)
   },

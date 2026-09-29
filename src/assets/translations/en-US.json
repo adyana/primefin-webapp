@@ -968,7 +968,8 @@
       "Reverse": "Reverse",
       "Create Tenant": "Create Tenant",
       "Test Connection": "Test Connection",
-      "Post Dividends": "Post Dividends"
+      "Post Dividends": "Post Dividends",
+      "Create Partner": "Create Partner"
     },
     "catalogs": {
       "% Amount": "% Amount",
@@ -1981,7 +1982,8 @@
       "Configuration": "Configuration",
       "Edit Charge Amount": "Edit Charge Amount",
       "Edit Charge Date": "Edit Charge Date",
-      "Edit Guarantor": "Edit Guarantor"
+      "Edit Guarantor": "Edit Guarantor",
+      "Create Channel Partner": "Create Channel Partner"
     },
     "inputs": {
       "Returned": "Returned",
@@ -4058,7 +4060,12 @@
       "On Hold Funds": "On Hold Funds",
       "Payment": "Payment",
       "Export Date": "Export Date",
-      "Label": "Label"
+      "Label": "Label",
+      "Partner Code": "Partner Code",
+      "Partner Name": "Partner Name",
+      "SFTP Username": "SFTP Username",
+      "PGP Key Reference": "PGP Key Reference",
+      "Contact": "Contact"
     },
     "links": {
       "Community": "Community",
@@ -4216,7 +4223,8 @@
       "Approve Additional Shares": "Approve Additional Shares",
       "Reject Additional Shares": "Reject Additional Shares",
       "Manage Dashboards": "Manage Dashboards",
-      "Reporting Dashboard": "Reporting Dashboard"
+      "Reporting Dashboard": "Reporting Dashboard",
+      "Channeling": "Channeling"
     },
     "placeholders": {
       "# Remittance": "# Remittance",
@@ -5526,7 +5534,8 @@
       "Closed": "Closed",
       "Dashboard Export": "Dashboard Export",
       "Generated on": "Generated on",
-      "Automated export": "This is an automated export from Mifos X Global Dashboard"
+      "Automated export": "This is an automated export from Mifos X Global Dashboard",
+      "Unknown Partner": "Unknown partner code."
     },
     "permissions": {
       "actions": {

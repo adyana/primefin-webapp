@@ -966,7 +966,8 @@
       "Post Dividends": "Registra dividendi",
       "Convert": "Converti",
       "Deleting": "Eliminazione",
-      "Inactivate": "Disattiva"
+      "Inactivate": "Disattiva",
+      "Create Partner": "Create Partner"
     },
     "catalogs": {
       "% Amount": "Quantità",
@@ -1979,7 +1980,8 @@
       "Deposit Details": "Dettagli del deposito",
       "Services": "Servizi",
       "Schedules": "Orari",
-      "Reference": "Riferimento"
+      "Reference": "Riferimento",
+      "Create Channel Partner": "Create Channel Partner"
     },
     "inputs": {
       "Returned": "Restituito",
@@ -4062,7 +4064,12 @@
       "PERSON": "Persona fisica",
       "Payment": "Pagamento",
       "Export Date": "Data di esportazione",
-      "Label": "Etichetta"
+      "Label": "Etichetta",
+      "Partner Code": "Partner Code",
+      "Partner Name": "Partner Name",
+      "SFTP Username": "SFTP Username",
+      "PGP Key Reference": "PGP Key Reference",
+      "Contact": "Contact"
     },
     "links": {
       "Community": "Comunità",
@@ -4220,7 +4227,8 @@
       "Link to payment system": "Collega al sistema di pagamento",
       "Interbank Transfer": "Bonifico interbancario",
       "Reporting Dashboard": "Cruscotto dei report",
-      "Assign Staff": "Assegna personale"
+      "Assign Staff": "Assegna personale",
+      "Channeling": "Channeling"
     },
     "placeholders": {
       "Add new server": "Aggiungi nuovo server",
@@ -5530,7 +5538,8 @@
       "Closed": "Chiuso",
       "Dashboard Export": "Esportazione del cruscotto",
       "Generated on": "Generato il",
-      "Automated export": "Questa è un'esportazione automatica dal cruscotto globale di Mifos X"
+      "Automated export": "Questa è un'esportazione automatica dal cruscotto globale di Mifos X",
+      "Unknown Partner": "Unknown partner code."
     },
     "permissions": {
       "actions": {

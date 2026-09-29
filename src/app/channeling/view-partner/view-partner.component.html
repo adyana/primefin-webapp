@@ -1,0 +1,53 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="container">
+  <div class="layout-row align-end gap-20px m-b-20">
+    <button mat-raised-button [routerLink]="['../']">
+      <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
+      {{ 'labels.buttons.Back' | translate }}
+    </button>
+  </div>
+
+  @if (partnerData) {
+    <mat-card>
+      <mat-card-title class="m-b-16">{{ partnerData.name }} ({{ partnerData.code }})</mat-card-title>
+
+      <mat-card-content>
+        <div class="layout-row gap-20px responsive-column">
+          <div class="flex-fill">
+            <p>
+              <strong>{{ 'labels.inputs.Status' | translate }}:</strong>
+              {{ partnerData.status }}
+            </p>
+            <p>
+              <strong>{{ 'labels.inputs.Contact' | translate }}:</strong>
+              {{ partnerData.contact }}
+            </p>
+          </div>
+          <div class="flex-fill">
+            <p>
+              <strong>{{ 'labels.inputs.SFTP Username' | translate }}:</strong>
+              {{ partnerData.sftpUsername }}
+            </p>
+            <p>
+              <strong>{{ 'labels.inputs.PGP Key Reference' | translate }}:</strong>
+              {{ partnerData.pgpKeyRef }}
+            </p>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  } @else {
+    <mat-card>
+      <mat-card-content>
+        <p>{{ 'labels.text.Unknown Partner' | translate }}</p>
+      </mat-card-content>
+    </mat-card>
+  }
+</div>

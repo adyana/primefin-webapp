@@ -967,7 +967,8 @@
       "Post Dividends": "Zaúčtovat dividendy",
       "Convert": "Převést",
       "Deleting": "Mazání",
-      "Inactivate": "Deaktivovat"
+      "Inactivate": "Deaktivovat",
+      "Create Partner": "Create Partner"
     },
     "catalogs": {
       "% Amount": "% částky",
@@ -1980,7 +1981,8 @@
       "Customer and Account": "Klient a účet",
       "Deposit Details": "Podrobnosti vkladu",
       "Services": "Služby",
-      "Schedules": "Rozvrhy"
+      "Schedules": "Rozvrhy",
+      "Create Channel Partner": "Create Channel Partner"
     },
     "inputs": {
       "Returned": "Vráceno",
@@ -4063,7 +4065,12 @@
       "PERSON": "Fyzická osoba",
       "Payment": "Platba",
       "Export Date": "Datum exportu",
-      "Label": "Popisek"
+      "Label": "Popisek",
+      "Partner Code": "Partner Code",
+      "Partner Name": "Partner Name",
+      "SFTP Username": "SFTP Username",
+      "PGP Key Reference": "PGP Key Reference",
+      "Contact": "Contact"
     },
     "links": {
       "Community": "Společenství",
@@ -4221,7 +4228,8 @@
       "Manage Dashboards": "Spravovat ovládací panely",
       "Link to payment system": "Propojit s platebním systémem",
       "Interbank Transfer": "Mezibankovní převod",
-      "Reporting Dashboard": "Přehled hlášení"
+      "Reporting Dashboard": "Přehled hlášení",
+      "Channeling": "Channeling"
     },
     "placeholders": {
       "Add new server": "Přidat nový server",
@@ -5531,7 +5539,8 @@
       "Closed": "Uzavřeno",
       "Dashboard Export": "Export přehledu",
       "Generated on": "Vygenerováno",
-      "Automated export": "Toto je automatický export z globálního přehledu Mifos X"
+      "Automated export": "Toto je automatický export z globálního přehledu Mifos X",
+      "Unknown Partner": "Unknown partner code."
     },
     "permissions": {
       "actions": {

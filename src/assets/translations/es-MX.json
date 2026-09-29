@@ -966,7 +966,8 @@
       "Post Dividends": "Contabilizar dividendos",
       "Convert": "Convertir",
       "Deleting": "Eliminando",
-      "Inactivate": "Inactivar"
+      "Inactivate": "Inactivar",
+      "Create Partner": "Create Partner"
     },
     "catalogs": {
       "% Amount": "% Monto",
@@ -1979,7 +1980,8 @@
       "Customer and Account": "Cliente y cuenta",
       "Deposit Details": "Detalles del depósito",
       "Services": "Servicios",
-      "Schedules": "Horarios"
+      "Schedules": "Horarios",
+      "Create Channel Partner": "Create Channel Partner"
     },
     "inputs": {
       "Returned": "Devuelto",
@@ -4056,7 +4058,12 @@
       "PERSON": "Persona física",
       "Payment": "Pago",
       "Export Date": "Fecha de exportación",
-      "Label": "Etiqueta"
+      "Label": "Etiqueta",
+      "Partner Code": "Partner Code",
+      "Partner Name": "Partner Name",
+      "SFTP Username": "SFTP Username",
+      "PGP Key Reference": "PGP Key Reference",
+      "Contact": "Contact"
     },
     "links": {
       "Community": "Comunidad",
@@ -4214,7 +4221,8 @@
       "Global Financial Dashboard": "Panel Financiero Global",
       "Manage Dashboards": "Gestionar Paneles de Control",
       "Interbank Transfer": "Transferencia interbancaria",
-      "Reporting Dashboard": "Panel de reportes"
+      "Reporting Dashboard": "Panel de reportes",
+      "Channeling": "Channeling"
     },
     "placeholders": {
       "# Remittance": "# Remesa",
@@ -5524,7 +5532,8 @@
       "Closed": "Cerrado",
       "Dashboard Export": "Exportación del panel",
       "Generated on": "Generado el",
-      "Automated export": "Esta es una exportación automática del panel global de Mifos X"
+      "Automated export": "Esta es una exportación automática del panel global de Mifos X",
+      "Unknown Partner": "Unknown partner code."
     },
     "permissions": {
       "actions": {

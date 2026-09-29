@@ -1,0 +1,61 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="container">
+  <mat-card>
+    <mat-card-title class="m-b-16">{{ 'labels.heading.Create Channel Partner' | translate }}</mat-card-title>
+
+    <mat-card-content>
+      <form [formGroup]="partnerForm">
+        <div class="layout-row gap-20px responsive-column">
+          <mat-form-field class="flex-fill">
+            <mat-label>{{ 'labels.inputs.Partner Code' | translate }}</mat-label>
+            <input matInput formControlName="code" required />
+            <mat-error>{{ 'labels.inputs.Code Lowercase Dash' | translate }}</mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="flex-fill">
+            <mat-label>{{ 'labels.inputs.Partner Name' | translate }}</mat-label>
+            <input matInput formControlName="name" required />
+          </mat-form-field>
+        </div>
+
+        <div class="layout-row gap-20px responsive-column">
+          <mat-form-field class="flex-fill">
+            <mat-label>{{ 'labels.inputs.Status' | translate }}</mat-label>
+            <input matInput formControlName="status" required />
+          </mat-form-field>
+
+          <mat-form-field class="flex-fill">
+            <mat-label>{{ 'labels.inputs.Contact' | translate }}</mat-label>
+            <input matInput formControlName="contact" />
+          </mat-form-field>
+        </div>
+
+        <div class="layout-row gap-20px responsive-column">
+          <mat-form-field class="flex-fill">
+            <mat-label>{{ 'labels.inputs.SFTP Username' | translate }}</mat-label>
+            <input matInput formControlName="sftpUsername" />
+          </mat-form-field>
+
+          <mat-form-field class="flex-fill">
+            <mat-label>{{ 'labels.inputs.PGP Key Reference' | translate }}</mat-label>
+            <input matInput formControlName="pgpKeyRef" />
+          </mat-form-field>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <div class="layout-row align-end gap-20px m-t-20">
+    <button mat-raised-button [routerLink]="['../']">{{ 'labels.buttons.Cancel' | translate }}</button>
+    <button mat-raised-button color="primary" [disabled]="!partnerForm.valid" (click)="submit()">
+      {{ 'labels.buttons.Submit' | translate }}
+    </button>
+  </div>
+</div>

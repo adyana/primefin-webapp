@@ -891,7 +891,8 @@
       "Save": "Yadda saxla",
       "Upload Report Design": "Hesabat tərtibatını yüklə",
       "Mass Reject": "Kütləvi rədd et",
-      "Hide": "Gizlət"
+      "Hide": "Gizlət",
+      "Create Partner": "Create Partner"
     },
     "catalogs": {
       "% Amount": "Məbləğin %-i",
@@ -1887,7 +1888,8 @@
       "Deferred Income Recognition": "Təxirə salınmış gəlirin tanınması",
       "Advanced Configuration": "Genişləndirilmiş konfiqurasiya",
       "Mass Reject Credit Applications": "Kredit müraciətlərinin kütləvi rəddi",
-      "Enrollment Details": "Qeydiyyat təfərrüatları"
+      "Enrollment Details": "Qeydiyyat təfərrüatları",
+      "Create Channel Partner": "Create Channel Partner"
     },
     "inputs": {
       "Returned": "Qaytarılıb",
@@ -3931,7 +3933,12 @@
       "Withdrawn": "Geri götürülüb",
       "Registration Status": "Qeydiyyatın vəziyyəti",
       "Unknown": "Naməlum",
-      "Pending": "Gözləyir"
+      "Pending": "Gözləyir",
+      "Partner Code": "Partner Code",
+      "Partner Name": "Partner Name",
+      "SFTP Username": "SFTP Username",
+      "PGP Key Reference": "PGP Key Reference",
+      "Contact": "Contact"
     },
     "links": {
       "Community": "İcma",
@@ -4089,7 +4096,8 @@
       "Approve Additional Shares": "Əlavə payları təsdiqlə",
       "Reject Additional Shares": "Əlavə payları rədd et",
       "Manage Dashboards": "İdarə panellərini idarə et",
-      "Reporting Dashboard": "Hesabat paneli"
+      "Reporting Dashboard": "Hesabat paneli",
+      "Channeling": "Channeling"
     },
     "placeholders": {
       "# Remittance": "Pul köçürməsinin nömrəsi",
@@ -5354,7 +5362,8 @@
       "Loading pending prospects": "Gözləyən potensial müştərilər yüklənir",
       "No pending prospects found": "Gözləyən potensial müştəri tapılmadı",
       "Unable to load pending prospects": "Gözləyən potensial müştəriləri yükləmək mümkün olmadı",
-      "The amount could not be re-quoted for this date. Pick the date again to retry.": "Bu tarix üçün məbləği yenidən hesablamaq mümkün olmadı. Yenidən cəhd etmək üçün tarixi təkrar seç."
+      "The amount could not be re-quoted for this date. Pick the date again to retry.": "Bu tarix üçün məbləği yenidən hesablamaq mümkün olmadı. Yenidən cəhd etmək üçün tarixi təkrar seç.",
+      "Unknown Partner": "Unknown partner code."
     },
     "permissions": {
       "actions": {

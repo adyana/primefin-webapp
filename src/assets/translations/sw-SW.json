@@ -966,7 +966,8 @@
       "Post Dividends": "Weka Gawio",
       "Convert": "Badilisha",
       "Deleting": "Inafuta",
-      "Inactivate": "Zima"
+      "Inactivate": "Zima",
+      "Create Partner": "Create Partner"
     },
     "catalogs": {
       "% Amount": "Kiasi",
@@ -1979,7 +1980,8 @@
       "Services": "Huduma",
       "Schedules": "Ratiba",
       "Reference": "Rejea",
-      "Create Savings Product": "Unda Bidhaa ya Akiba"
+      "Create Savings Product": "Unda Bidhaa ya Akiba",
+      "Create Channel Partner": "Create Channel Partner"
     },
     "inputs": {
       "Returned": "Imerudishwa",
@@ -4062,7 +4064,12 @@
       "PERSON": "Mtu binafsi",
       "Payment": "Malipo",
       "Export Date": "Tarehe ya Kuhamisha",
-      "Label": "Lebo"
+      "Label": "Lebo",
+      "Partner Code": "Partner Code",
+      "Partner Name": "Partner Name",
+      "SFTP Username": "SFTP Username",
+      "PGP Key Reference": "PGP Key Reference",
+      "Contact": "Contact"
     },
     "links": {
       "Community": "Jumuiya",
@@ -4220,7 +4227,8 @@
       "Link to payment system": "Unganisha kwenye mfumo wa malipo",
       "Interbank Transfer": "Uhamisho Baina ya Benki",
       "Reporting Dashboard": "Dashibodi ya Ripoti",
-      "Assign Staff": "Kabidhi Mfanyakazi"
+      "Assign Staff": "Kabidhi Mfanyakazi",
+      "Channeling": "Channeling"
     },
     "placeholders": {
       "Add new server": "Ongeza seva mpya",
@@ -5530,7 +5538,8 @@
       "Closed": "Imefungwa",
       "Dashboard Export": "Uhamishaji wa Dashibodi",
       "Generated on": "Imetolewa tarehe",
-      "Automated export": "Huu ni uhamishaji wa kiotomatiki kutoka Dashibodi ya Kimataifa ya Mifos X"
+      "Automated export": "Huu ni uhamishaji wa kiotomatiki kutoka Dashibodi ya Kimataifa ya Mifos X",
+      "Unknown Partner": "Unknown partner code."
     },
     "permissions": {
       "actions": {

@@ -966,7 +966,8 @@
       "Post Dividends": "Apskaityti dividendus",
       "Convert": "Konvertuoti",
       "Deleting": "Šalinama",
-      "Inactivate": "Deaktyvuoti"
+      "Inactivate": "Deaktyvuoti",
+      "Create Partner": "Create Partner"
     },
     "catalogs": {
       "% Amount": "Suma",
@@ -1979,7 +1980,8 @@
       "Deposit Details": "Indėlio informacija",
       "Services": "Paslaugos",
       "Schedules": "Tvarkaraščiai",
-      "Reference": "Nuoroda"
+      "Reference": "Nuoroda",
+      "Create Channel Partner": "Create Channel Partner"
     },
     "inputs": {
       "Returned": "Grąžintas",
@@ -4062,7 +4064,12 @@
       "PERSON": "Fizinis asmuo",
       "Payment": "Mokėjimas",
       "Export Date": "Eksporto data",
-      "Label": "Etiketė"
+      "Label": "Etiketė",
+      "Partner Code": "Partner Code",
+      "Partner Name": "Partner Name",
+      "SFTP Username": "SFTP Username",
+      "PGP Key Reference": "PGP Key Reference",
+      "Contact": "Contact"
     },
     "links": {
       "Community": "bendruomenė",
@@ -4220,7 +4227,8 @@
       "Manage Dashboards": "Valdyti prietaisų skydelius",
       "Link to payment system": "Susieti su mokėjimo sistema",
       "Interbank Transfer": "Tarpbankinis pervedimas",
-      "Reporting Dashboard": "Ataskaitų skydelis"
+      "Reporting Dashboard": "Ataskaitų skydelis",
+      "Channeling": "Channeling"
     },
     "placeholders": {
       "Add new server": "Pridėti naują serverį",
@@ -5530,7 +5538,8 @@
       "Closed": "Uždaryta",
       "Dashboard Export": "Skydelio eksportas",
       "Generated on": "Sugeneruota",
-      "Automated export": "Tai automatinis eksportas iš „Mifos X“ visuotinio skydelio"
+      "Automated export": "Tai automatinis eksportas iš „Mifos X“ visuotinio skydelio",
+      "Unknown Partner": "Unknown partner code."
     },
     "permissions": {
       "actions": {

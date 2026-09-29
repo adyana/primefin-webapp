@@ -966,7 +966,8 @@
       "Post Dividends": "लाभांश पोस्ट गर्नुहोस्",
       "Convert": "रूपान्तरण गर्नुहोस्",
       "Deleting": "मेटाउँदै",
-      "Inactivate": "निष्क्रिय पार्नुहोस्"
+      "Inactivate": "निष्क्रिय पार्नुहोस्",
+      "Create Partner": "Create Partner"
     },
     "catalogs": {
       "% Amount": "रकम",
@@ -1979,7 +1980,8 @@
       "Deposit Details": "निक्षेप विवरण",
       "Services": "सेवाहरू",
       "Schedules": "तालिकाहरू",
-      "Reference": "सन्दर्भ"
+      "Reference": "सन्दर्भ",
+      "Create Channel Partner": "Create Channel Partner"
     },
     "inputs": {
       "Returned": "फिर्ता भएको",
@@ -4062,7 +4064,12 @@
       "PERSON": "व्यक्ति",
       "Payment": "भुक्तानी",
       "Export Date": "निर्यात मिति",
-      "Label": "लेबल"
+      "Label": "लेबल",
+      "Partner Code": "Partner Code",
+      "Partner Name": "Partner Name",
+      "SFTP Username": "SFTP Username",
+      "PGP Key Reference": "PGP Key Reference",
+      "Contact": "Contact"
     },
     "links": {
       "Community": "समुदाय",
@@ -4220,7 +4227,8 @@
       "Manage Dashboards": "ड्यासबोर्डहरू प्रबन्ध गर्नुहोस्",
       "Link to payment system": "भुक्तानी प्रणालीमा लिंक गर्नुहोस्",
       "Interbank Transfer": "अन्तर-बैंक स्थानान्तरण",
-      "Reporting Dashboard": "प्रतिवेदन ड्यासबोर्ड"
+      "Reporting Dashboard": "प्रतिवेदन ड्यासबोर्ड",
+      "Channeling": "Channeling"
     },
     "placeholders": {
       "Add new server": "नयाँ सर्भर थप्नुहोस्",
@@ -5530,7 +5538,8 @@
       "Closed": "बन्द गरियो",
       "Dashboard Export": "ड्यासबोर्ड निर्यात",
       "Generated on": "उत्पन्न मिति",
-      "Automated export": "यो Mifos X ग्लोबल ड्यासबोर्डबाट स्वचालित निर्यात हो"
+      "Automated export": "यो Mifos X ग्लोबल ड्यासबोर्डबाट स्वचालित निर्यात हो",
+      "Unknown Partner": "Unknown partner code."
     },
     "permissions": {
       "actions": {

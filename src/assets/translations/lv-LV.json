@@ -966,7 +966,8 @@
       "Post Dividends": "Grāmatot dividendes",
       "Convert": "Konvertēt",
       "Deleting": "Dzēš",
-      "Inactivate": "Deaktivizēt"
+      "Inactivate": "Deaktivizēt",
+      "Create Partner": "Create Partner"
     },
     "catalogs": {
       "% Amount": "Summa",
@@ -1979,7 +1980,8 @@
       "Deposit Details": "Noguldījuma informācija",
       "Services": "Pakalpojumi",
       "Schedules": "Grafiki",
-      "Reference": "Atsauce"
+      "Reference": "Atsauce",
+      "Create Channel Partner": "Create Channel Partner"
     },
     "inputs": {
       "Returned": "Atgriezts",
@@ -4062,7 +4064,12 @@
       "PERSON": "Fiziska persona",
       "Payment": "Maksājums",
       "Export Date": "Eksporta datums",
-      "Label": "Nosaukums"
+      "Label": "Nosaukums",
+      "Partner Code": "Partner Code",
+      "Partner Name": "Partner Name",
+      "SFTP Username": "SFTP Username",
+      "PGP Key Reference": "PGP Key Reference",
+      "Contact": "Contact"
     },
     "links": {
       "Community": "kopiena",
@@ -4220,7 +4227,8 @@
       "Link to payment system": "Saistīt ar maksājumu sistēmu",
       "Interbank Transfer": "Starpbanku pārskaitījums",
       "Reporting Dashboard": "Pārskatu panelis",
-      "Assign Staff": "Piešķirt darbinieku"
+      "Assign Staff": "Piešķirt darbinieku",
+      "Channeling": "Channeling"
     },
     "placeholders": {
       "Add new server": "Pievienot jaunu serveri",
@@ -5530,7 +5538,8 @@
       "Closed": "Slēgts",
       "Dashboard Export": "Paneļa eksports",
       "Generated on": "Ģenerēts",
-      "Automated export": "Šis ir automātisks eksports no Mifos X globālā paneļa"
+      "Automated export": "Šis ir automātisks eksports no Mifos X globālā paneļa",
+      "Unknown Partner": "Unknown partner code."
     },
     "permissions": {
       "actions": {
