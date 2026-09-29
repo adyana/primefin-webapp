@@ -14,10 +14,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { ChannelPartnersComponent } from './partners/partners.component';
 import { CreatePartnerComponent } from './create-partner/create-partner.component';
 import { ViewPartnerComponent } from './view-partner/view-partner.component';
+import { ChannelFilesComponent } from './files/files.component';
 
 /** Custom Resolvers */
 import { ChannelPartnersResolver } from './channel-partners.resolver';
 import { ChannelPartnerResolver } from './channel-partner.resolver';
+import { ChannelFilesResolver } from './channel-files.resolver';
 
 /** Custom Services */
 import { Route } from '../core/route/route.service';
@@ -39,6 +41,14 @@ const routes: Routes = [
       data: { title: 'Create Channel Partner', breadcrumb: 'Create', routeParamBreadcrumb: false }
     },
     {
+      path: 'files',
+      component: ChannelFilesComponent,
+      data: { title: 'Channel Files', breadcrumb: 'Files', routeParamBreadcrumb: false },
+      resolve: {
+        files: ChannelFilesResolver
+      }
+    },
+    {
       path: ':id',
       component: ViewPartnerComponent,
       data: { title: 'Channel Partner', breadcrumb: 'Partner', routeParamBreadcrumb: false },
@@ -57,7 +67,8 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: [
     ChannelPartnersResolver,
-    ChannelPartnerResolver
+    ChannelPartnerResolver,
+    ChannelFilesResolver
   ]
 })
 export class ChannelingRoutingModule {}

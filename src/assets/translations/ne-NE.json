@@ -4258,7 +4258,9 @@
       "Link to payment system": "भुक्तानी प्रणालीमा लिंक गर्नुहोस्",
       "Interbank Transfer": "अन्तर-बैंक स्थानान्तरण",
       "Reporting Dashboard": "प्रतिवेदन ड्यासबोर्ड",
-      "Channeling": "Channeling"
+      "Channeling": "Channeling",
+      "Channel Partners": "Channel Partners",
+      "Channel Files": "Channel Files"
     },
     "placeholders": {
       "Add new server": "नयाँ सर्भर थप्नुहोस्",

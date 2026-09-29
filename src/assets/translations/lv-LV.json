@@ -4258,7 +4258,9 @@
       "Interbank Transfer": "Starpbanku pārskaitījums",
       "Reporting Dashboard": "Pārskatu panelis",
       "Assign Staff": "Piešķirt darbinieku",
-      "Channeling": "Channeling"
+      "Channeling": "Channeling",
+      "Channel Partners": "Channel Partners",
+      "Channel Files": "Channel Files"
     },
     "placeholders": {
       "Add new server": "Pievienot jaunu serveri",

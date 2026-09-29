@@ -4260,7 +4260,9 @@
       "Link to payment system": "Mit Zahlungssystem verknüpfen",
       "Interbank Transfer": "Interbankenüberweisung",
       "Reporting Dashboard": "Berichts-Dashboard",
-      "Channeling": "Channeling"
+      "Channeling": "Channeling",
+      "Channel Partners": "Channel Partners",
+      "Channel Files": "Channel Files"
     },
     "placeholders": {
       "Add new server": "Neuen Server hinzufügen",

@@ -4258,7 +4258,9 @@
       "Link to payment system": "Lier au système de paiement",
       "Interbank Transfer": "Virement interbancaire",
       "Reporting Dashboard": "Tableau de bord des rapports",
-      "Channeling": "Channeling"
+      "Channeling": "Channeling",
+      "Channel Partners": "Channel Partners",
+      "Channel Files": "Channel Files"
     },
     "placeholders": {
       "Add new server": "Ajouter un nouveau serveur",

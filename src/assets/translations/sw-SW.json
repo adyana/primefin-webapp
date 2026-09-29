@@ -4258,7 +4258,9 @@
       "Interbank Transfer": "Uhamisho Baina ya Benki",
       "Reporting Dashboard": "Dashibodi ya Ripoti",
       "Assign Staff": "Kabidhi Mfanyakazi",
-      "Channeling": "Channeling"
+      "Channeling": "Channeling",
+      "Channel Partners": "Channel Partners",
+      "Channel Files": "Channel Files"
     },
     "placeholders": {
       "Add new server": "Ongeza seva mpya",

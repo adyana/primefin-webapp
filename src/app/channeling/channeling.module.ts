@@ -16,6 +16,7 @@ import { ChannelingRoutingModule } from './channeling-routing.module';
 import { ChannelPartnersComponent } from './partners/partners.component';
 import { CreatePartnerComponent } from './create-partner/create-partner.component';
 import { ViewPartnerComponent } from './view-partner/view-partner.component';
+import { ChannelFilesComponent } from './files/files.component';
 
 /**
  * Channeling module: partner registry + product/rate/cap/window config (P3).
@@ -25,7 +26,8 @@ import { ViewPartnerComponent } from './view-partner/view-partner.component';
     ChannelingRoutingModule,
     ChannelPartnersComponent,
     CreatePartnerComponent,
-    ViewPartnerComponent
+    ViewPartnerComponent,
+    ChannelFilesComponent
   ],
   exports: [],
   declarations: [],

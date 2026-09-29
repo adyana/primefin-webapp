@@ -4258,7 +4258,9 @@
       "Interbank Transfer": "Bonifico interbancario",
       "Reporting Dashboard": "Cruscotto dei report",
       "Assign Staff": "Assegna personale",
-      "Channeling": "Channeling"
+      "Channeling": "Channeling",
+      "Channel Partners": "Channel Partners",
+      "Channel Files": "Channel Files"
     },
     "placeholders": {
       "Add new server": "Aggiungi nuovo server",

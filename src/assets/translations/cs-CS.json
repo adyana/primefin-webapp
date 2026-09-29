@@ -4259,7 +4259,9 @@
       "Link to payment system": "Propojit s platebním systémem",
       "Interbank Transfer": "Mezibankovní převod",
       "Reporting Dashboard": "Přehled hlášení",
-      "Channeling": "Channeling"
+      "Channeling": "Channeling",
+      "Channel Partners": "Channel Partners",
+      "Channel Files": "Channel Files"
     },
     "placeholders": {
       "Add new server": "Přidat nový server",

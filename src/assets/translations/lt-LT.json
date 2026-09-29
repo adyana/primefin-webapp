@@ -4258,7 +4258,9 @@
       "Link to payment system": "Susieti su mokėjimo sistema",
       "Interbank Transfer": "Tarpbankinis pervedimas",
       "Reporting Dashboard": "Ataskaitų skydelis",
-      "Channeling": "Channeling"
+      "Channeling": "Channeling",
+      "Channel Partners": "Channel Partners",
+      "Channel Files": "Channel Files"
     },
     "placeholders": {
       "Add new server": "Pridėti naują serverį",

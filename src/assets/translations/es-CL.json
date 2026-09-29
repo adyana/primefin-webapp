@@ -4258,7 +4258,9 @@
       "Manage Dashboards": "Gestionar Paneles de Control",
       "Interbank Transfer": "Transferencia interbancaria",
       "Reporting Dashboard": "Panel de reportes",
-      "Channeling": "Channeling"
+      "Channeling": "Channeling",
+      "Channel Partners": "Channel Partners",
+      "Channel Files": "Channel Files"
     },
     "placeholders": {
       "Add new server": "Agregar nuevo servidor",

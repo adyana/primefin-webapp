@@ -4254,7 +4254,9 @@
       "Reject Additional Shares": "Reject Additional Shares",
       "Manage Dashboards": "Manage Dashboards",
       "Reporting Dashboard": "Reporting Dashboard",
-      "Channeling": "Channeling"
+      "Channeling": "Channeling",
+      "Channel Partners": "Channel Partners",
+      "Channel Files": "Channel Files"
     },
     "placeholders": {
       "# Remittance": "# Remittance",

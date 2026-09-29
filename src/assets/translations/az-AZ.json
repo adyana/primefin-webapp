@@ -4127,7 +4127,9 @@
       "Reject Additional Shares": "Əlavə payları rədd et",
       "Manage Dashboards": "İdarə panellərini idarə et",
       "Reporting Dashboard": "Hesabat paneli",
-      "Channeling": "Channeling"
+      "Channeling": "Channeling",
+      "Channel Partners": "Channel Partners",
+      "Channel Files": "Channel Files"
     },
     "placeholders": {
       "# Remittance": "Pul köçürməsinin nömrəsi",

@@ -4258,7 +4258,9 @@
       "Interbank Transfer": "은행 간 이체",
       "Reporting Dashboard": "보고 대시보드",
       "Recovery Payment": "회수 납입",
-      "Channeling": "Channeling"
+      "Channeling": "Channeling",
+      "Channel Partners": "Channel Partners",
+      "Channel Files": "Channel Files"
     },
     "placeholders": {
       "Add new server": "새 서버 추가",
