@@ -217,7 +217,8 @@ export class ClientTrendsBarComponent implements OnInit {
       case 'Week':
         labels.forEach((label: any) => {
           const week = response.find((entry: any) => {
-            return entry.Weeks === label;
+            // PrimeFin: backend returns lowercase column names.
+            return entry.Weeks === label || entry.weeks === label;
           });
           counts = this.updateCount(week, counts, type);
         });
@@ -225,7 +226,8 @@ export class ClientTrendsBarComponent implements OnInit {
       case 'Month':
         labels.forEach((label: any) => {
           const month = response.find((entry: any) => {
-            return entry.Months === label;
+            // PrimeFin: backend returns lowercase column names.
+            return entry.Months === label || entry.months === label;
           });
           counts = this.updateCount(month, counts, type);
         });

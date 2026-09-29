@@ -170,15 +170,16 @@ export class AnalyticsDataSourceService {
           pending,
           complete
         ] = this.extractAmountPair(response, reportName);
-        const net = complete - pending;
-        const pctDiff = pending > 0 ? ((complete - pending) / pending) * 100 : undefined;
+        // PrimeFin: for Demand Vs Collection the metric IS the collected
+        // amount (not collected-minus-demand); the trend guard skips the
+        // percent diff there and on non-positive pending.
+        const net = reportName === 'Demand Vs Collection' ? complete : complete - pending;
+        const pctDiff =
+          reportName === 'Demand Vs Collection' || pending <= 0 ? undefined : ((complete - pending) / pending) * 100;
         const trend = this.getMetricTrend(widgetId, pctDiff !== undefined ? Math.abs(pctDiff) : undefined, net >= 0);
         if (pending === 0 && complete === 0) {
-          // Fallback when API returns empty data
-          const fallbackValue =
-            reportName === 'Demand Vs Collection'
-              ? -(Math.floor(Math.random() * 300000) + 50000)
-              : Math.floor(Math.random() * 60000) + 10000;
+          // Fallback when API returns empty data (always positive mock).
+          const fallbackValue = Math.floor(Math.random() * 60000) + 10000;
           return {
             loading: false,
             empty: false,
@@ -695,51 +696,48 @@ export class AnalyticsDataSourceService {
   }
 
   private loadLoanPortfolioDistribution(filters: AnalyticsFilters): Observable<AnalyticsWidgetState> {
-    return of({
-      loading: false,
-      empty: false,
-      labels: [
-        'labels.text.Product Type',
-        'labels.text.Loan Portfolio',
-        'labels.text.Others',
-        'labels.text.Agricultural / Sectors',
-        'labels.text.Sector'
-      ],
-      translateLabels: true,
-      datasets: [
-        {
-          labelKey: 'labels.text.Loan Portfolio Distribution',
-          data: [
-            40,
-            23.3,
-            29.8,
-            10.0,
-            16.8,
-            9.8,
-            6.0,
-            12.0,
-            12.3,
-            3.3,
-            3.6
-          ],
-          backgroundColor: [
-            '#1565c0',
-            '#1e88e5',
-            '#42a5f5',
-            '#26c6da',
-            '#29b6f6',
-            '#80deea',
-            '#81c784',
-            '#8e24aa',
-            '#ab47bc',
-            '#ffa726',
-            '#ef5350'
-          ],
-          borderWidth: 1
+    // PrimeFin: real per-product data from the report (not mock values).
+    const palette = [
+      '#1565c0',
+      '#1e88e5',
+      '#42a5f5',
+      '#26c6da',
+      '#29b6f6',
+      '#80deea',
+      '#81c784',
+      '#8e24aa',
+      '#ab47bc',
+      '#ffa726',
+      '#ef5350'
+    ];
+    return this.runReport('Loan Portfolio By Product', this.buildReportParams(filters)).pipe(
+      map((rows: any[]) => {
+        const items = (rows || []).filter((row: any) => Number(row?.loans || 0) > 0 || Number(row?.amount || 0) > 0);
+        const labels = items.map((row: any) => `${row?.product ?? 'Other'}`);
+        const data = items.map((row: any) => Number(row?.amount || 0));
+        if (data.length === 0 || data.every((value) => value === 0)) {
+          return { loading: false, empty: true, labels: [], translateLabels: false, datasets: [], details: [] };
         }
-      ],
-      details: []
-    });
+        return {
+          loading: false,
+          empty: false,
+          labels,
+          translateLabels: false,
+          datasets: [
+            {
+              labelKey: 'labels.text.Loan Portfolio Distribution',
+              data,
+              backgroundColor: labels.map((_, index) => palette[index % palette.length]),
+              borderWidth: 1
+            }
+          ],
+          details: labels.map((label, index) => ({ labelKey: label, value: data[index] }))
+        };
+      }),
+      catchError(() =>
+        of({ loading: false, empty: true, labels: [], translateLabels: false, datasets: [], details: [] })
+      )
+    );
   }
 
   private loadNewClientOnboardingTrends(filters: AnalyticsFilters): Observable<AnalyticsWidgetState> {
@@ -939,10 +937,11 @@ export class AnalyticsDataSourceService {
       case 'Day':
         return this.formatDayLabel(entry?.days);
       case 'Week':
-        return `${entry?.Weeks ?? ''}`;
+        // PrimeFin: backend returns lowercase column names.
+        return `${entry?.Weeks ?? entry?.weeks ?? ''}`;
       case 'Month':
       case 'Year':
-        return `${entry?.Months ?? ''}`;
+        return `${entry?.Months ?? entry?.months ?? ''}`;
       default:
         return '';
     }
@@ -1021,35 +1020,57 @@ export class AnalyticsDataSourceService {
     }
   }
 
+  /** Per-office real metrics keyed by officeId; filled on each map load. */
+  private officeMetrics: Record<number, { clients: number; loans: number; savings: number; collected: number }> = {};
+
   private loadGeoreferenceMapData(filters: AnalyticsFilters): Observable<AnalyticsWidgetState> {
-    return this.http.get<any[]>('/offices').pipe(
-      map((offices) => {
-        const mapData = offices.map((office, index) => {
-          const coords = this.getOfficeCoordinates(office.name, index);
-          const clients = this.getOfficeClients(office.id, filters);
-          const loans = this.getOfficeLoans(office.id, filters);
-          const savings = this.getOfficeSavings(office.id, filters);
-          const collected = this.getOfficeCollected(office.id, filters);
+    // PrimeFin: join offices with the Office Performance Summary report so
+    // pins carry real metrics (getters below prefer this cache, mock on miss).
+    return forkJoin([
+      this.http.get<any[]>('/offices'),
+      this.runReport('Office Performance Summary', this.buildReportParams(filters))
+    ]).pipe(
+      map(
+        ([
+          offices,
+          report
+        ]) => {
+          this.officeMetrics = {};
+          for (const row of report || []) {
+            this.officeMetrics[row.officeId] = {
+              clients: Number(row.clients) || 0,
+              loans: Number(row.loans) || 0,
+              savings: Number(row.savings) || 0,
+              collected: Number(row.collected) || 0
+            };
+          }
+          const mapData = offices.map((office, index) => {
+            const coords = this.getOfficeCoordinates(office.name, index);
+            const clients = this.getOfficeClients(office.id, filters);
+            const loans = this.getOfficeLoans(office.id, filters);
+            const savings = this.getOfficeSavings(office.id, filters);
+            const collected = this.getOfficeCollected(office.id, filters);
+
+            return {
+              officeId: office.id,
+              officeName: office.name,
+              latitude: coords.lat,
+              longitude: coords.lng,
+              country: coords.country,
+              clients,
+              loans,
+              savings,
+              collected
+            };
+          });
 
           return {
-            officeId: office.id,
-            officeName: office.name,
-            latitude: coords.lat,
-            longitude: coords.lng,
-            country: coords.country,
-            clients,
-            loans,
-            savings,
-            collected
+            loading: false,
+            empty: mapData.length === 0,
+            mapData
           };
-        });
-
-        return {
-          loading: false,
-          empty: mapData.length === 0,
-          mapData
-        };
-      }),
+        }
+      ),
       catchError(() => {
         const mockOffices = [
           { id: 1, name: 'Head Office' },
@@ -1118,6 +1139,49 @@ export class AnalyticsDataSourceService {
     if (cleanName.includes('nakuru')) {
       return { lat: -0.3031, lng: 36.08, country: 'Kenya' };
     }
+    // PrimeFin: Gulf + world office cities (match deployed bundle).
+    if (cleanName.includes('dubai')) {
+      return { lat: 25.2048, lng: 55.2708, country: 'UAE' };
+    }
+    if (cleanName.includes('doha')) {
+      return { lat: 25.2854, lng: 51.531, country: 'Qatar' };
+    }
+    if (cleanName.includes('kuwait')) {
+      return { lat: 29.3759, lng: 47.9774, country: 'Kuwait' };
+    }
+    if (cleanName.includes('manama')) {
+      return { lat: 26.2285, lng: 50.586, country: 'Bahrain' };
+    }
+    if (cleanName.includes('muscat')) {
+      return { lat: 23.588, lng: 58.3829, country: 'Oman' };
+    }
+    if (cleanName.includes('amman')) {
+      return { lat: 31.9539, lng: 35.9106, country: 'Jordan' };
+    }
+    if (cleanName.includes('cairo')) {
+      return { lat: 30.0444, lng: 31.2357, country: 'Egypt' };
+    }
+    if (cleanName.includes('istanbul')) {
+      return { lat: 41.0082, lng: 28.9784, country: 'Turkey' };
+    }
+    if (cleanName.includes('new york')) {
+      return { lat: 40.7128, lng: -74.006, country: 'USA' };
+    }
+    if (cleanName.includes('frankfurt')) {
+      return { lat: 50.1109, lng: 8.6821, country: 'Germany' };
+    }
+    if (cleanName.includes('jakarta')) {
+      return { lat: -6.2088, lng: 106.8456, country: 'Indonesia' };
+    }
+    if (cleanName.includes('shanghai')) {
+      return { lat: 31.2304, lng: 121.4737, country: 'China' };
+    }
+    if (cleanName.includes('london')) {
+      return { lat: 51.5074, lng: -0.1278, country: 'UK' };
+    }
+    if (cleanName.includes('riyadh')) {
+      return { lat: 24.7136, lng: 46.6753, country: 'Saudi Arabia' };
+    }
     if (cleanName.includes('kampala') || cleanName.includes('uganda')) {
       return { lat: 0.3476, lng: 32.5825, country: 'Uganda' };
     }
@@ -1170,6 +1234,10 @@ export class AnalyticsDataSourceService {
   }
 
   private getOfficeClients(officeId: number, filters: AnalyticsFilters): number {
+    const cached = this.officeMetrics?.[officeId]?.clients;
+    if (cached !== undefined) {
+      return cached;
+    }
     const safeId = this.normalizeOfficeId(officeId);
     const base = ((safeId * 149) % 300) + 150;
     const scale = filters.productId ? 0.25 : 1.0;
@@ -1177,11 +1245,19 @@ export class AnalyticsDataSourceService {
   }
 
   private getOfficeLoans(officeId: number, filters: AnalyticsFilters): number {
+    const cached = this.officeMetrics?.[officeId]?.loans;
+    if (cached !== undefined) {
+      return cached;
+    }
     const clients = this.getOfficeClients(officeId, filters);
     return Math.floor(clients * 0.85);
   }
 
   private getOfficeSavings(officeId: number, filters: AnalyticsFilters): number {
+    const cached = this.officeMetrics?.[officeId]?.savings;
+    if (cached !== undefined) {
+      return cached;
+    }
     const clients = this.getOfficeClients(officeId, filters);
     const safeId = this.normalizeOfficeId(officeId);
     const basePerClient = ((safeId * 73) % 500) + 800;
@@ -1190,6 +1266,10 @@ export class AnalyticsDataSourceService {
   }
 
   private getOfficeCollected(officeId: number, filters: AnalyticsFilters): number {
+    const cached = this.officeMetrics?.[officeId]?.collected;
+    if (cached !== undefined) {
+      return cached;
+    }
     const loansCount = this.getOfficeLoans(officeId, filters);
     const safeId = this.normalizeOfficeId(officeId);
     const avgLoanSize = ((safeId * 41) % 1000) + 1500;
