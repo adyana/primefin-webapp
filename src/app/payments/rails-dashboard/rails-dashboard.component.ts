@@ -56,7 +56,14 @@ export class RailsDashboardComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
 
   railsDataSource = new MatTableDataSource<any>([]);
-  railColumns: string[] = ['code', 'status', 'ticket', 'window', 'count', 'totalValue'];
+  railColumns: string[] = [
+    'code',
+    'status',
+    'ticket',
+    'window',
+    'count',
+    'totalValue'
+  ];
   queueDepth: number | null = null;
   oldestQueuedHours: number | null = null;
   openBreaks = 0;

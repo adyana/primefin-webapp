@@ -971,7 +971,11 @@
       "Map Product": "Map Product",
       "Add Band": "Add Band",
       "Add Cap": "Add Cap",
-      "Add Window": "Add Window"
+      "Add Window": "Add Window",
+      "Add Row": "Add Row",
+      "File Returns": "File Returns",
+      "Show DKE": "Show DKE",
+      "Sweep to Recon Breaks": "Sweep to Recon Breaks"
     },
     "catalogs": {
       "% Amount": "Quantità",
@@ -3409,6 +3413,7 @@
       "State": "Stato",
       "State / Province": "Stato/Provincia",
       "Status": "Stato",
+      "Metric": "Metric",
       "Rail": "Rail",
       "Ticket Range": "Ticket Range",
       "Window": "Window",
@@ -4207,7 +4212,7 @@
       "Notifications": "Notifiche",
       "Organization": "Organizzazione",
       "Interest Payment Waiver": "Rinuncia al pagamento degli interessi",
-      "Payments": "Pagamenti",
+      "Payments": "Payments",
       "Payout Refund": "Rimborso del pagamento",
       "Post Interest": "Pubblica interesse",
       "Post Interest As On": "Pubblica interesse come attivo",
@@ -4271,9 +4276,10 @@
       "Reporting Dashboard": "Cruscotto dei report",
       "Assign Staff": "Assegna personale",
       "Channeling": "Channeling",
-      "Payments": "Payments",
       "Channel Partners": "Channel Partners",
       "Channel Files": "Channel Files",
+      "Channeling Dashboard": "Channeling Dashboard",
+      "Payments Dashboard": "Payments Dashboard",
       "Payment Rails": "Payment Rails",
       "Payment Breaks": "Payment Breaks",
       "Payment Fraud SLA": "Payment Fraud SLA",
@@ -5588,7 +5594,18 @@
       "Dashboard Export": "Esportazione del cruscotto",
       "Generated on": "Generato il",
       "Automated export": "Questa è un'esportazione automatica dal cruscotto globale di Mifos X",
-      "Unknown Partner": "Unknown partner code."
+      "Unknown Partner": "Unknown partner code.",
+      "Fraud holds past 24h breach the reporting SLA": "Fraud holds past 24h breach the reporting SLA",
+      "Sweep filed": "Sweep filed",
+      "Return rows filed": "Return rows filed",
+      "RTGS Queue": "RTGS Queue",
+      "Oldest Queued Hours": "Oldest Queued Hours",
+      "Open Breaks": "Open Breaks",
+      "Total Partners": "Total Partners",
+      "Partners": "Partners",
+      "Product Mappings": "Product Mappings",
+      "Staged Files": "Staged Files",
+      "File Rows": "File Rows"
     },
     "permissions": {
       "actions": {

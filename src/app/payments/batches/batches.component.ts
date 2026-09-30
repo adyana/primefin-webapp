@@ -35,7 +35,20 @@ import { PaymentsService } from '../payments.service';
 @Component({
   selector: 'mifosx-payment-batches',
   templateUrl: './batches.component.html',
-  imports: [...STANDALONE_SHARED_IMPORTS, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, RouterLink],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatTable,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatHeaderCell,
+    MatCellDef,
+    MatCell,
+    MatHeaderRowDef,
+    MatHeaderRow,
+    MatRowDef,
+    MatRow,
+    RouterLink
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PaymentBatchesComponent implements OnInit {
@@ -44,7 +57,13 @@ export class PaymentBatchesComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
 
   batchesDataSource = new MatTableDataSource<any>([]);
-  batchColumns: string[] = ['reference', 'rail', 'layanan', 'status', 'valueDate'];
+  batchColumns: string[] = [
+    'reference',
+    'rail',
+    'layanan',
+    'status',
+    'valueDate'
+  ];
 
   ngOnInit(): void {
     this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { batches: any }) => {

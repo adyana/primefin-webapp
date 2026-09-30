@@ -8,9 +8,9 @@
 
 <div class="container">
   <div class="layout-row gap-20px alert-row">
-    <span>RTGS queue: {{ queueDepth ?? '—' }}</span>
-    <span>Oldest queued (h): {{ oldestQueuedHours ?? '—' }}</span>
-    <span>Open breaks: {{ openBreaks }}</span>
+    <span>{{ 'labels.text.RTGS Queue' | translate }}: {{ queueDepth ?? '—' }}</span>
+    <span>{{ 'labels.text.Oldest Queued Hours' | translate }}: {{ oldestQueuedHours ?? '—' }}</span>
+    <span>{{ 'labels.text.Open Breaks' | translate }}: {{ openBreaks }}</span>
   </div>
 
   <div class="mat-elevation-z8 table-container">

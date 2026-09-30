@@ -971,7 +971,11 @@
       "Map Product": "Map Product",
       "Add Band": "Add Band",
       "Add Cap": "Add Cap",
-      "Add Window": "Add Window"
+      "Add Window": "Add Window",
+      "Add Row": "Add Row",
+      "File Returns": "File Returns",
+      "Show DKE": "Show DKE",
+      "Sweep to Recon Breaks": "Sweep to Recon Breaks"
     },
     "catalogs": {
       "% Amount": "Montant",
@@ -3409,6 +3413,7 @@
       "State": "État",
       "State / Province": "État/Province",
       "Status": "Statut",
+      "Metric": "Metric",
       "Rail": "Rail",
       "Ticket Range": "Ticket Range",
       "Window": "Window",
@@ -4208,7 +4213,7 @@
       "Notifications": "Notifications",
       "Organization": "Organisation",
       "Interest Payment Waiver": "Renonciation au paiement des intérêts",
-      "Payments": "Paiements",
+      "Payments": "Payments",
       "Payout Refund": "Remboursement des paiements",
       "Post Interest": "Intérêt pour les publications",
       "Post Interest As On": "Publier les intérêts au fur et à mesure",
@@ -4271,9 +4276,10 @@
       "Interbank Transfer": "Virement interbancaire",
       "Reporting Dashboard": "Tableau de bord des rapports",
       "Channeling": "Channeling",
-      "Payments": "Payments",
       "Channel Partners": "Channel Partners",
       "Channel Files": "Channel Files",
+      "Channeling Dashboard": "Channeling Dashboard",
+      "Payments Dashboard": "Payments Dashboard",
       "Payment Rails": "Payment Rails",
       "Payment Breaks": "Payment Breaks",
       "Payment Fraud SLA": "Payment Fraud SLA",
@@ -5588,7 +5594,18 @@
       "Dashboard Export": "Export du tableau de bord",
       "Generated on": "Généré le",
       "Automated export": "Ceci est un export automatique du tableau de bord global Mifos X",
-      "Unknown Partner": "Unknown partner code."
+      "Unknown Partner": "Unknown partner code.",
+      "Fraud holds past 24h breach the reporting SLA": "Fraud holds past 24h breach the reporting SLA",
+      "Sweep filed": "Sweep filed",
+      "Return rows filed": "Return rows filed",
+      "RTGS Queue": "RTGS Queue",
+      "Oldest Queued Hours": "Oldest Queued Hours",
+      "Open Breaks": "Open Breaks",
+      "Total Partners": "Total Partners",
+      "Partners": "Partners",
+      "Product Mappings": "Product Mappings",
+      "Staged Files": "Staged Files",
+      "File Rows": "File Rows"
     },
     "permissions": {
       "actions": {

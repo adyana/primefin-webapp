@@ -9,8 +9,8 @@
 <div class="container">
   <div class="layout-row gap-20px alert-row">
     <span>{{ batch?.reference }} · {{ batch?.rail }} · {{ batch?.status }}</span>
-    <button mat-button color="primary" (click)="send()">Send</button>
-    <button mat-button color="primary" (click)="loadDke()">Show DKE</button>
+    <button mat-button color="primary" (click)="send()">{{ 'labels.inputs.Send' | translate }}</button>
+    <button mat-button color="primary" (click)="loadDke()">{{ 'labels.buttons.Show DKE' | translate }}</button>
   </div>
 
   <div class="mat-elevation-z8 table-container">
@@ -49,26 +49,30 @@
     <pre class="dke-block">{{ dkeContent }}</pre>
   }
 
-  <div class="layout-row gap-20px returns-row">
+  <form [formGroup]="returnsForm" class="layout-row gap-20px returns-row">
     <mat-form-field>
       <mat-label>{{ 'labels.inputs.Ref' | translate }}</mat-label>
-      <input matInput [(ngModel)]="newRow.ref" />
+      <input matInput formControlName="ref" />
     </mat-form-field>
     <mat-form-field>
       <mat-label>{{ 'labels.inputs.Return Status' | translate }}</mat-label>
-      <mat-select [(ngModel)]="newRow.status">
+      <mat-select formControlName="status">
         <mat-option value="REJECTED">REJECTED</mat-option>
         <mat-option value="RETURNED">RETURNED</mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field class="flex-fill">
       <mat-label>{{ 'labels.inputs.Reason' | translate }}</mat-label>
-      <input matInput [(ngModel)]="newRow.reason" />
+      <input matInput formControlName="reason" />
     </mat-form-field>
-    <button mat-button color="primary" (click)="addReturnRow()">Add row</button>
-    <button mat-button color="primary" (click)="fileReturns()">File returns ({{ returnRows.length }})</button>
-  </div>
-  @if (returnsResult) {
-    <div class="alert-row">{{ returnsResult }}</div>
+    <button mat-button color="primary" type="button" (click)="addReturnRow()">
+      {{ 'labels.buttons.Add Row' | translate }}
+    </button>
+    <button mat-button color="primary" type="button" (click)="fileReturns()">
+      {{ 'labels.buttons.File Returns' | translate }} ({{ returnRows.length }})
+    </button>
+  </form>
+  @if (filedCount !== null) {
+    <div class="alert-row">{{ 'labels.text.Return rows filed' | translate }} ({{ filedCount }})</div>
   }
 </div>

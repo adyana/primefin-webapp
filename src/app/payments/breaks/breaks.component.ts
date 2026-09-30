@@ -59,7 +59,15 @@ export class PaymentBreaksComponent implements OnInit {
   private cdr = inject(ChangeDetectorRef);
 
   breaksDataSource = new MatTableDataSource<any>([]);
-  breakColumns: string[] = ['id', 'order', 'expected', 'actual', 'reason', 'status', 'actions'];
+  breakColumns: string[] = [
+    'id',
+    'order',
+    'expected',
+    'actual',
+    'reason',
+    'status',
+    'actions'
+  ];
 
   ngOnInit(): void {
     this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { breaks: any }) => {

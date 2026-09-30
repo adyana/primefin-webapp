@@ -11,6 +11,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 /** Custom Components */
+import { ChannelDashboardComponent } from './dashboard/dashboard.component';
 import { ChannelPartnersComponent } from './partners/partners.component';
 import { CreatePartnerComponent } from './create-partner/create-partner.component';
 import { ViewPartnerComponent } from './view-partner/view-partner.component';
@@ -26,6 +27,11 @@ import { Route } from '../core/route/route.service';
 
 const routes: Routes = [
   Route.withShell([
+    {
+      path: 'dashboard',
+      component: ChannelDashboardComponent,
+      data: { title: 'Channeling Dashboard', breadcrumb: 'Dashboard', routeParamBreadcrumb: false }
+    },
     {
       path: '',
       pathMatch: 'full',

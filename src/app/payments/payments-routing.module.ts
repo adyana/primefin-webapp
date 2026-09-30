@@ -36,7 +36,7 @@ const routes: Routes = [
       path: '',
       pathMatch: 'full',
       component: RailsDashboardComponent,
-      data: { title: 'Payment Rails', breadcrumb: 'Payment Rails', routeParamBreadcrumb: false },
+      data: { title: 'Payments Dashboard', breadcrumb: 'Dashboard', routeParamBreadcrumb: false },
       resolve: {
         rails: PaymentRailsResolver,
         throughput: PaymentThroughputResolver

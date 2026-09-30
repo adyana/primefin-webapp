@@ -972,7 +972,11 @@
       "Map Product": "Map Product",
       "Add Band": "Add Band",
       "Add Cap": "Add Cap",
-      "Add Window": "Add Window"
+      "Add Window": "Add Window",
+      "Add Row": "Add Row",
+      "File Returns": "File Returns",
+      "Show DKE": "Show DKE",
+      "Sweep to Recon Breaks": "Sweep to Recon Breaks"
     },
     "catalogs": {
       "% Amount": "% částky",
@@ -3410,6 +3414,7 @@
       "State": "Stát",
       "State / Province": "Stát / provincie",
       "Status": "Postavení",
+      "Metric": "Metric",
       "Rail": "Rail",
       "Ticket Range": "Ticket Range",
       "Window": "Window",
@@ -4209,7 +4214,7 @@
       "Notifications": "Oznámení",
       "Organization": "Organizace",
       "Interest Payment Waiver": "Prominutí platby úroků",
-      "Payments": "Platby",
+      "Payments": "Payments",
       "Payout Refund": "Vrácení platby",
       "Post Interest": "Zaúčtovat úroky",
       "Post Interest As On": "Zaúčtovat úroky ke dni",
@@ -4272,9 +4277,10 @@
       "Interbank Transfer": "Mezibankovní převod",
       "Reporting Dashboard": "Přehled hlášení",
       "Channeling": "Channeling",
-      "Payments": "Payments",
       "Channel Partners": "Channel Partners",
       "Channel Files": "Channel Files",
+      "Channeling Dashboard": "Channeling Dashboard",
+      "Payments Dashboard": "Payments Dashboard",
       "Payment Rails": "Payment Rails",
       "Payment Breaks": "Payment Breaks",
       "Payment Fraud SLA": "Payment Fraud SLA",
@@ -5589,7 +5595,18 @@
       "Dashboard Export": "Export přehledu",
       "Generated on": "Vygenerováno",
       "Automated export": "Toto je automatický export z globálního přehledu Mifos X",
-      "Unknown Partner": "Unknown partner code."
+      "Unknown Partner": "Unknown partner code.",
+      "Fraud holds past 24h breach the reporting SLA": "Fraud holds past 24h breach the reporting SLA",
+      "Sweep filed": "Sweep filed",
+      "Return rows filed": "Return rows filed",
+      "RTGS Queue": "RTGS Queue",
+      "Oldest Queued Hours": "Oldest Queued Hours",
+      "Open Breaks": "Open Breaks",
+      "Total Partners": "Total Partners",
+      "Partners": "Partners",
+      "Product Mappings": "Product Mappings",
+      "Staged Files": "Staged Files",
+      "File Rows": "File Rows"
     },
     "permissions": {
       "actions": {

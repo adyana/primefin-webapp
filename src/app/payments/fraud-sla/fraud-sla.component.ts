@@ -59,8 +59,15 @@ export class PaymentFraudSlaComponent implements OnInit {
   private cdr = inject(ChangeDetectorRef);
 
   breachesDataSource = new MatTableDataSource<any>([]);
-  breachColumns: string[] = ['orderId', 'key', 'rail', 'amount', 'heldHours', 'reason'];
-  sweepResult: string | null = null;
+  breachColumns: string[] = [
+    'orderId',
+    'key',
+    'rail',
+    'amount',
+    'heldHours',
+    'reason'
+  ];
+  sweepResult: boolean | null = null;
 
   ngOnInit(): void {
     this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { breaches: any }) => {
@@ -73,7 +80,7 @@ export class PaymentFraudSlaComponent implements OnInit {
       .sweepFraudSla()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => {
-        this.sweepResult = 'Sweep filed — breached holds now carry recon breaks.';
+        this.sweepResult = true;
         this.cdr.markForCheck();
         this.reload();
       });

@@ -215,6 +215,12 @@
   <button mat-menu-item [routerLink]="['/reports', 'Accounting']" tabindex="0" *mifosxHasPermission="'READ_REPORT'">
     {{ 'labels.menus.Accounting' | translate }}
   </button>
+  <button mat-menu-item [routerLink]="['/channeling/dashboard']" tabindex="0" *mifosxHasPermission="'READ_CHANNEL'">
+    {{ 'labels.menus.Channeling Dashboard' | translate }}
+  </button>
+  <button mat-menu-item [routerLink]="['/payments']" tabindex="0" *mifosxHasPermission="'READ_PAYMENT'">
+    {{ 'labels.menus.Payments Dashboard' | translate }}
+  </button>
 </mat-menu>
 
 <mat-menu #adminMenu="matMenu" [overlapTrigger]="false">
@@ -253,6 +259,9 @@
 </mat-menu>
 
 <mat-menu #channelingMenu="matMenu" [overlapTrigger]="false">
+  <button mat-menu-item [routerLink]="['/channeling/dashboard']" tabindex="0" *mifosxHasPermission="'READ_CHANNEL'">
+    {{ 'labels.menus.Dashboard' | translate }}
+  </button>
   <button mat-menu-item [routerLink]="['/channeling']" tabindex="0" *mifosxHasPermission="'READ_CHANNEL'">
     {{ 'labels.menus.Channel Partners' | translate }}
   </button>
@@ -263,7 +272,7 @@
 
 <mat-menu #paymentsMenu="matMenu" [overlapTrigger]="false">
   <button mat-menu-item [routerLink]="['/payments']" tabindex="0" *mifosxHasPermission="'READ_PAYMENT'">
-    {{ 'labels.menus.Payment Rails' | translate }}
+    {{ 'labels.menus.Dashboard' | translate }}
   </button>
   <button mat-menu-item [routerLink]="['/payments/breaks']" tabindex="0" *mifosxHasPermission="'READ_PAYMENT'">
     {{ 'labels.menus.Payment Breaks' | translate }}

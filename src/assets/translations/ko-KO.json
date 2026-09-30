@@ -971,7 +971,11 @@
       "Map Product": "Map Product",
       "Add Band": "Add Band",
       "Add Cap": "Add Cap",
-      "Add Window": "Add Window"
+      "Add Window": "Add Window",
+      "Add Row": "Add Row",
+      "File Returns": "File Returns",
+      "Show DKE": "Show DKE",
+      "Sweep to Recon Breaks": "Sweep to Recon Breaks"
     },
     "catalogs": {
       "% Amount": "양",
@@ -3409,6 +3413,7 @@
       "State": "도/주",
       "State / Province": "주/도",
       "Status": "상태",
+      "Metric": "Metric",
       "Rail": "Rail",
       "Ticket Range": "Ticket Range",
       "Window": "Window",
@@ -4208,7 +4213,7 @@
       "Notifications": "알림",
       "Organization": "조직",
       "Interest Payment Waiver": "이자 지급 면제",
-      "Payments": "결제",
+      "Payments": "Payments",
       "Payout Refund": "지불금 환불",
       "Post Interest": "관심 게시",
       "Post Interest As On": "이자 게시를 현재 상태로 유지",
@@ -4271,9 +4276,10 @@
       "Reporting Dashboard": "보고 대시보드",
       "Recovery Payment": "회수 납입",
       "Channeling": "Channeling",
-      "Payments": "Payments",
       "Channel Partners": "Channel Partners",
       "Channel Files": "Channel Files",
+      "Channeling Dashboard": "Channeling Dashboard",
+      "Payments Dashboard": "Payments Dashboard",
       "Payment Rails": "Payment Rails",
       "Payment Breaks": "Payment Breaks",
       "Payment Fraud SLA": "Payment Fraud SLA",
@@ -5588,7 +5594,18 @@
       "Dashboard Export": "대시보드 내보내기",
       "Generated on": "생성 일시",
       "Automated export": "Mifos X 글로벌 대시보드에서 자동으로 내보낸 파일입니다",
-      "Unknown Partner": "Unknown partner code."
+      "Unknown Partner": "Unknown partner code.",
+      "Fraud holds past 24h breach the reporting SLA": "Fraud holds past 24h breach the reporting SLA",
+      "Sweep filed": "Sweep filed",
+      "Return rows filed": "Return rows filed",
+      "RTGS Queue": "RTGS Queue",
+      "Oldest Queued Hours": "Oldest Queued Hours",
+      "Open Breaks": "Open Breaks",
+      "Total Partners": "Total Partners",
+      "Partners": "Partners",
+      "Product Mappings": "Product Mappings",
+      "Staged Files": "Staged Files",
+      "File Rows": "File Rows"
     },
     "permissions": {
       "actions": {

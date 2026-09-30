@@ -19,7 +19,11 @@ describe('PaymentsService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [PaymentsService, provideHttpClient(), provideHttpClientTesting()]
+      providers: [
+        PaymentsService,
+        provideHttpClient(),
+        provideHttpClientTesting()
+      ]
     });
 
     service = TestBed.inject(PaymentsService);

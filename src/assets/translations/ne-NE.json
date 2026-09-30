@@ -971,7 +971,11 @@
       "Map Product": "Map Product",
       "Add Band": "Add Band",
       "Add Cap": "Add Cap",
-      "Add Window": "Add Window"
+      "Add Window": "Add Window",
+      "Add Row": "Add Row",
+      "File Returns": "File Returns",
+      "Show DKE": "Show DKE",
+      "Sweep to Recon Breaks": "Sweep to Recon Breaks"
     },
     "catalogs": {
       "% Amount": "रकम",
@@ -3409,6 +3413,7 @@
       "State": "प्रदेश",
       "State / Province": "राज्य / प्रदेश",
       "Status": "स्थिति",
+      "Metric": "Metric",
       "Rail": "Rail",
       "Ticket Range": "Ticket Range",
       "Window": "Window",
@@ -4208,7 +4213,7 @@
       "Notifications": "सूचनाहरू",
       "Organization": "संगठन",
       "Interest Payment Waiver": "ब्याज भुक्तानी माफी",
-      "Payments": "भुक्तानीहरू",
+      "Payments": "Payments",
       "Payout Refund": "भुक्तानी फिर्ता",
       "Post Interest": "पोस्ट ब्याज",
       "Post Interest As On": "पोष्ट ब्याज यथा",
@@ -4271,9 +4276,10 @@
       "Interbank Transfer": "अन्तर-बैंक स्थानान्तरण",
       "Reporting Dashboard": "प्रतिवेदन ड्यासबोर्ड",
       "Channeling": "Channeling",
-      "Payments": "Payments",
       "Channel Partners": "Channel Partners",
       "Channel Files": "Channel Files",
+      "Channeling Dashboard": "Channeling Dashboard",
+      "Payments Dashboard": "Payments Dashboard",
       "Payment Rails": "Payment Rails",
       "Payment Breaks": "Payment Breaks",
       "Payment Fraud SLA": "Payment Fraud SLA",
@@ -5588,7 +5594,18 @@
       "Dashboard Export": "ड्यासबोर्ड निर्यात",
       "Generated on": "उत्पन्न मिति",
       "Automated export": "यो Mifos X ग्लोबल ड्यासबोर्डबाट स्वचालित निर्यात हो",
-      "Unknown Partner": "Unknown partner code."
+      "Unknown Partner": "Unknown partner code.",
+      "Fraud holds past 24h breach the reporting SLA": "Fraud holds past 24h breach the reporting SLA",
+      "Sweep filed": "Sweep filed",
+      "Return rows filed": "Return rows filed",
+      "RTGS Queue": "RTGS Queue",
+      "Oldest Queued Hours": "Oldest Queued Hours",
+      "Open Breaks": "Open Breaks",
+      "Total Partners": "Total Partners",
+      "Partners": "Partners",
+      "Product Mappings": "Product Mappings",
+      "Staged Files": "Staged Files",
+      "File Rows": "File Rows"
     },
     "permissions": {
       "actions": {

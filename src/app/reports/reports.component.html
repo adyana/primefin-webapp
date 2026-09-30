@@ -17,6 +17,16 @@
     </div>
   </header>
 
+  <!-- ── PrimeFin dashboards ────────────────────────────── -->
+  <div class="toolbar">
+    <a class="btn btn-ghost" [routerLink]="['/channeling/dashboard']" *mifosxHasPermission="'READ_CHANNEL'">
+      {{ 'labels.menus.Channeling Dashboard' | translate }}
+    </a>
+    <a class="btn btn-ghost" [routerLink]="['/payments']" *mifosxHasPermission="'READ_PAYMENT'">
+      {{ 'labels.menus.Payments Dashboard' | translate }}
+    </a>
+  </div>
+
   <!-- ── Toolbar ────────────────────────────────────────────── -->
   <div class="toolbar">
     <div class="search">

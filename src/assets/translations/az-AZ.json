@@ -896,7 +896,11 @@
       "Map Product": "Map Product",
       "Add Band": "Add Band",
       "Add Cap": "Add Cap",
-      "Add Window": "Add Window"
+      "Add Window": "Add Window",
+      "Add Row": "Add Row",
+      "File Returns": "File Returns",
+      "Show DKE": "Show DKE",
+      "Sweep to Recon Breaks": "Sweep to Recon Breaks"
     },
     "catalogs": {
       "% Amount": "Məbləğin %-i",
@@ -3357,6 +3361,7 @@
       "State / Municipality": "Vilayət / bələdiyyə",
       "State / Province": "Vilayət / əyalət",
       "Status": "Vəziyyət",
+      "Metric": "Metric",
       "Rail": "Rail",
       "Ticket Range": "Ticket Range",
       "Window": "Window",
@@ -4080,7 +4085,7 @@
       "Organization": "Təşkilat",
       "Interbank Transfer": "Banklararası köçürmə",
       "Interest Payment Waiver": "Faiz ödənişindən azad et",
-      "Payments": "Ödənişlər",
+      "Payments": "Payments",
       "Remittances": "Pul köçürmələri",
       "Process Remittance": "Pul köçürməsini emal et",
       "Payout Refund": "Ödənilmiş məbləği geri qaytar",
@@ -4140,9 +4145,10 @@
       "Manage Dashboards": "İdarə panellərini idarə et",
       "Reporting Dashboard": "Hesabat paneli",
       "Channeling": "Channeling",
-      "Payments": "Payments",
       "Channel Partners": "Channel Partners",
       "Channel Files": "Channel Files",
+      "Channeling Dashboard": "Channeling Dashboard",
+      "Payments Dashboard": "Payments Dashboard",
       "Payment Rails": "Payment Rails",
       "Payment Breaks": "Payment Breaks",
       "Payment Fraud SLA": "Payment Fraud SLA",
@@ -5412,7 +5418,18 @@
       "No pending prospects found": "Gözləyən potensial müştəri tapılmadı",
       "Unable to load pending prospects": "Gözləyən potensial müştəriləri yükləmək mümkün olmadı",
       "The amount could not be re-quoted for this date. Pick the date again to retry.": "Bu tarix üçün məbləği yenidən hesablamaq mümkün olmadı. Yenidən cəhd etmək üçün tarixi təkrar seç.",
-      "Unknown Partner": "Unknown partner code."
+      "Unknown Partner": "Unknown partner code.",
+      "Fraud holds past 24h breach the reporting SLA": "Fraud holds past 24h breach the reporting SLA",
+      "Sweep filed": "Sweep filed",
+      "Return rows filed": "Return rows filed",
+      "RTGS Queue": "RTGS Queue",
+      "Oldest Queued Hours": "Oldest Queued Hours",
+      "Open Breaks": "Open Breaks",
+      "Total Partners": "Total Partners",
+      "Partners": "Partners",
+      "Product Mappings": "Product Mappings",
+      "Staged Files": "Staged Files",
+      "File Rows": "File Rows"
     },
     "permissions": {
       "actions": {

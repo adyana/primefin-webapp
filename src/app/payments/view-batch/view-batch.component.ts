@@ -10,7 +10,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject, DestroyRef } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
   MatTableDataSource,
   MatTable,
@@ -43,7 +43,7 @@ import { PaymentsService } from '../payments.service';
   templateUrl: './view-batch.component.html',
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
-    FormsModule,
+    ReactiveFormsModule,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
@@ -68,14 +68,34 @@ export class ViewPaymentBatchComponent implements OnInit {
   private paymentsService = inject(PaymentsService);
   private destroyRef = inject(DestroyRef);
   private cdr = inject(ChangeDetectorRef);
+  private formBuilder = inject(FormBuilder);
 
   batch: any = null;
   membersDataSource = new MatTableDataSource<any>([]);
-  memberColumns: string[] = ['key', 'debtor', 'creditor', 'amount', 'status'];
+  memberColumns: string[] = [
+    'key',
+    'debtor',
+    'creditor',
+    'amount',
+    'status'
+  ];
   dkeContent: string | null = null;
   returnRows: any[] = [];
-  newRow = { ref: '', status: 'REJECTED', reason: '' };
-  returnsResult: string | null = null;
+  filedCount: number | null = null;
+  returnsForm: FormGroup = this.formBuilder.group({
+    ref: [
+      '',
+      Validators.required
+    ],
+    status: [
+      'REJECTED',
+      Validators.required
+    ],
+    reason: [
+      '',
+      Validators.required
+    ]
+  });
 
   ngOnInit(): void {
     this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { batch: any }) => {
@@ -115,11 +135,14 @@ export class ViewPaymentBatchComponent implements OnInit {
   }
 
   addReturnRow(): void {
-    if (!this.newRow.ref || !this.newRow.reason) {
+    if (this.returnsForm.invalid) {
       return;
     }
-    this.returnRows = [...this.returnRows, { ...this.newRow }];
-    this.newRow = { ref: '', status: 'REJECTED', reason: '' };
+    this.returnRows = [
+      ...this.returnRows,
+      { ...this.returnsForm.value }
+    ];
+    this.returnsForm.reset({ ref: '', status: 'REJECTED', reason: '' });
   }
 
   fileReturns(): void {
@@ -130,7 +153,7 @@ export class ViewPaymentBatchComponent implements OnInit {
       .fileBatchReturns(this.batch.id, this.returnRows)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => {
-        this.returnsResult = `${this.returnRows.length} return rows filed.`;
+        this.filedCount = this.returnRows.length;
         this.returnRows = [];
         this.cdr.markForCheck();
         this.loadMembers();
