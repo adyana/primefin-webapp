@@ -4110,7 +4110,8 @@
       "Suspense": "Suspense",
       "Line": "Line",
       "Partner Ref": "Partner Ref",
-      "Our Ref": "Our Ref"
+      "Our Ref": "Our Ref",
+      "Date Range": "Date Range"
     },
     "links": {
       "Community": "Comunidad",
@@ -5601,7 +5602,12 @@
       "Staged Files": "Staged Files",
       "File Rows": "File Rows",
       "Payment Traffic": "Payment Traffic",
-      "Channel Traffic": "Channel Traffic"
+      "Channel Traffic": "Channel Traffic",
+      "Total Orders": "Total Orders",
+      "Total Value": "Total Value",
+      "Settled Orders": "Settled Orders",
+      "Posted Rate": "Posted Rate",
+      "Active Partners": "Active Partners"
     },
     "permissions": {
       "actions": {

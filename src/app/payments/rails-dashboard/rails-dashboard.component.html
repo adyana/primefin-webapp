@@ -7,7 +7,54 @@
 -->
 
 <div class="container">
-  <mifosx-payment-traffic-chart></mifosx-payment-traffic-chart>
+  <form [formGroup]="filtersForm" class="layout-row gap-16px filter-bar">
+    <mat-form-field>
+      <mat-label>{{ 'labels.inputs.Rail' | translate }}</mat-label>
+      <mat-select formControlName="rail">
+        <mat-option value="ALL">{{ 'labels.text.All' | translate }}</mat-option>
+        @for (rail of rails; track rail.code) {
+          <mat-option [value]="rail.code">{{ rail.code }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{ 'labels.inputs.Date Range' | translate }}</mat-label>
+      <mat-select formControlName="dateRange">
+        <mat-option value="DAY">{{ 'labels.buttons.Day' | translate }}</mat-option>
+        <mat-option value="MONTH">{{ 'labels.buttons.Month' | translate }}</mat-option>
+        <mat-option value="YEAR">{{ 'labels.buttons.Year' | translate }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="button" (click)="exportCsv()">
+      {{ 'labels.buttons.Export CSV' | translate }}
+    </button>
+  </form>
+
+  <div class="kpi-grid">
+    @for (kpi of kpis; track kpi.labelKey) {
+      <mat-card class="kpi-card">
+        <mat-card-content>
+          <p class="kpi-label">{{ kpi.labelKey | translate }}</p>
+          <p class="kpi-value">
+            {{ kpi.value }}
+            @if (kpi.trend !== null) {
+              <span class="kpi-trend" [class.up]="kpi.positive" [class.down]="!kpi.positive">
+                <fa-icon [icon]="kpi.positive ? 'arrow-up' : 'arrow-down'" size="sm"></fa-icon>
+                {{ kpi.trend | number: '1.1-1' }}%
+              </span>
+            }
+          </p>
+        </mat-card-content>
+      </mat-card>
+    }
+  </div>
+
+  <mifosx-payment-traffic-chart
+    [from]="chartFrom"
+    [to]="chartTo"
+    [granularity]="chartGranularity"
+    [rail]="chartRail"
+  ></mifosx-payment-traffic-chart>
 
   <div class="layout-row gap-20px alert-row">
     <span>{{ 'labels.text.RTGS Queue' | translate }}: {{ queueDepth ?? '—' }}</span>

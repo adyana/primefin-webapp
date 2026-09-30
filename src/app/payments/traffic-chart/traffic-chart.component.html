@@ -17,10 +17,5 @@
     <div [style.display]="hideOutput ? 'none' : 'block'">
       <canvas id="payment-traffic-chart" width="800" height="380"></canvas>
     </div>
-    <mat-button-toggle-group [formControl]="timescale" appearance="legacy">
-      <mat-button-toggle value="DAY">{{ 'labels.buttons.Day' | translate }}</mat-button-toggle>
-      <mat-button-toggle value="MONTH">{{ 'labels.buttons.Month' | translate }}</mat-button-toggle>
-      <mat-button-toggle value="YEAR">{{ 'labels.buttons.Year' | translate }}</mat-button-toggle>
-    </mat-button-toggle-group>
   </mat-card-content>
 </mat-card>

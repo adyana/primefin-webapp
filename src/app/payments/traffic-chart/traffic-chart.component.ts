@@ -7,11 +7,19 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  inject,
+  DestroyRef
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatCard, MatCardHeader, MatCardContent } from '@angular/material/card';
-import { MatButtonToggleGroup, MatButtonToggle } from '@angular/material/button-toggle';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /** Charting Imports */
@@ -23,29 +31,30 @@ import { PaymentsService } from '../payments.service';
 Chart.register(...registerables);
 
 /**
- * Payment traffic chart: order counts per rail over DAY, MONTH or YEAR
- * buckets. Same card + toggle pattern as the home dashboard charts.
+ * Payment traffic chart: order counts per rail for a caller-supplied window.
+ * The dashboard filter bar owns granularity; this card only renders.
  */
 @Component({
   selector: 'mifosx-payment-traffic-chart',
   templateUrl: './traffic-chart.component.html',
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
-    ReactiveFormsModule,
     MatCard,
     MatCardHeader,
-    MatCardContent,
-    MatButtonToggleGroup,
-    MatButtonToggle
+    MatCardContent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PaymentTrafficChartComponent implements OnInit {
+export class PaymentTrafficChartComponent implements OnInit, OnChanges {
   private paymentsService = inject(PaymentsService);
   private destroyRef = inject(DestroyRef);
   private cdr = inject(ChangeDetectorRef);
 
-  timescale = new FormControl('DAY');
+  @Input() from = '';
+  @Input() to = '';
+  @Input() granularity = 'DAY';
+  @Input() rail = 'ALL';
+
   chart: any;
   hideOutput = true;
 
@@ -60,42 +69,33 @@ export class PaymentTrafficChartComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    this.timescale.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.load());
     this.load();
   }
 
-  private range(): { from: string; to: string } {
-    const to = new Date();
-    const from = new Date(to);
-    const scale = this.timescale.value ?? 'DAY';
-    if (scale === 'YEAR') {
-      from.setFullYear(to.getFullYear() - 5);
-    } else if (scale === 'MONTH') {
-      from.setMonth(to.getMonth() - 12);
-    } else {
-      from.setDate(to.getDate() - 30);
+  ngOnChanges(changes: SimpleChanges): void {
+    if (!changes['from']?.firstChange || !changes['to']?.firstChange || !changes['granularity']?.firstChange) {
+      this.load();
     }
-    // Local wall-clock without zone: the backend parses plain LocalDateTime.
-    const stamp = (date: Date) => date.toISOString().slice(0, 19);
-    return { from: stamp(from), to: stamp(to) };
   }
 
   private load(): void {
-    const scale = this.timescale.value ?? 'DAY';
-    const { from, to } = this.range();
+    if (!this.from || !this.to) {
+      return;
+    }
     this.paymentsService
-      .getTraffic(from, to, scale)
+      .getTraffic(this.from, this.to, this.granularity)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((series: any[]) => this.setChart(series));
   }
 
   private setChart(series: any[]): void {
-    const buckets = [...new Set(series.map((point: any) => point.bucket))].sort();
-    const rails = [...new Set(series.map((point: any) => point.rail))].sort();
+    const scoped = this.rail === 'ALL' ? series : series.filter((point: any) => point.rail === this.rail);
+    const buckets = [...new Set(scoped.map((point: any) => point.bucket))].sort();
+    const rails = [...new Set(scoped.map((point: any) => point.rail))].sort();
     const datasets = rails.map((rail: string, index: number) => ({
       label: rail,
       data: buckets.map(
-        (bucket: string) => series.find((point: any) => point.bucket === bucket && point.rail === rail)?.count ?? 0
+        (bucket: string) => scoped.find((point: any) => point.bucket === bucket && point.rail === rail)?.count ?? 0
       ),
       backgroundColor: this.palette[index % this.palette.length],
       borderColor: this.palette[index % this.palette.length],
