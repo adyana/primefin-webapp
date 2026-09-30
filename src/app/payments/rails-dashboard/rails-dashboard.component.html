@@ -38,6 +38,7 @@
           <p class="kpi-value">
             @if (kpi.money) {
               {{ kpi.value | number: '1.2-2' }}
+              <span class="kpi-currency">{{ kpi.currency }}</span>
             } @else {
               {{ kpi.value }}
             }

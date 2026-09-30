@@ -93,7 +93,14 @@ export class RailsDashboardComponent implements OnInit {
   oldestQueuedHours: number | null = null;
   openBreaks = 0;
 
-  kpis: Array<{ labelKey: string; value: string; trend: number | null; positive: boolean; money: boolean }> = [];
+  kpis: Array<{
+    labelKey: string;
+    value: string;
+    trend: number | null;
+    positive: boolean;
+    money: boolean;
+    currency: string | null;
+  }> = [];
   chartFrom = '';
   chartTo = '';
   chartGranularity = 'DAY';
@@ -160,35 +167,40 @@ export class RailsDashboardComponent implements OnInit {
         value: `${cur.length}`,
         trend: trend(cur.length, prev.length),
         positive: cur.length >= prev.length,
-        money: false
+        money: false,
+        currency: null
       },
       {
         labelKey: 'labels.text.Total Value',
         value: `${Math.round(sum(cur))}`,
         trend: trend(sum(cur), sum(prev)),
         positive: sum(cur) >= sum(prev),
-        money: true
+        money: true,
+        currency: 'IDR'
       },
       {
         labelKey: 'labels.text.Settled Orders',
         value: `${settled}`,
         trend: null,
         positive: true,
-        money: false
+        money: false,
+        currency: null
       },
       {
         labelKey: 'labels.text.Open Breaks',
         value: `${this.openBreaks}`,
         trend: null,
         positive: true,
-        money: false
+        money: false,
+        currency: null
       },
       {
         labelKey: 'labels.text.RTGS Queue',
         value: `${this.queueDepth ?? 0}`,
         trend: null,
         positive: true,
-        money: false
+        money: false,
+        currency: null
       }
     ];
     const granularity = this.filtersForm.value.dateRange ?? 'DAY';

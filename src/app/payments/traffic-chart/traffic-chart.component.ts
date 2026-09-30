@@ -19,7 +19,8 @@ import {
   DestroyRef
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { MatCard, MatCardHeader, MatCardContent } from '@angular/material/card';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /** Charting Imports */
@@ -40,8 +41,8 @@ Chart.register(...registerables);
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     MatCard,
-    MatCardHeader,
-    MatCardContent
+    MatCardContent,
+    FaIconComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
