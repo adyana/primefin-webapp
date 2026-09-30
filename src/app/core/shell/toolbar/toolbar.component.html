@@ -253,6 +253,12 @@
   <button mat-menu-item [routerLink]="['/payments']" tabindex="0" *mifosxHasPermission="'READ_PAYMENT'">
     {{ 'labels.menus.Payment Rails' | translate }}
   </button>
+  <button mat-menu-item [routerLink]="['/payments/breaks']" tabindex="0" *mifosxHasPermission="'READ_PAYMENT'">
+    {{ 'labels.menus.Payment Breaks' | translate }}
+  </button>
+  <button mat-menu-item [routerLink]="['/payments/fraud-sla']" tabindex="0" *mifosxHasPermission="'READ_PAYMENT'">
+    {{ 'labels.menus.Payment Fraud SLA' | translate }}
+  </button>
 </mat-menu>
 
 <!-- Application User Help Menu -->

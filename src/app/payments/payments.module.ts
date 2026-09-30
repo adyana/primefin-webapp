@@ -14,12 +14,15 @@ import { PaymentsRoutingModule } from './payments-routing.module';
 
 /** Custom Components */
 import { RailsDashboardComponent } from './rails-dashboard/rails-dashboard.component';
+import { PaymentBreaksComponent } from './breaks/breaks.component';
+import { PaymentFraudSlaComponent } from './fraud-sla/fraud-sla.component';
 
 /**
- * Payments module: ID payment rails dashboard (slice 1).
+ * Payments module: ID payment rails dashboard (slice 1), breaks board and
+ * fraud-SLA view (slice 2).
  */
 @NgModule({
-  imports: [PaymentsRoutingModule, RailsDashboardComponent],
+  imports: [PaymentsRoutingModule, RailsDashboardComponent, PaymentBreaksComponent, PaymentFraudSlaComponent],
   exports: [],
   declarations: [],
   providers: []

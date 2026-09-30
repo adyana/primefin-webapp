@@ -4261,7 +4261,9 @@
       "Channeling": "Channeling",
       "Channel Partners": "Channel Partners",
       "Channel Files": "Channel Files",
-      "Payment Rails": "Payment Rails"
+      "Payment Rails": "Payment Rails",
+      "Payment Breaks": "Payment Breaks",
+      "Payment Fraud SLA": "Payment Fraud SLA"
     },
     "placeholders": {
       "Add new server": "Pridėti naują serverį",
