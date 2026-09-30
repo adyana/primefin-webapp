@@ -244,12 +244,24 @@
   <button mat-menu-item routerLink="/templates" tabindex="0" *mifosxHasPermission="'READ_TEMPLATE'">
     {{ 'labels.menus.Templates' | translate }}
   </button>
+  <button mat-menu-item [matMenuTriggerFor]="channelingMenu" tabindex="0" *mifosxHasPermission="'READ_CHANNEL'">
+    {{ 'labels.menus.Channeling' | translate }}
+  </button>
+  <button mat-menu-item [matMenuTriggerFor]="paymentsMenu" tabindex="0" *mifosxHasPermission="'READ_PAYMENT'">
+    {{ 'labels.menus.Payments' | translate }}
+  </button>
+</mat-menu>
+
+<mat-menu #channelingMenu="matMenu" [overlapTrigger]="false">
   <button mat-menu-item [routerLink]="['/channeling']" tabindex="0" *mifosxHasPermission="'READ_CHANNEL'">
     {{ 'labels.menus.Channel Partners' | translate }}
   </button>
   <button mat-menu-item [routerLink]="['/channeling/files']" tabindex="0" *mifosxHasPermission="'READ_CHANNEL'">
     {{ 'labels.menus.Channel Files' | translate }}
   </button>
+</mat-menu>
+
+<mat-menu #paymentsMenu="matMenu" [overlapTrigger]="false">
   <button mat-menu-item [routerLink]="['/payments']" tabindex="0" *mifosxHasPermission="'READ_PAYMENT'">
     {{ 'labels.menus.Payment Rails' | translate }}
   </button>
