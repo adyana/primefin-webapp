@@ -43,6 +43,17 @@ export class PaymentsService {
   }
 
   /**
+   * @param from ISO datetime start.
+   * @param to ISO datetime end.
+   * @param granularity DAY, MONTH or YEAR.
+   * @returns Per-rail traffic series for the dashboard chart.
+   */
+  getTraffic(from: string, to: string, granularity: string): Observable<any> {
+    const params = new HttpParams().set('from', from).set('to', to).set('granularity', granularity);
+    return this.http.get('/v2/payment-reports/traffic', { params });
+  }
+
+  /**
    * @param status Order status filter (optional; all orders when omitted).
    * @returns Transfer orders, newest last.
    */

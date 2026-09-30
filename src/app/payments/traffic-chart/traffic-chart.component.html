@@ -1,0 +1,26 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<mat-card class="card">
+  <mat-card-header class="header">
+    <h3 class="flex-100">
+      {{ 'labels.text.Payment Traffic' | translate }}
+    </h3>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div [style.display]="hideOutput ? 'none' : 'block'">
+      <canvas id="payment-traffic-chart" width="800" height="380"></canvas>
+    </div>
+    <mat-button-toggle-group [formControl]="timescale" appearance="legacy">
+      <mat-button-toggle value="DAY">{{ 'labels.buttons.Day' | translate }}</mat-button-toggle>
+      <mat-button-toggle value="MONTH">{{ 'labels.buttons.Month' | translate }}</mat-button-toggle>
+      <mat-button-toggle value="YEAR">{{ 'labels.buttons.Year' | translate }}</mat-button-toggle>
+    </mat-button-toggle-group>
+  </mat-card-content>
+</mat-card>

@@ -28,6 +28,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 /** Custom Services */
 import { PaymentsService } from '../payments.service';
 
+/** Custom Components */
+import { PaymentTrafficChartComponent } from '../traffic-chart/traffic-chart.component';
+
 /**
  * Payment rails dashboard: seeded rail config (tickets/windows) plus today's
  * throughput per rail. Ops morning check; queue age pages treasury when stuck.
@@ -37,6 +40,7 @@ import { PaymentsService } from '../payments.service';
   templateUrl: './rails-dashboard.component.html',
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
+    PaymentTrafficChartComponent,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,

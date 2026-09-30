@@ -31,6 +31,9 @@ import { catchError, map, switchMap } from 'rxjs/operators';
 /** Custom Services */
 import { ChannelingService } from '../channeling.service';
 
+/** Custom Components */
+import { ChannelTrafficChartComponent } from '../traffic-chart/traffic-chart.component';
+
 /**
  * Channeling dashboard: partner, product and file flow summary.
  * Counts partners by status, config rows, staged files and row outcomes.
@@ -40,6 +43,7 @@ import { ChannelingService } from '../channeling.service';
   templateUrl: './dashboard.component.html',
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
+    ChannelTrafficChartComponent,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,

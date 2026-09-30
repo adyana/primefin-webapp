@@ -5606,7 +5606,9 @@
       "Partners": "Partners",
       "Product Mappings": "Product Mappings",
       "Staged Files": "Staged Files",
-      "File Rows": "File Rows"
+      "File Rows": "File Rows",
+      "Payment Traffic": "Payment Traffic",
+      "Channel Traffic": "Channel Traffic"
     },
     "permissions": {
       "actions": {

@@ -178,6 +178,17 @@ export class ChannelingService {
    * @param fileId Staged file id.
    * @returns Staged rows of the file.
    */
+  /**
+   * @param from ISO date start.
+   * @param to ISO date end.
+   * @param granularity DAY, MONTH or YEAR.
+   * @returns Per-partner file traffic series for the dashboard chart.
+   */
+  getTraffic(from: string, to: string, granularity: string): Observable<any> {
+    const params = new HttpParams().set('from', from).set('to', to).set('granularity', granularity);
+    return this.http.get('/v2/channel-files/traffic', { params });
+  }
+
   getFileRows(fileId: number): Observable<any> {
     return this.http.get(`/v2/channel-files/${fileId}/rows`);
   }
