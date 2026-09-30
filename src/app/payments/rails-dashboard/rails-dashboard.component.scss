@@ -13,7 +13,7 @@
 
 .kpi-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* stylelint-disable-line unit-allowed-list */
   gap: 16px;
   margin-bottom: 16px;
 }
@@ -38,6 +38,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
+    flex-wrap: wrap;
   }
 
   .kpi-trend {

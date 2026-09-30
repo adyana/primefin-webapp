@@ -36,7 +36,11 @@
         <mat-card-content>
           <p class="kpi-label">{{ kpi.labelKey | translate }}</p>
           <p class="kpi-value">
-            {{ kpi.value }}
+            @if (kpi.money) {
+              {{ kpi.value | number: '1.2-2' }}
+            } @else {
+              {{ kpi.value }}
+            }
             @if (kpi.trend !== null) {
               <span class="kpi-trend" [class.up]="kpi.positive" [class.down]="!kpi.positive">
                 <fa-icon [icon]="kpi.positive ? 'arrow-up' : 'arrow-down'" size="sm"></fa-icon>
@@ -91,7 +95,7 @@
 
       <ng-container matColumnDef="totalValue">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Today Value' | translate }}</th>
-        <td mat-cell *matCellDef="let rail">{{ rail.totalValue }}</td>
+        <td mat-cell *matCellDef="let rail">{{ rail.totalValue | number: '1.2-2' }}</td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="railColumns"></tr>
