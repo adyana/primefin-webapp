@@ -4260,7 +4260,8 @@
       "Reporting Dashboard": "Tableau de bord des rapports",
       "Channeling": "Channeling",
       "Channel Partners": "Channel Partners",
-      "Channel Files": "Channel Files"
+      "Channel Files": "Channel Files",
+      "Payment Rails": "Payment Rails"
     },
     "placeholders": {
       "Add new server": "Ajouter un nouveau serveur",
