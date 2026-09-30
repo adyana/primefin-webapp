@@ -14,13 +14,17 @@ import { RouterModule, Routes } from '@angular/router';
 import { RailsDashboardComponent } from './rails-dashboard/rails-dashboard.component';
 import { PaymentBreaksComponent } from './breaks/breaks.component';
 import { PaymentFraudSlaComponent } from './fraud-sla/fraud-sla.component';
+import { PaymentBatchesComponent } from './batches/batches.component';
+import { ViewPaymentBatchComponent } from './view-batch/view-batch.component';
 
 /** Custom Resolvers */
 import {
   PaymentRailsResolver,
   PaymentThroughputResolver,
   PaymentBreaksResolver,
-  PaymentFraudSlaResolver
+  PaymentFraudSlaResolver,
+  PaymentBatchesResolver,
+  PaymentBatchResolver
 } from './payments.resolver';
 
 /** Custom Services */
@@ -53,6 +57,22 @@ const routes: Routes = [
       resolve: {
         breaches: PaymentFraudSlaResolver
       }
+    },
+    {
+      path: 'batches',
+      component: PaymentBatchesComponent,
+      data: { title: 'Payment Batches', breadcrumb: 'Batches', routeParamBreadcrumb: false },
+      resolve: {
+        batches: PaymentBatchesResolver
+      }
+    },
+    {
+      path: 'batches/:id',
+      component: ViewPaymentBatchComponent,
+      data: { title: 'Payment Batch', breadcrumb: 'Batch', routeParamBreadcrumb: false },
+      resolve: {
+        batch: PaymentBatchResolver
+      }
     }
   ])
 ];
@@ -63,6 +83,13 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: [PaymentRailsResolver, PaymentThroughputResolver, PaymentBreaksResolver, PaymentFraudSlaResolver]
+  providers: [
+    PaymentRailsResolver,
+    PaymentThroughputResolver,
+    PaymentBreaksResolver,
+    PaymentFraudSlaResolver,
+    PaymentBatchesResolver,
+    PaymentBatchResolver
+  ]
 })
 export class PaymentsRoutingModule {}

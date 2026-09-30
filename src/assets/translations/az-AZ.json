@@ -4132,7 +4132,8 @@
       "Channel Files": "Channel Files",
       "Payment Rails": "Payment Rails",
       "Payment Breaks": "Payment Breaks",
-      "Payment Fraud SLA": "Payment Fraud SLA"
+      "Payment Fraud SLA": "Payment Fraud SLA",
+      "Payment Batches": "Payment Batches"
     },
     "placeholders": {
       "# Remittance": "Pul köçürməsinin nömrəsi",

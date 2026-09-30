@@ -111,10 +111,18 @@ export class PaymentsService {
 
   /**
    * @param batchId Batch id.
-   * @returns DKE file lines for the submitted batch.
+   * @returns Batch member orders.
+   */
+  getBatchMembers(batchId: number): Observable<any> {
+    return this.http.get(`/v2/payment-batches/${batchId}/members`);
+  }
+
+  /**
+   * @param batchId Batch id.
+   * @returns DKE file content for the submitted batch (plain text).
    */
   getBatchDke(batchId: number): Observable<any> {
-    return this.http.get(`/v2/payment-batches/${batchId}/dke`);
+    return this.http.get(`/v2/payment-batches/${batchId}/dke`, { responseType: 'text' });
   }
 
   /**

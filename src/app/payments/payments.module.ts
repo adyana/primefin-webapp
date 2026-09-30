@@ -16,13 +16,22 @@ import { PaymentsRoutingModule } from './payments-routing.module';
 import { RailsDashboardComponent } from './rails-dashboard/rails-dashboard.component';
 import { PaymentBreaksComponent } from './breaks/breaks.component';
 import { PaymentFraudSlaComponent } from './fraud-sla/fraud-sla.component';
+import { PaymentBatchesComponent } from './batches/batches.component';
+import { ViewPaymentBatchComponent } from './view-batch/view-batch.component';
 
 /**
  * Payments module: ID payment rails dashboard (slice 1), breaks board and
- * fraud-SLA view (slice 2).
+ * fraud-SLA view (slice 2), batch monitor (slice 3).
  */
 @NgModule({
-  imports: [PaymentsRoutingModule, RailsDashboardComponent, PaymentBreaksComponent, PaymentFraudSlaComponent],
+  imports: [
+    PaymentsRoutingModule,
+    RailsDashboardComponent,
+    PaymentBreaksComponent,
+    PaymentFraudSlaComponent,
+    PaymentBatchesComponent,
+    ViewPaymentBatchComponent
+  ],
   exports: [],
   declarations: [],
   providers: []

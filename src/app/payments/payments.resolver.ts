@@ -8,6 +8,7 @@
 
 /** Angular Imports */
 import { Injectable, inject } from '@angular/core';
+import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -76,6 +77,22 @@ export class PaymentFraudSlaResolver {
    */
   resolve(): Observable<any> {
     return this.paymentsService.getFraudSla();
+  }
+}
+
+/**
+ * Single transfer batch data resolver.
+ */
+@Injectable()
+export class PaymentBatchResolver {
+  private paymentsService = inject(PaymentsService);
+
+  /**
+   * Returns one transfer batch by route id.
+   * @returns {Observable<any>}
+   */
+  resolve(route: ActivatedRouteSnapshot): Observable<any> {
+    return this.paymentsService.getBatch(Number(route.paramMap.get('id')));
   }
 }
 
