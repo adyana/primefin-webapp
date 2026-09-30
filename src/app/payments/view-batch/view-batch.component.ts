@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject, DestroyRef } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -67,6 +67,7 @@ export class ViewPaymentBatchComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private paymentsService = inject(PaymentsService);
   private destroyRef = inject(DestroyRef);
+  private cdr = inject(ChangeDetectorRef);
 
   batch: any = null;
   membersDataSource = new MatTableDataSource<any>([]);
@@ -92,6 +93,7 @@ export class ViewPaymentBatchComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((members: any) => {
         this.membersDataSource.data = Array.isArray(members) ? members : [];
+        this.cdr.markForCheck();
       });
   }
 
@@ -101,6 +103,7 @@ export class ViewPaymentBatchComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((dke: any) => {
         this.dkeContent = typeof dke === 'string' ? dke : JSON.stringify(dke);
+        this.cdr.markForCheck();
       });
   }
 
@@ -129,6 +132,7 @@ export class ViewPaymentBatchComponent implements OnInit {
       .subscribe(() => {
         this.returnsResult = `${this.returnRows.length} return rows filed.`;
         this.returnRows = [];
+        this.cdr.markForCheck();
         this.loadMembers();
       });
   }

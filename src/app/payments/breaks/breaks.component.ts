@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject, DestroyRef } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import {
@@ -56,6 +56,7 @@ export class PaymentBreaksComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private paymentsService = inject(PaymentsService);
   private destroyRef = inject(DestroyRef);
+  private cdr = inject(ChangeDetectorRef);
 
   breaksDataSource = new MatTableDataSource<any>([]);
   breakColumns: string[] = ['id', 'order', 'expected', 'actual', 'reason', 'status', 'actions'];
@@ -79,6 +80,7 @@ export class PaymentBreaksComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((breaks: any) => {
         this.breaksDataSource.data = Array.isArray(breaks) ? breaks : [];
+        this.cdr.markForCheck();
       });
   }
 }

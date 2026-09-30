@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject, DestroyRef } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import {
@@ -56,6 +56,7 @@ export class PaymentFraudSlaComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private paymentsService = inject(PaymentsService);
   private destroyRef = inject(DestroyRef);
+  private cdr = inject(ChangeDetectorRef);
 
   breachesDataSource = new MatTableDataSource<any>([]);
   breachColumns: string[] = ['orderId', 'key', 'rail', 'amount', 'heldHours', 'reason'];
@@ -73,6 +74,7 @@ export class PaymentFraudSlaComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => {
         this.sweepResult = 'Sweep filed — breached holds now carry recon breaks.';
+        this.cdr.markForCheck();
         this.reload();
       });
   }
@@ -83,6 +85,7 @@ export class PaymentFraudSlaComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((breaches: any) => {
         this.breachesDataSource.data = Array.isArray(breaches) ? breaches : [];
+        this.cdr.markForCheck();
       });
   }
 }
