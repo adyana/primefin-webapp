@@ -21,6 +21,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { ModuleCapabilityService } from 'app/core/services/module-capability.service';
 
 interface Report {
   id: number;
@@ -68,6 +69,11 @@ export class ReportsComponent implements OnInit {
   private router = inject(Router);
   private destroyRef = inject(DestroyRef);
   private cdr = inject(ChangeDetectorRef);
+  private moduleCapability = inject(ModuleCapabilityService);
+
+  /** Module link visibility; true until a probe proves the module absent. */
+  channelingVisible = true;
+  paymentsVisible = true;
 
   /** Raw reports data from resolver. */
   private reportsData: Report[] = [];
@@ -117,6 +123,20 @@ export class ReportsComponent implements OnInit {
     this.totalCount = this.reportsData.length;
     this.computeEngineCounts();
     this.recompute();
+    this.moduleCapability
+      .channelingAvailable()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((available) => {
+        this.channelingVisible = available;
+        this.cdr.markForCheck();
+      });
+    this.moduleCapability
+      .paymentsAvailable()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((available) => {
+        this.paymentsVisible = available;
+        this.cdr.markForCheck();
+      });
   }
 
   /* ── Filtering / search ───────────────────────────────────── */

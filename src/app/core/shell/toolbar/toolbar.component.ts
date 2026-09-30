@@ -53,6 +53,7 @@ import { NotificationsTrayComponent as NotificationsTrayComponent_1 } from '../.
 import { ThemeToggleComponent } from '../../../shared/theme-toggle/theme-toggle.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { DocumentationLinksService } from 'app/shared/services/documentation-links.service';
+import { ModuleCapabilityService } from '../../services/module-capability.service';
 
 /**
  * Toolbar component.
@@ -88,6 +89,11 @@ export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChec
   private changeDetector = inject(ChangeDetectorRef);
   private documentationLinks = inject(DocumentationLinksService);
   private destroyRef = inject(DestroyRef);
+  private moduleCapability = inject(ModuleCapabilityService);
+
+  /** Module menu visibility; true until a probe proves the module absent. */
+  channelingVisible = true;
+  paymentsVisible = true;
 
   /* Reference of institution */
   @ViewChild('institution') institution: ElementRef<any>;
@@ -121,6 +127,18 @@ export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChec
         this.toggleSidenavCollapse(false);
       }
     });
+    this.moduleCapability
+      .channelingAvailable()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((available) => {
+        this.channelingVisible = available;
+      });
+    this.moduleCapability
+      .paymentsAvailable()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((available) => {
+        this.paymentsVisible = available;
+      });
   }
 
   ngAfterContentChecked(): void {

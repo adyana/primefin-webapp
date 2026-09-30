@@ -215,12 +215,16 @@
   <button mat-menu-item [routerLink]="['/reports', 'Accounting']" tabindex="0" *mifosxHasPermission="'READ_REPORT'">
     {{ 'labels.menus.Accounting' | translate }}
   </button>
-  <button mat-menu-item [routerLink]="['/channeling/dashboard']" tabindex="0" *mifosxHasPermission="'READ_CHANNEL'">
-    {{ 'labels.menus.Channeling Dashboard' | translate }}
-  </button>
-  <button mat-menu-item [routerLink]="['/payments']" tabindex="0" *mifosxHasPermission="'READ_PAYMENT'">
-    {{ 'labels.menus.Payments Dashboard' | translate }}
-  </button>
+  @if (channelingVisible) {
+    <button mat-menu-item [routerLink]="['/channeling/dashboard']" tabindex="0" *mifosxHasPermission="'READ_CHANNEL'">
+      {{ 'labels.menus.Channeling Dashboard' | translate }}
+    </button>
+  }
+  @if (paymentsVisible) {
+    <button mat-menu-item [routerLink]="['/payments']" tabindex="0" *mifosxHasPermission="'READ_PAYMENT'">
+      {{ 'labels.menus.Payments Dashboard' | translate }}
+    </button>
+  }
 </mat-menu>
 
 <mat-menu #adminMenu="matMenu" [overlapTrigger]="false">
@@ -250,12 +254,16 @@
   <button mat-menu-item routerLink="/templates" tabindex="0" *mifosxHasPermission="'READ_TEMPLATE'">
     {{ 'labels.menus.Templates' | translate }}
   </button>
-  <button mat-menu-item [matMenuTriggerFor]="channelingMenu" tabindex="0" *mifosxHasPermission="'READ_CHANNEL'">
-    {{ 'labels.menus.Channeling' | translate }}
-  </button>
-  <button mat-menu-item [matMenuTriggerFor]="paymentsMenu" tabindex="0" *mifosxHasPermission="'READ_PAYMENT'">
-    {{ 'labels.menus.Payments' | translate }}
-  </button>
+  @if (channelingVisible) {
+    <button mat-menu-item [matMenuTriggerFor]="channelingMenu" tabindex="0" *mifosxHasPermission="'READ_CHANNEL'">
+      {{ 'labels.menus.Channeling' | translate }}
+    </button>
+  }
+  @if (paymentsVisible) {
+    <button mat-menu-item [matMenuTriggerFor]="paymentsMenu" tabindex="0" *mifosxHasPermission="'READ_PAYMENT'">
+      {{ 'labels.menus.Payments' | translate }}
+    </button>
+  }
 </mat-menu>
 
 <mat-menu #channelingMenu="matMenu" [overlapTrigger]="false">
