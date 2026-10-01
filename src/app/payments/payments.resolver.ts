@@ -159,3 +159,19 @@ export class PaymentSchedulesResolver {
     return this.paymentsService.getSchedules();
   }
 }
+
+/**
+ * Auto-match rules data resolver.
+ */
+@Injectable()
+export class PaymentMatchRulesResolver {
+  private paymentsService = inject(PaymentsService);
+
+  /**
+   * Returns all auto-match rules.
+   * @returns {Observable<any>}
+   */
+  resolve(): Observable<any> {
+    return this.paymentsService.getMatchRules();
+  }
+}

@@ -161,6 +161,53 @@ export class PaymentsService {
   }
 
   /**
+   * @returns Auto-match rules in priority order.
+   */
+  getMatchRules(): Observable<any> {
+    return this.http.get('/v2/payment-match-rules');
+  }
+
+  /**
+   * @param rule Rule payload (code, matchType, priority, toleranceAmount, maxAmount, enabled).
+   * @returns Creation result with resourceId.
+   */
+  createMatchRule(rule: any): Observable<any> {
+    return this.http.post('/v2/payment-match-rules', rule);
+  }
+
+  /**
+   * @param ruleId Rule id.
+   * @param rule Rule payload (priority, toleranceAmount, maxAmount, enabled).
+   * @returns Updated rule.
+   */
+  updateMatchRule(ruleId: number, rule: any): Observable<any> {
+    return this.http.put(`/v2/payment-match-rules/${ruleId}`, rule);
+  }
+
+  /**
+   * @param ruleId Rule id.
+   * @returns Deletion result.
+   */
+  deleteMatchRule(ruleId: number): Observable<any> {
+    return this.http.delete(`/v2/payment-match-rules/${ruleId}`);
+  }
+
+  /**
+   * @returns Match runs, newest first.
+   */
+  getMatchRuns(): Observable<any> {
+    return this.http.get('/v2/payment-match-runs');
+  }
+
+  /**
+   * Executes a matching sweep now (matches only, never closes).
+   * @returns Run result with resourceId.
+   */
+  runMatch(): Observable<any> {
+    return this.http.post('/v2/payment-match-runs', {});
+  }
+
+  /**
    * @param code Rail code.
    * @param config Rail config (ticketMin, ticketMax, cutoffStart, cutoffEnd, timezone, prefundLimit).
    * @returns Updated rail.

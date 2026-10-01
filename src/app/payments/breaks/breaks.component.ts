@@ -9,7 +9,10 @@
 /** Angular Imports */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject, DestroyRef } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatSelect, MatOption } from '@angular/material/select';
 import {
   MatTableDataSource,
   MatTable,
@@ -36,8 +39,14 @@ import { PaymentsService } from '../payments.service';
 @Component({
   selector: 'mifosx-payment-breaks',
   templateUrl: './breaks.component.html',
+  styleUrls: ['./breaks.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
+    ReactiveFormsModule,
+    MatFormField,
+    MatLabel,
+    MatSelect,
+    MatOption,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
@@ -55,8 +64,11 @@ import { PaymentsService } from '../payments.service';
 export class PaymentBreaksComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private paymentsService = inject(PaymentsService);
+  private formBuilder = inject(FormBuilder);
   private destroyRef = inject(DestroyRef);
   private cdr = inject(ChangeDetectorRef);
+
+  filterForm: FormGroup = this.formBuilder.group({ status: ['OPEN'] });
 
   breaksDataSource = new MatTableDataSource<any>([]);
   breakColumns: string[] = [
@@ -73,6 +85,7 @@ export class PaymentBreaksComponent implements OnInit {
     this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { breaks: any }) => {
       this.breaksDataSource.data = Array.isArray(data.breaks) ? data.breaks : [];
     });
+    this.filterForm.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.reload());
   }
 
   close(breakRow: any): void {
@@ -82,9 +95,17 @@ export class PaymentBreaksComponent implements OnInit {
       .subscribe(() => this.reload());
   }
 
-  private reload(): void {
+  runMatch(): void {
     this.paymentsService
-      .getBreaks('OPEN')
+      .runMatch()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => this.reload());
+  }
+
+  private reload(): void {
+    const status = this.filterForm.value.status === 'ALL' ? undefined : this.filterForm.value.status;
+    this.paymentsService
+      .getBreaks(status)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((breaks: any) => {
         this.breaksDataSource.data = Array.isArray(breaks) ? breaks : [];

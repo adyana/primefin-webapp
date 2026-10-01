@@ -181,6 +181,33 @@ describe('PaymentsService', () => {
     expect(await resultPromise).toEqual({ code: 'BCT' });
   });
 
+  it('should manage match rules and runs', async () => {
+    const rulesPromise = firstValueFrom(service.getMatchRules());
+    const createPromise = firstValueFrom(service.createMatchRule({ code: 'R-1' }));
+    const runPromise = firstValueFrom(service.runMatch());
+    const runsPromise = firstValueFrom(service.getMatchRuns());
+
+    httpMock
+      .expectOne((request) => request.url === '/v2/payment-match-rules' && request.method === 'GET')
+      .flush([{ id: 1 }]);
+    const createReq = httpMock.expectOne(
+      (request) => request.url === '/v2/payment-match-rules' && request.method === 'POST'
+    );
+    expect(createReq.request.body).toEqual({ code: 'R-1' });
+    createReq.flush({ resourceId: 1 });
+    httpMock
+      .expectOne((request) => request.url === '/v2/payment-match-runs' && request.method === 'POST')
+      .flush({ resourceId: 2 });
+    httpMock
+      .expectOne((request) => request.url === '/v2/payment-match-runs' && request.method === 'GET')
+      .flush([{ id: 2 }]);
+
+    expect(await rulesPromise).toEqual([{ id: 1 }]);
+    expect(await createPromise).toEqual({ resourceId: 1 });
+    expect(await runPromise).toEqual({ resourceId: 2 });
+    expect(await runsPromise).toEqual([{ id: 2 }]);
+  });
+
   it('should manage schedules: list, create, update, run, runs', async () => {
     const listPromise = firstValueFrom(service.getSchedules());
     const createPromise = firstValueFrom(service.createSchedule({ code: 'S-1' }));

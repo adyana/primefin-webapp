@@ -17,6 +17,7 @@ import { PaymentBreaksComponent } from './breaks/breaks.component';
 import { PaymentFraudSlaComponent } from './fraud-sla/fraud-sla.component';
 import { PaymentBatchesComponent } from './batches/batches.component';
 import { ViewPaymentBatchComponent } from './view-batch/view-batch.component';
+import { PaymentMatchingComponent } from './matching/matching.component';
 import { PaymentMandatesComponent } from './mandates/mandates.component';
 import { CreateMandateComponent } from './create-mandate/create-mandate.component';
 import { PaymentCollectionsComponent } from './collections/collections.component';
@@ -34,7 +35,8 @@ import {
   PaymentBatchResolver,
   PaymentMandatesResolver,
   PaymentCollectionsResolver,
-  PaymentSchedulesResolver
+  PaymentSchedulesResolver,
+  PaymentMatchRulesResolver
 } from './payments.resolver';
 
 /** Custom Services */
@@ -127,6 +129,14 @@ const routes: Routes = [
       path: 'treasury',
       component: TreasuryComponent,
       data: { title: 'Treasury Funding', breadcrumb: 'Treasury', routeParamBreadcrumb: false }
+    },
+    {
+      path: 'matching',
+      component: PaymentMatchingComponent,
+      data: { title: 'Reconciliation Matching', breadcrumb: 'Matching', routeParamBreadcrumb: false },
+      resolve: {
+        rules: PaymentMatchRulesResolver
+      }
     }
   ])
 ];
@@ -146,7 +156,8 @@ const routes: Routes = [
     PaymentBatchResolver,
     PaymentMandatesResolver,
     PaymentCollectionsResolver,
-    PaymentSchedulesResolver
+    PaymentSchedulesResolver,
+    PaymentMatchRulesResolver
   ]
 })
 export class PaymentsRoutingModule {}
