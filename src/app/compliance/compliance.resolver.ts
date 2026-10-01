@@ -30,3 +30,51 @@ export class ComplianceListsResolver {
     return this.complianceService.getLists().pipe(catchError(() => of([])));
   }
 }
+
+/**
+ * Monitoring rules data resolver (empty list when unreachable).
+ */
+@Injectable()
+export class AmlRulesResolver {
+  private complianceService = inject(ComplianceService);
+
+  /**
+   * Returns all monitoring rules.
+   * @returns {Observable<any>}
+   */
+  resolve(): Observable<any> {
+    return this.complianceService.getAmlRules().pipe(catchError(() => of([])));
+  }
+}
+
+/**
+ * Open cases data resolver (empty list when unreachable).
+ */
+@Injectable()
+export class AmlCasesResolver {
+  private complianceService = inject(ComplianceService);
+
+  /**
+   * Returns open suspicious cases.
+   * @returns {Observable<any>}
+   */
+  resolve(): Observable<any> {
+    return this.complianceService.getAmlCases('OPEN').pipe(catchError(() => of([])));
+  }
+}
+
+/**
+ * Reports data resolver (empty list when unreachable).
+ */
+@Injectable()
+export class AmlReportsResolver {
+  private complianceService = inject(ComplianceService);
+
+  /**
+   * Returns all reports, newest first.
+   * @returns {Observable<any>}
+   */
+  resolve(): Observable<any> {
+    return this.complianceService.getAmlReports().pipe(catchError(() => of([])));
+  }
+}

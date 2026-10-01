@@ -98,4 +98,39 @@ describe('ComplianceService', () => {
 
     expect(await resultPromise).toEqual({ resourceId: 3 });
   });
+
+  it('should manage AML rules, cases and reports', async () => {
+    const rulesPromise = firstValueFrom(service.getAmlRules());
+    const casesPromise = firstValueFrom(service.getAmlCases('OPEN'));
+    const proposePromise = firstValueFrom(service.proposeCase(4, 'looks structured'));
+    const reportsPromise = firstValueFrom(service.getAmlReports());
+    const generatePromise = firstValueFrom(
+      service.generateReport({ reportType: 'LTKT', from: '2026-10-01', to: '2026-10-01' })
+    );
+
+    httpMock.expectOne((request) => request.url === '/v2/aml-rules' && request.method === 'GET').flush([{ id: 1 }]);
+    httpMock
+      .expectOne(
+        (request) =>
+          request.url === '/v2/aml-cases' && request.method === 'GET' && request.params.get('status') === 'OPEN'
+      )
+      .flush([{ id: 4 }]);
+    const proposeReq = httpMock.expectOne(
+      (request) => request.url === '/v2/aml-cases/4/propose' && request.method === 'POST'
+    );
+    expect(proposeReq.request.body).toEqual({ reason: 'looks structured' });
+    proposeReq.flush({ resourceId: 4 });
+    httpMock.expectOne((request) => request.url === '/v2/aml-reports' && request.method === 'GET').flush([{ id: 5 }]);
+    const generateReq = httpMock.expectOne(
+      (request) => request.url === '/v2/aml-reports/generate' && request.method === 'POST'
+    );
+    expect(generateReq.request.body).toEqual({ reportType: 'LTKT', from: '2026-10-01', to: '2026-10-01' });
+    generateReq.flush({ resourceId: 5 });
+
+    expect(await rulesPromise).toEqual([{ id: 1 }]);
+    expect(await casesPromise).toEqual([{ id: 4 }]);
+    expect(await proposePromise).toEqual({ resourceId: 4 });
+    expect(await reportsPromise).toEqual([{ id: 5 }]);
+    expect(await generatePromise).toEqual({ resourceId: 5 });
+  });
 });

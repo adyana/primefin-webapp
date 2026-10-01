@@ -12,9 +12,12 @@ import { RouterModule, Routes } from '@angular/router';
 
 /** Custom Components */
 import { DenyListBoardComponent } from './deny-list-board/deny-list-board.component';
+import { AmlRulesComponent } from './aml-rules/aml-rules.component';
+import { AmlCasesComponent } from './aml-cases/aml-cases.component';
+import { AmlReportsComponent } from './aml-reports/aml-reports.component';
 
 /** Custom Resolvers */
-import { ComplianceListsResolver } from './compliance.resolver';
+import { AmlCasesResolver, AmlReportsResolver, AmlRulesResolver, ComplianceListsResolver } from './compliance.resolver';
 
 /** Custom Services */
 import { Route } from '../core/route/route.service';
@@ -29,6 +32,30 @@ const routes: Routes = [
       resolve: {
         lists: ComplianceListsResolver
       }
+    },
+    {
+      path: 'aml-rules',
+      component: AmlRulesComponent,
+      data: { title: 'AML Rules', breadcrumb: 'AML Rules', routeParamBreadcrumb: false },
+      resolve: {
+        rules: AmlRulesResolver
+      }
+    },
+    {
+      path: 'cases',
+      component: AmlCasesComponent,
+      data: { title: 'AML Cases', breadcrumb: 'Cases', routeParamBreadcrumb: false },
+      resolve: {
+        cases: AmlCasesResolver
+      }
+    },
+    {
+      path: 'reports',
+      component: AmlReportsComponent,
+      data: { title: 'AML Reports', breadcrumb: 'Reports', routeParamBreadcrumb: false },
+      resolve: {
+        reports: AmlReportsResolver
+      }
     }
   ])
 ];
@@ -39,6 +66,11 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: [ComplianceListsResolver]
+  providers: [
+    ComplianceListsResolver,
+    AmlRulesResolver,
+    AmlCasesResolver,
+    AmlReportsResolver
+  ]
 })
 export class ComplianceRoutingModule {}

@@ -363,6 +363,20 @@
   <button mat-menu-item [routerLink]="['/compliance']" tabindex="0" *mifosxHasPermission="'READ_COMPLIANCE'">
     {{ 'labels.menus.Deny List' | translate }}
   </button>
+  <button
+    mat-menu-item
+    [routerLink]="['/compliance/aml-rules']"
+    tabindex="0"
+    *mifosxHasPermission="'READ_AML'"
+  >
+    {{ 'labels.menus.AML Rules' | translate }}
+  </button>
+  <button mat-menu-item [routerLink]="['/compliance/cases']" tabindex="0" *mifosxHasPermission="'READ_AML'">
+    {{ 'labels.menus.AML Cases' | translate }}
+  </button>
+  <button mat-menu-item [routerLink]="['/compliance/reports']" tabindex="0" *mifosxHasPermission="'READ_AML'">
+    {{ 'labels.menus.AML Reports' | translate }}
+  </button>
 </mat-menu>
 
 <!-- Application User Help Menu -->

@@ -8,7 +8,7 @@
 
 /** Angular Imports */
 import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -111,5 +111,90 @@ export class ComplianceService {
    */
   approveAllow(allowId: number): Observable<any> {
     return this.http.post(`/v2/compliance-allow/${allowId}/approve`, {});
+  }
+
+  /**
+   * @returns Monitoring rules with tunable thresholds.
+   */
+  getAmlRules(): Observable<any> {
+    return this.http.get('/v2/aml-rules');
+  }
+
+  /**
+   * @param ruleId Rule id.
+   * @param rule Rule payload (thresholdAmount, windowDays, countThreshold, enabled).
+   * @returns Updated rule.
+   */
+  updateAmlRule(ruleId: number, rule: any): Observable<any> {
+    return this.http.put(`/v2/aml-rules/${ruleId}`, rule);
+  }
+
+  /**
+   * @param status Case status filter (optional; all cases when omitted).
+   * @returns Suspicious cases, newest last.
+   */
+  getAmlCases(status?: string): Observable<any> {
+    let params = new HttpParams();
+    if (status !== undefined) {
+      params = params.set('status', status);
+    }
+    return this.http.get('/v2/aml-cases', { params });
+  }
+
+  /**
+   * @param caseId Case id.
+   * @param reason Filing reason.
+   * @returns Proposal result.
+   */
+  proposeCase(caseId: number, reason: string): Observable<any> {
+    return this.http.post(`/v2/aml-cases/${caseId}/propose`, { reason });
+  }
+
+  /**
+   * @param caseId Case id.
+   * @returns Approval result (checker step, emits the STR).
+   */
+  approveCase(caseId: number): Observable<any> {
+    return this.http.post(`/v2/aml-cases/${caseId}/approve`, {});
+  }
+
+  /**
+   * @param caseId Case id.
+   * @param reason Close reason.
+   * @returns Close result.
+   */
+  closeCase(caseId: number, reason: string): Observable<any> {
+    return this.http.post(`/v2/aml-cases/${caseId}/close`, { reason });
+  }
+
+  /**
+   * @returns Reports, newest first.
+   */
+  getAmlReports(): Observable<any> {
+    return this.http.get('/v2/aml-reports');
+  }
+
+  /**
+   * @param report Report payload (reportType LTKT/LTKL, from, to).
+   * @returns Generation result with resourceId.
+   */
+  generateReport(report: any): Observable<any> {
+    return this.http.post('/v2/aml-reports/generate', report);
+  }
+
+  /**
+   * Downloads the goAML XML through the authenticated client (an anchor
+   * alone would miss the Authorization header).
+   * @param reportId Report id.
+   */
+  downloadReport(reportId: number): void {
+    this.http.get(`/v2/aml-reports/${reportId}/file`, { responseType: 'blob' }).subscribe((blob: Blob) => {
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement('a');
+      anchor.href = url;
+      anchor.download = `aml-report-${reportId}.xml`;
+      anchor.click();
+      URL.revokeObjectURL(url);
+    });
   }
 }
