@@ -18,10 +18,17 @@ import { PaymentBreaksComponent } from './breaks/breaks.component';
 import { PaymentFraudSlaComponent } from './fraud-sla/fraud-sla.component';
 import { PaymentBatchesComponent } from './batches/batches.component';
 import { ViewPaymentBatchComponent } from './view-batch/view-batch.component';
+import { PaymentMandatesComponent } from './mandates/mandates.component';
+import { CreateMandateComponent } from './create-mandate/create-mandate.component';
+import { PaymentCollectionsComponent } from './collections/collections.component';
+import { CreateCollectionComponent } from './create-collection/create-collection.component';
+import { PaymentSchedulesComponent } from './schedules/schedules.component';
+import { CreateScheduleComponent } from './create-schedule/create-schedule.component';
 
 /**
  * Payments module: ID payment rails dashboard (slice 1), breaks board and
- * fraud-SLA view (slice 2), batch monitor (slice 3).
+ * fraud-SLA view (slice 2), batch monitor (slice 3), mandates + collections
+ * boards and automation schedules (roadmap #2).
  */
 @NgModule({
   imports: [
@@ -30,7 +37,13 @@ import { ViewPaymentBatchComponent } from './view-batch/view-batch.component';
     PaymentBreaksComponent,
     PaymentFraudSlaComponent,
     PaymentBatchesComponent,
-    ViewPaymentBatchComponent
+    ViewPaymentBatchComponent,
+    PaymentMandatesComponent,
+    CreateMandateComponent,
+    PaymentCollectionsComponent,
+    CreateCollectionComponent,
+    PaymentSchedulesComponent,
+    CreateScheduleComponent
   ],
   exports: [],
   declarations: [],

@@ -111,3 +111,51 @@ export class PaymentBatchesResolver {
     return this.paymentsService.getBatches();
   }
 }
+
+/**
+ * DDT mandates data resolver.
+ */
+@Injectable()
+export class PaymentMandatesResolver {
+  private paymentsService = inject(PaymentsService);
+
+  /**
+   * Returns all autopay mandates.
+   * @returns {Observable<any>}
+   */
+  resolve(): Observable<any> {
+    return this.paymentsService.getMandates();
+  }
+}
+
+/**
+ * Collection requests data resolver.
+ */
+@Injectable()
+export class PaymentCollectionsResolver {
+  private paymentsService = inject(PaymentsService);
+
+  /**
+   * Returns all collection requests.
+   * @returns {Observable<any>}
+   */
+  resolve(): Observable<any> {
+    return this.paymentsService.getCollections();
+  }
+}
+
+/**
+ * Automation schedules data resolver.
+ */
+@Injectable()
+export class PaymentSchedulesResolver {
+  private paymentsService = inject(PaymentsService);
+
+  /**
+   * Returns all automation schedules.
+   * @returns {Observable<any>}
+   */
+  resolve(): Observable<any> {
+    return this.paymentsService.getSchedules();
+  }
+}

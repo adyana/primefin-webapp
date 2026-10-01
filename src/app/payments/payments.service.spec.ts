@@ -86,4 +86,111 @@ describe('PaymentsService', () => {
 
     expect(await resultPromise).toEqual({ resourceId: 1 });
   });
+
+  it('should manage mandates: list, create, collect, suspend, revoke', async () => {
+    const listPromise = firstValueFrom(service.getMandates('ACTIVE'));
+    const createPromise = firstValueFrom(service.createMandate({ reference: 'M-1' }));
+    const collectPromise = firstValueFrom(service.collectMandate(7, 200000));
+    const suspendPromise = firstValueFrom(service.suspendMandate(7));
+    const revokePromise = firstValueFrom(service.revokeMandate(8));
+
+    httpMock
+      .expectOne(
+        (request) =>
+          request.url === '/v2/payment-mandates' &&
+          request.method === 'GET' &&
+          request.params.get('status') === 'ACTIVE'
+      )
+      .flush([{ id: 7 }]);
+    const createReq = httpMock.expectOne(
+      (request) => request.url === '/v2/payment-mandates' && request.method === 'POST'
+    );
+    expect(createReq.request.body).toEqual({ reference: 'M-1' });
+    createReq.flush({ resourceId: 7 });
+    const collectReq = httpMock.expectOne(
+      (request) => request.url === '/v2/payment-mandates/7/collect' && request.method === 'POST'
+    );
+    expect(collectReq.request.body).toEqual({ amount: 200000 });
+    collectReq.flush({ resourceId: 9 });
+    httpMock
+      .expectOne((request) => request.url === '/v2/payment-mandates/7/suspend' && request.method === 'POST')
+      .flush({ resourceId: 7 });
+    httpMock
+      .expectOne((request) => request.url === '/v2/payment-mandates/8/revoke' && request.method === 'POST')
+      .flush({ resourceId: 8 });
+
+    expect(await listPromise).toEqual([{ id: 7 }]);
+    expect(await createPromise).toEqual({ resourceId: 7 });
+    expect(await collectPromise).toEqual({ resourceId: 9 });
+    expect(await suspendPromise).toEqual({ resourceId: 7 });
+    expect(await revokePromise).toEqual({ resourceId: 8 });
+  });
+
+  it('should manage collections: list, create, approve, reject', async () => {
+    const listPromise = firstValueFrom(service.getCollections('PENDING'));
+    const createPromise = firstValueFrom(service.createCollection({ reference: 'C-1' }));
+    const approvePromise = firstValueFrom(service.approveCollection(3, 'EXT-1'));
+    const rejectPromise = firstValueFrom(service.rejectCollection(4));
+
+    httpMock
+      .expectOne(
+        (request) =>
+          request.url === '/v2/payment-collections' &&
+          request.method === 'GET' &&
+          request.params.get('status') === 'PENDING'
+      )
+      .flush([{ id: 3 }]);
+    const createReq = httpMock.expectOne(
+      (request) => request.url === '/v2/payment-collections' && request.method === 'POST'
+    );
+    expect(createReq.request.body).toEqual({ reference: 'C-1' });
+    createReq.flush({ resourceId: 3 });
+    const approveReq = httpMock.expectOne(
+      (request) => request.url === '/v2/payment-collections/3/approve' && request.method === 'POST'
+    );
+    expect(approveReq.request.body).toEqual({ externalRef: 'EXT-1' });
+    approveReq.flush({ resourceId: 11 });
+    httpMock
+      .expectOne((request) => request.url === '/v2/payment-collections/4/reject' && request.method === 'POST')
+      .flush({ resourceId: 4 });
+
+    expect(await listPromise).toEqual([{ id: 3 }]);
+    expect(await createPromise).toEqual({ resourceId: 3 });
+    expect(await approvePromise).toEqual({ resourceId: 11 });
+    expect(await rejectPromise).toEqual({ resourceId: 4 });
+  });
+
+  it('should manage schedules: list, create, update, run, runs', async () => {
+    const listPromise = firstValueFrom(service.getSchedules());
+    const createPromise = firstValueFrom(service.createSchedule({ code: 'S-1' }));
+    const updatePromise = firstValueFrom(service.updateSchedule(5, { enabled: true }));
+    const runPromise = firstValueFrom(service.runSchedule(5));
+    const runsPromise = firstValueFrom(service.getScheduleRuns(5));
+
+    httpMock
+      .expectOne((request) => request.url === '/v2/payment-schedules' && request.method === 'GET')
+      .flush([{ id: 5 }]);
+    const createReq = httpMock.expectOne(
+      (request) => request.url === '/v2/payment-schedules' && request.method === 'POST'
+    );
+    expect(createReq.request.body).toEqual({ code: 'S-1' });
+    createReq.flush({ resourceId: 5 });
+    const updateReq = httpMock.expectOne(
+      (request) => request.url === '/v2/payment-schedules/5' && request.method === 'PUT'
+    );
+    expect(updateReq.request.body).toEqual({ enabled: true });
+    updateReq.flush({ id: 5 });
+    httpMock
+      .expectOne((request) => request.url === '/v2/payment-schedules/5/run' && request.method === 'POST')
+      .flush({ resourceId: 2 });
+    httpMock
+      .expectOne((request) => request.url === '/v2/payment-schedules/5/runs' && request.method === 'GET')
+      .flush([{ id: 2 }]);
+
+    expect(await listPromise).toEqual([{ id: 5 }]);
+    expect(await createPromise).toEqual({ resourceId: 5 });
+    expect(await updatePromise).toEqual({ id: 5 });
+    expect(await runPromise).toEqual({ resourceId: 2 });
+    expect(await runsPromise).toEqual([{ id: 2 }]);
+  });
 });

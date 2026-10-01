@@ -16,6 +16,12 @@ import { PaymentBreaksComponent } from './breaks/breaks.component';
 import { PaymentFraudSlaComponent } from './fraud-sla/fraud-sla.component';
 import { PaymentBatchesComponent } from './batches/batches.component';
 import { ViewPaymentBatchComponent } from './view-batch/view-batch.component';
+import { PaymentMandatesComponent } from './mandates/mandates.component';
+import { CreateMandateComponent } from './create-mandate/create-mandate.component';
+import { PaymentCollectionsComponent } from './collections/collections.component';
+import { CreateCollectionComponent } from './create-collection/create-collection.component';
+import { PaymentSchedulesComponent } from './schedules/schedules.component';
+import { CreateScheduleComponent } from './create-schedule/create-schedule.component';
 
 /** Custom Resolvers */
 import {
@@ -24,7 +30,10 @@ import {
   PaymentBreaksResolver,
   PaymentFraudSlaResolver,
   PaymentBatchesResolver,
-  PaymentBatchResolver
+  PaymentBatchResolver,
+  PaymentMandatesResolver,
+  PaymentCollectionsResolver,
+  PaymentSchedulesResolver
 } from './payments.resolver';
 
 /** Custom Services */
@@ -73,6 +82,45 @@ const routes: Routes = [
       resolve: {
         batch: PaymentBatchResolver
       }
+    },
+    {
+      path: 'mandates',
+      component: PaymentMandatesComponent,
+      data: { title: 'Payment Mandates', breadcrumb: 'Mandates', routeParamBreadcrumb: false },
+      resolve: {
+        mandates: PaymentMandatesResolver
+      }
+    },
+    {
+      path: 'mandates/create',
+      component: CreateMandateComponent,
+      data: { title: 'Create Mandate', breadcrumb: 'Create', routeParamBreadcrumb: false }
+    },
+    {
+      path: 'collections',
+      component: PaymentCollectionsComponent,
+      data: { title: 'Payment Collections', breadcrumb: 'Collections', routeParamBreadcrumb: false },
+      resolve: {
+        collections: PaymentCollectionsResolver
+      }
+    },
+    {
+      path: 'collections/create',
+      component: CreateCollectionComponent,
+      data: { title: 'Create Collection', breadcrumb: 'Create', routeParamBreadcrumb: false }
+    },
+    {
+      path: 'schedules',
+      component: PaymentSchedulesComponent,
+      data: { title: 'Payment Schedules', breadcrumb: 'Schedules', routeParamBreadcrumb: false },
+      resolve: {
+        schedules: PaymentSchedulesResolver
+      }
+    },
+    {
+      path: 'schedules/create',
+      component: CreateScheduleComponent,
+      data: { title: 'Create Schedule', breadcrumb: 'Create', routeParamBreadcrumb: false }
     }
   ])
 ];
@@ -89,7 +137,10 @@ const routes: Routes = [
     PaymentBreaksResolver,
     PaymentFraudSlaResolver,
     PaymentBatchesResolver,
-    PaymentBatchResolver
+    PaymentBatchResolver,
+    PaymentMandatesResolver,
+    PaymentCollectionsResolver,
+    PaymentSchedulesResolver
   ]
 })
 export class PaymentsRoutingModule {}

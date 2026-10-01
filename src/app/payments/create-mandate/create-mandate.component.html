@@ -1,0 +1,71 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="container">
+  <mat-card>
+    <mat-card-title class="m-b-16">{{ 'labels.heading.Create Mandate' | translate }}</mat-card-title>
+
+    <mat-card-content>
+      <form [formGroup]="mandateForm">
+        <div class="layout-row gap-20px responsive-column">
+          <mat-form-field class="flex-fill">
+            <mat-label>{{ 'labels.inputs.Reference' | translate }}</mat-label>
+            <input matInput formControlName="reference" required />
+            <mat-error>{{ 'labels.inputs.Required' | translate }}</mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="flex-fill">
+            <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
+            <mat-select formControlName="frequency">
+              <mat-option value="MONTHLY">MONTHLY</mat-option>
+              <mat-option value="WEEKLY">WEEKLY</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="layout-row gap-20px responsive-column">
+          <mat-form-field class="flex-fill">
+            <mat-label>{{ 'labels.inputs.Debtor Account' | translate }}</mat-label>
+            <input matInput formControlName="debtorAccount" required />
+          </mat-form-field>
+
+          <mat-form-field class="flex-fill">
+            <mat-label>{{ 'labels.inputs.Creditor Account' | translate }}</mat-label>
+            <input matInput formControlName="creditorAccount" required />
+          </mat-form-field>
+        </div>
+
+        <div class="layout-row gap-20px responsive-column">
+          <mat-form-field class="flex-fill">
+            <mat-label>{{ 'labels.inputs.Max Amount' | translate }}</mat-label>
+            <input matInput type="number" formControlName="maxAmount" required />
+          </mat-form-field>
+
+          <mat-form-field class="flex-fill">
+            <mat-label>{{ 'labels.inputs.Currency' | translate }}</mat-label>
+            <input matInput formControlName="currency" />
+          </mat-form-field>
+
+          <mat-form-field class="flex-fill">
+            <mat-label>{{ 'labels.inputs.Next Due On' | translate }}</mat-label>
+            <input matInput [matDatepicker]="duePicker" formControlName="nextDueOn" />
+            <mat-datepicker-toggle matSuffix [for]="duePicker"></mat-datepicker-toggle>
+            <mat-datepicker #duePicker></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <div class="layout-row align-end gap-20px m-t-20">
+    <button mat-raised-button [routerLink]="['../']">{{ 'labels.buttons.Cancel' | translate }}</button>
+    <button mat-raised-button color="primary" [disabled]="!mandateForm.valid" (click)="submit()">
+      {{ 'labels.buttons.Submit' | translate }}
+    </button>
+  </div>
+</div>
