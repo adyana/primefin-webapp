@@ -208,6 +208,58 @@ export class PaymentsService {
   }
 
   /**
+   * @param status VA status filter (optional; all accounts when omitted).
+   * @returns Virtual accounts.
+   */
+  getVas(status?: string): Observable<any> {
+    let params = new HttpParams();
+    if (status !== undefined) {
+      params = params.set('status', status);
+    }
+    return this.http.get('/v2/payment-vas', { params });
+  }
+
+  /**
+   * @param va VA payload (customerRef, name, expectedAmount, feeAmount, expiresOn).
+   * @returns Issuance result with resourceId.
+   */
+  issueVa(va: any): Observable<any> {
+    return this.http.post('/v2/payment-vas', va);
+  }
+
+  /**
+   * @param vaId VA id.
+   * @returns One virtual account.
+   */
+  getVa(vaId: number): Observable<any> {
+    return this.http.get(`/v2/payment-vas/${vaId}`);
+  }
+
+  /**
+   * @param vaId VA id.
+   * @returns Close result.
+   */
+  closeVa(vaId: number): Observable<any> {
+    return this.http.post(`/v2/payment-vas/${vaId}/close`, {});
+  }
+
+  /**
+   * @param vaId VA id.
+   * @returns Matched inbound payments, newest first.
+   */
+  getVaTransactions(vaId: number): Observable<any> {
+    return this.http.get(`/v2/payment-vas/${vaId}/transactions`);
+  }
+
+  /**
+   * Links unlinked inbound orders to VAs now (links only, never moves money).
+   * @returns Match result.
+   */
+  runVaMatch(): Observable<any> {
+    return this.http.post('/v2/payment-vas/match-run', {});
+  }
+
+  /**
    * @param code Rail code.
    * @param config Rail config (ticketMin, ticketMax, cutoffStart, cutoffEnd, timezone, prefundLimit).
    * @returns Updated rail.

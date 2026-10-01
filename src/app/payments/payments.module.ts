@@ -14,6 +14,9 @@ import { PaymentsRoutingModule } from './payments-routing.module';
 
 /** Custom Components */
 import { PaymentMatchingComponent } from './matching/matching.component';
+import { VasListComponent } from './vas/vas-list.component';
+import { CreateVaComponent } from './create-va/create-va.component';
+import { ViewVaComponent } from './view-va/view-va.component';
 import { TreasuryComponent } from './treasury/treasury.component';
 import { RailsDashboardComponent } from './rails-dashboard/rails-dashboard.component';
 import { PaymentBreaksComponent } from './breaks/breaks.component';
@@ -36,6 +39,9 @@ import { CreateScheduleComponent } from './create-schedule/create-schedule.compo
   imports: [
     PaymentsRoutingModule,
     PaymentMatchingComponent,
+    VasListComponent,
+    CreateVaComponent,
+    ViewVaComponent,
     TreasuryComponent,
     RailsDashboardComponent,
     PaymentBreaksComponent,

@@ -11,7 +11,7 @@ import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
-import { Observable } from 'rxjs';
+import { Observable, catchError, of } from 'rxjs';
 
 /** Custom Services */
 import { PaymentsService } from './payments.service';
@@ -173,5 +173,37 @@ export class PaymentMatchRulesResolver {
    */
   resolve(): Observable<any> {
     return this.paymentsService.getMatchRules();
+  }
+}
+
+/**
+ * Virtual accounts data resolver.
+ */
+@Injectable()
+export class PaymentVasResolver {
+  private paymentsService = inject(PaymentsService);
+
+  /**
+   * Returns all virtual accounts.
+   * @returns {Observable<any>}
+   */
+  resolve(): Observable<any> {
+    return this.paymentsService.getVas();
+  }
+}
+
+/**
+ * Single virtual account data resolver (undefined when the id is unknown).
+ */
+@Injectable()
+export class PaymentVaResolver {
+  private paymentsService = inject(PaymentsService);
+
+  /**
+   * Returns one virtual account by route id.
+   * @returns {Observable<any>}
+   */
+  resolve(route: ActivatedRouteSnapshot): Observable<any> {
+    return this.paymentsService.getVa(route.params['id']).pipe(catchError(() => of(undefined)));
   }
 }

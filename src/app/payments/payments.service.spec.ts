@@ -181,6 +181,34 @@ describe('PaymentsService', () => {
     expect(await resultPromise).toEqual({ code: 'BCT' });
   });
 
+  it('should manage virtual accounts and matching', async () => {
+    const listPromise = firstValueFrom(service.getVas('ACTIVE'));
+    const issuePromise = firstValueFrom(service.issueVa({ name: 'PT Bayar' }));
+    const closePromise = firstValueFrom(service.closeVa(5));
+    const matchPromise = firstValueFrom(service.runVaMatch());
+
+    httpMock
+      .expectOne(
+        (request) =>
+          request.url === '/v2/payment-vas' && request.method === 'GET' && request.params.get('status') === 'ACTIVE'
+      )
+      .flush([{ id: 5 }]);
+    const issueReq = httpMock.expectOne((request) => request.url === '/v2/payment-vas' && request.method === 'POST');
+    expect(issueReq.request.body).toEqual({ name: 'PT Bayar' });
+    issueReq.flush({ resourceId: 5 });
+    httpMock
+      .expectOne((request) => request.url === '/v2/payment-vas/5/close' && request.method === 'POST')
+      .flush({ resourceId: 5 });
+    httpMock
+      .expectOne((request) => request.url === '/v2/payment-vas/match-run' && request.method === 'POST')
+      .flush({ resourceId: 0 });
+
+    expect(await listPromise).toEqual([{ id: 5 }]);
+    expect(await issuePromise).toEqual({ resourceId: 5 });
+    expect(await closePromise).toEqual({ resourceId: 5 });
+    expect(await matchPromise).toEqual({ resourceId: 0 });
+  });
+
   it('should manage match rules and runs', async () => {
     const rulesPromise = firstValueFrom(service.getMatchRules());
     const createPromise = firstValueFrom(service.createMatchRule({ code: 'R-1' }));

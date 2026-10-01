@@ -336,6 +336,9 @@
   <button mat-menu-item [routerLink]="['/payments/matching']" tabindex="0" *mifosxHasPermission="'READ_PAYMENT'">
     {{ 'labels.menus.Matching' | translate }}
   </button>
+  <button mat-menu-item [routerLink]="['/payments/vas']" tabindex="0" *mifosxHasPermission="'READ_PAYMENT'">
+    {{ 'labels.menus.Virtual Accounts' | translate }}
+  </button>
 </mat-menu>
 
 <mat-menu #agentsMenu="matMenu" [overlapTrigger]="false">
@@ -363,12 +366,7 @@
   <button mat-menu-item [routerLink]="['/compliance']" tabindex="0" *mifosxHasPermission="'READ_COMPLIANCE'">
     {{ 'labels.menus.Deny List' | translate }}
   </button>
-  <button
-    mat-menu-item
-    [routerLink]="['/compliance/aml-rules']"
-    tabindex="0"
-    *mifosxHasPermission="'READ_AML'"
-  >
+  <button mat-menu-item [routerLink]="['/compliance/aml-rules']" tabindex="0" *mifosxHasPermission="'READ_AML'">
     {{ 'labels.menus.AML Rules' | translate }}
   </button>
   <button mat-menu-item [routerLink]="['/compliance/cases']" tabindex="0" *mifosxHasPermission="'READ_AML'">

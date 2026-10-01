@@ -18,6 +18,9 @@ import { PaymentFraudSlaComponent } from './fraud-sla/fraud-sla.component';
 import { PaymentBatchesComponent } from './batches/batches.component';
 import { ViewPaymentBatchComponent } from './view-batch/view-batch.component';
 import { PaymentMatchingComponent } from './matching/matching.component';
+import { VasListComponent } from './vas/vas-list.component';
+import { CreateVaComponent } from './create-va/create-va.component';
+import { ViewVaComponent } from './view-va/view-va.component';
 import { PaymentMandatesComponent } from './mandates/mandates.component';
 import { CreateMandateComponent } from './create-mandate/create-mandate.component';
 import { PaymentCollectionsComponent } from './collections/collections.component';
@@ -36,7 +39,9 @@ import {
   PaymentMandatesResolver,
   PaymentCollectionsResolver,
   PaymentSchedulesResolver,
-  PaymentMatchRulesResolver
+  PaymentMatchRulesResolver,
+  PaymentVasResolver,
+  PaymentVaResolver
 } from './payments.resolver';
 
 /** Custom Services */
@@ -137,6 +142,27 @@ const routes: Routes = [
       resolve: {
         rules: PaymentMatchRulesResolver
       }
+    },
+    {
+      path: 'vas',
+      component: VasListComponent,
+      data: { title: 'Virtual Accounts', breadcrumb: 'Virtual Accounts', routeParamBreadcrumb: false },
+      resolve: {
+        vas: PaymentVasResolver
+      }
+    },
+    {
+      path: 'vas/create',
+      component: CreateVaComponent,
+      data: { title: 'Issue VA', breadcrumb: 'Issue', routeParamBreadcrumb: false }
+    },
+    {
+      path: 'vas/:id',
+      component: ViewVaComponent,
+      data: { title: 'Virtual Account', breadcrumb: 'Account', routeParamBreadcrumb: false },
+      resolve: {
+        va: PaymentVaResolver
+      }
     }
   ])
 ];
@@ -157,7 +183,9 @@ const routes: Routes = [
     PaymentMandatesResolver,
     PaymentCollectionsResolver,
     PaymentSchedulesResolver,
-    PaymentMatchRulesResolver
+    PaymentMatchRulesResolver,
+    PaymentVasResolver,
+    PaymentVaResolver
   ]
 })
 export class PaymentsRoutingModule {}
