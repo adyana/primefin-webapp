@@ -230,6 +230,11 @@
       {{ 'labels.menus.Agent Dashboard' | translate }}
     </button>
   }
+  @if (qrisVisible) {
+    <button mat-menu-item [routerLink]="['/qris/dashboard']" tabindex="0" *mifosxHasPermission="'READ_QRIS'">
+      {{ 'labels.menus.QRIS Dashboard' | translate }}
+    </button>
+  }
 </mat-menu>
 
 <mat-menu #adminMenu="matMenu" [overlapTrigger]="false">
@@ -272,6 +277,11 @@
   @if (agentsVisible) {
     <button mat-menu-item [matMenuTriggerFor]="agentsMenu" tabindex="0" *mifosxHasPermission="'READ_AGENT'">
       {{ 'labels.menus.Agents' | translate }}
+    </button>
+  }
+  @if (qrisVisible) {
+    <button mat-menu-item [matMenuTriggerFor]="qrisMenu" tabindex="0" *mifosxHasPermission="'READ_QRIS'">
+      {{ 'labels.menus.QRIS' | translate }}
     </button>
   }
 </mat-menu>
@@ -318,6 +328,18 @@
   </button>
   <button mat-menu-item [routerLink]="['/agents']" tabindex="0" *mifosxHasPermission="'READ_AGENT'">
     {{ 'labels.menus.Agents' | translate }}
+  </button>
+</mat-menu>
+
+<mat-menu #qrisMenu="matMenu" [overlapTrigger]="false">
+  <button mat-menu-item [routerLink]="['/qris/dashboard']" tabindex="0" *mifosxHasPermission="'READ_QRIS'">
+    {{ 'labels.menus.Dashboard' | translate }}
+  </button>
+  <button mat-menu-item [routerLink]="['/qris']" tabindex="0" *mifosxHasPermission="'READ_QRIS'">
+    {{ 'labels.menus.QRIS Merchants' | translate }}
+  </button>
+  <button mat-menu-item [routerLink]="['/qris/mdr-rules']" tabindex="0" *mifosxHasPermission="'READ_QRIS'">
+    {{ 'labels.menus.QRIS MDR Rules' | translate }}
   </button>
 </mat-menu>
 

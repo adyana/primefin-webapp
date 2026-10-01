@@ -95,6 +95,7 @@ export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChec
   channelingVisible = true;
   paymentsVisible = true;
   agentsVisible = true;
+  qrisVisible = true;
 
   /* Reference of institution */
   @ViewChild('institution') institution: ElementRef<any>;
@@ -145,6 +146,12 @@ export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChec
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((available) => {
         this.agentsVisible = available;
+      });
+    this.moduleCapability
+      .qrisAvailable()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((available) => {
+        this.qrisVisible = available;
       });
   }
 

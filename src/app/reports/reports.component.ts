@@ -75,6 +75,7 @@ export class ReportsComponent implements OnInit {
   channelingVisible = true;
   paymentsVisible = true;
   agentsVisible = true;
+  qrisVisible = true;
 
   /** Raw reports data from resolver. */
   private reportsData: Report[] = [];
@@ -143,6 +144,13 @@ export class ReportsComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((available) => {
         this.agentsVisible = available;
+        this.cdr.markForCheck();
+      });
+    this.moduleCapability
+      .qrisAvailable()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((available) => {
+        this.qrisVisible = available;
         this.cdr.markForCheck();
       });
   }

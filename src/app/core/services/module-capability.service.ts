@@ -46,4 +46,9 @@ export class ModuleCapabilityService {
   agentsAvailable(): Observable<boolean> {
     return this.probe('/v2/agent-health');
   }
+
+  /** @returns True when the QRIS module answers. */
+  qrisAvailable(): Observable<boolean> {
+    return this.probe('/v2/qris-health');
+  }
 }

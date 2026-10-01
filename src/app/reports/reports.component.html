@@ -34,6 +34,11 @@
         {{ 'labels.menus.Agent Dashboard' | translate }}
       </a>
     }
+    @if (qrisVisible) {
+      <a class="btn btn-ghost" [routerLink]="['/qris/dashboard']" *mifosxHasPermission="'READ_QRIS'">
+        {{ 'labels.menus.QRIS Dashboard' | translate }}
+      </a>
+    }
   </div>
 
   <!-- ── Toolbar ────────────────────────────────────────────── -->
