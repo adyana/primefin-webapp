@@ -7,15 +7,9 @@
 -->
 
 <div class="container m-b-20 layout-row align-end gap-20px">
-  <button
-    mat-raised-button
-    color="primary"
-    [routerLink]="['self-service']"
-    *mifosxHasPermission="'READ_SELFSERVICEUSER'"
-  >
-    <fa-icon icon="users" class="m-r-10"></fa-icon>
-    {{ 'labels.text.Self Service Users' | translate }}
-  </button>
+  <!-- Self-service users entry removed: the backend serves no /selfservice
+    endpoints, so the page 404s on every action. Restore with the route
+    entries in users-routing.module.ts if the backend ever gains them. -->
   <div #buttonCreateUser class="in-block">
     <button mat-raised-button color="primary" [routerLink]="['create']">
       <fa-icon icon="plus" class="m-r-10"></fa-icon>

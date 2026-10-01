@@ -85,7 +85,7 @@
       "reason": "Důvod"
     }
   },
-  "APP_NAME": "PrimeFin WebApp",
+  "APP_NAME": "PrimeFin",
   "Logged in as": "Přihlášen jako",
   "Remember me": "Zapamatuj si mě",
   "error.resource.notImplemented.type": "Nenaimplementovaná chyba",

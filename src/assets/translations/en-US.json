@@ -85,7 +85,7 @@
       "reason": "Reason"
     }
   },
-  "APP_NAME": "PrimeFin WebApp",
+  "APP_NAME": "PrimeFin",
   "Logged in as": "Logged in as",
   "Remember me": "Remember me",
   "error.resource.notImplemented.type": "Not Implemented Error",
