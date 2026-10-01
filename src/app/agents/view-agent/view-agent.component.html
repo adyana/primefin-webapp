@@ -1,0 +1,105 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="container">
+  <div class="layout-row align-end gap-20px m-b-20">
+    <button mat-raised-button [routerLink]="['../']">
+      <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
+      {{ 'labels.buttons.Back' | translate }}
+    </button>
+  </div>
+
+  @if (agentData) {
+    <mat-card>
+      <mat-card-title class="m-b-16">{{ agentData.name }} ({{ agentData.code }})</mat-card-title>
+
+      <mat-card-content>
+        <div class="layout-row gap-20px responsive-column">
+          <div class="flex-fill">
+            <p>
+              <strong>{{ 'labels.inputs.Status' | translate }}:</strong>
+              {{ agentData.status }}
+            </p>
+            <p>
+              <strong>{{ 'labels.inputs.Float Balance' | translate }}:</strong>
+              {{ agentData.floatBalance | number: '1.2-2' }}
+            </p>
+          </div>
+          <div class="flex-fill">
+            <p>
+              <strong>{{ 'labels.inputs.Location' | translate }}:</strong>
+              {{ agentData.location }}
+            </p>
+            <p>
+              <strong>{{ 'labels.inputs.Commission (bps)' | translate }}:</strong>
+              {{ agentData.commissionBps }}
+            </p>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="m-t-20" *mifosxHasPermission="'UPDATE_AGENT'">
+      <mat-card-title class="m-b-16">{{ 'labels.heading.Top Up Float' | translate }}</mat-card-title>
+
+      <mat-card-content>
+        <form [formGroup]="topUpForm" class="layout-row gap-20px responsive-column">
+          <mat-form-field class="flex-fill">
+            <mat-label>{{ 'labels.inputs.Amount' | translate }}</mat-label>
+            <input matInput type="number" formControlName="amount" required />
+          </mat-form-field>
+
+          <mat-form-field class="flex-fill">
+            <mat-label>{{ 'labels.inputs.Currency' | translate }}</mat-label>
+            <input matInput formControlName="currency" />
+          </mat-form-field>
+
+          <mat-form-field class="flex-fill">
+            <mat-label>{{ 'labels.inputs.Rail' | translate }}</mat-label>
+            <mat-select formControlName="rail">
+              <mat-option value="ICT">ICT</mat-option>
+              <mat-option value="SKNBI">SKNBI</mat-option>
+              <mat-option value="RTGS">RTGS</mat-option>
+              <mat-option value="DDT">DDT</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <div class="in-block">
+            <button mat-raised-button color="primary" [disabled]="!topUpForm.valid" (click)="topUp()">
+              {{ 'labels.buttons.Top Up' | translate }}
+            </button>
+          </div>
+        </form>
+
+        <div class="layout-row gap-20px m-t-20">
+          <button mat-raised-button color="warn" (click)="suspend()">
+            {{ 'labels.buttons.Suspend' | translate }}
+          </button>
+          <button mat-raised-button color="warn" (click)="close()">
+            {{ 'labels.buttons.Close' | translate }}
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-tab-group class="m-t-20">
+      <mat-tab label="{{ 'labels.heading.Agent Transactions' | translate }}">
+        <mifosx-agent-transactions-tab [agentId]="agentData.id"></mifosx-agent-transactions-tab>
+      </mat-tab>
+      <mat-tab label="{{ 'labels.heading.Agent Commissions' | translate }}">
+        <mifosx-agent-commissions-tab [agentId]="agentData.id"></mifosx-agent-commissions-tab>
+      </mat-tab>
+    </mat-tab-group>
+  } @else {
+    <mat-card>
+      <mat-card-content>
+        <p>{{ 'labels.text.Unknown Agent' | translate }}</p>
+      </mat-card-content>
+    </mat-card>
+  }
+</div>

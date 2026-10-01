@@ -74,6 +74,7 @@ export class ReportsComponent implements OnInit {
   /** Module link visibility; true until a probe proves the module absent. */
   channelingVisible = true;
   paymentsVisible = true;
+  agentsVisible = true;
 
   /** Raw reports data from resolver. */
   private reportsData: Report[] = [];
@@ -135,6 +136,13 @@ export class ReportsComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((available) => {
         this.paymentsVisible = available;
+        this.cdr.markForCheck();
+      });
+    this.moduleCapability
+      .agentsAvailable()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((available) => {
+        this.agentsVisible = available;
         this.cdr.markForCheck();
       });
   }

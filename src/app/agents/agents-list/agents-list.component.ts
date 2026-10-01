@@ -1,0 +1,99 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+/** Angular Imports */
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort, MatSortHeader } from '@angular/material/sort';
+import {
+  MatTableDataSource,
+  MatTable,
+  MatColumnDef,
+  MatHeaderCellDef,
+  MatHeaderCell,
+  MatCellDef,
+  MatCell,
+  MatHeaderRowDef,
+  MatHeaderRow,
+  MatRowDef,
+  MatRow
+} from '@angular/material/table';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+
+/**
+ * Agents list component.
+ */
+@Component({
+  selector: 'mifosx-agents-list',
+  templateUrl: './agents-list.component.html',
+  styleUrls: ['./agents-list.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    RouterLink,
+    FaIconComponent,
+    MatTable,
+    MatSort,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatHeaderCell,
+    MatSortHeader,
+    MatCellDef,
+    MatCell,
+    MatHeaderRowDef,
+    MatHeaderRow,
+    MatRowDef,
+    MatRow,
+    MatPaginator
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class AgentsListComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private destroyRef = inject(DestroyRef);
+
+  /** Agents data. */
+  agentsData: any;
+  /** Columns to be displayed in agents table. */
+  displayedColumns: string[] = [
+    'code',
+    'name',
+    'status',
+    'floatBalance',
+    'location'
+  ];
+  /** Data source for agents table. */
+  dataSource: MatTableDataSource<any>;
+
+  /** Paginator for agents table. */
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  /** Sorter for agents table. */
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+
+  constructor() {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { agents: any }) => {
+      this.agentsData = data.agents || [];
+    });
+  }
+
+  ngOnInit() {
+    this.dataSource = new MatTableDataSource(this.agentsData);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+  /**
+   * Filters data in agents table based on passed value.
+   * @param {string} filterValue Value to filter data.
+   */
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+}

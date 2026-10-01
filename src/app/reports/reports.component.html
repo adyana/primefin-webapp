@@ -29,6 +29,11 @@
         {{ 'labels.menus.Payments Dashboard' | translate }}
       </a>
     }
+    @if (agentsVisible) {
+      <a class="btn btn-ghost" [routerLink]="['/agents/dashboard']" *mifosxHasPermission="'READ_AGENT'">
+        {{ 'labels.menus.Agent Dashboard' | translate }}
+      </a>
+    }
   </div>
 
   <!-- ── Toolbar ────────────────────────────────────────────── -->

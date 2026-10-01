@@ -41,4 +41,9 @@ export class ModuleCapabilityService {
   paymentsAvailable(): Observable<boolean> {
     return this.probe('/v2/payment-health');
   }
+
+  /** @returns True when the agent-banking module answers. */
+  agentsAvailable(): Observable<boolean> {
+    return this.probe('/v2/agent-health');
+  }
 }
