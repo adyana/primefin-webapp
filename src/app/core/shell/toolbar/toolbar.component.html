@@ -235,6 +235,11 @@
       {{ 'labels.menus.QRIS Dashboard' | translate }}
     </button>
   }
+  @if (complianceVisible) {
+    <button mat-menu-item [routerLink]="['/compliance']" tabindex="0" *mifosxHasPermission="'READ_COMPLIANCE'">
+      {{ 'labels.menus.Deny List' | translate }}
+    </button>
+  }
 </mat-menu>
 
 <mat-menu #adminMenu="matMenu" [overlapTrigger]="false">
@@ -282,6 +287,11 @@
   @if (qrisVisible) {
     <button mat-menu-item [matMenuTriggerFor]="qrisMenu" tabindex="0" *mifosxHasPermission="'READ_QRIS'">
       {{ 'labels.menus.QRIS' | translate }}
+    </button>
+  }
+  @if (complianceVisible) {
+    <button mat-menu-item [matMenuTriggerFor]="complianceMenu" tabindex="0" *mifosxHasPermission="'READ_COMPLIANCE'">
+      {{ 'labels.menus.Compliance' | translate }}
     </button>
   }
 </mat-menu>
@@ -340,6 +350,12 @@
   </button>
   <button mat-menu-item [routerLink]="['/qris/mdr-rules']" tabindex="0" *mifosxHasPermission="'READ_QRIS'">
     {{ 'labels.menus.QRIS MDR Rules' | translate }}
+  </button>
+</mat-menu>
+
+<mat-menu #complianceMenu="matMenu" [overlapTrigger]="false">
+  <button mat-menu-item [routerLink]="['/compliance']" tabindex="0" *mifosxHasPermission="'READ_COMPLIANCE'">
+    {{ 'labels.menus.Deny List' | translate }}
   </button>
 </mat-menu>
 

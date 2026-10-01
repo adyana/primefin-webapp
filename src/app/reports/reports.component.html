@@ -39,6 +39,11 @@
         {{ 'labels.menus.QRIS Dashboard' | translate }}
       </a>
     }
+    @if (complianceVisible) {
+      <a class="btn btn-ghost" [routerLink]="['/compliance']" *mifosxHasPermission="'READ_COMPLIANCE'">
+        {{ 'labels.menus.Deny List' | translate }}
+      </a>
+    }
   </div>
 
   <!-- ── Toolbar ────────────────────────────────────────────── -->

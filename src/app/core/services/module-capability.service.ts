@@ -51,4 +51,9 @@ export class ModuleCapabilityService {
   qrisAvailable(): Observable<boolean> {
     return this.probe('/v2/qris-health');
   }
+
+  /** @returns True when the compliance module answers. */
+  complianceAvailable(): Observable<boolean> {
+    return this.probe('/v2/compliance-health');
+  }
 }

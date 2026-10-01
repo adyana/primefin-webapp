@@ -76,6 +76,7 @@ export class ReportsComponent implements OnInit {
   paymentsVisible = true;
   agentsVisible = true;
   qrisVisible = true;
+  complianceVisible = true;
 
   /** Raw reports data from resolver. */
   private reportsData: Report[] = [];
@@ -151,6 +152,13 @@ export class ReportsComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((available) => {
         this.qrisVisible = available;
+        this.cdr.markForCheck();
+      });
+    this.moduleCapability
+      .complianceAvailable()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((available) => {
+        this.complianceVisible = available;
         this.cdr.markForCheck();
       });
   }
