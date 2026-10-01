@@ -330,6 +330,9 @@
   <button mat-menu-item [routerLink]="['/payments/schedules']" tabindex="0" *mifosxHasPermission="'READ_PAYMENT'">
     {{ 'labels.menus.Payment Schedules' | translate }}
   </button>
+  <button mat-menu-item [routerLink]="['/payments/treasury']" tabindex="0" *mifosxHasPermission="'READ_PAYMENT'">
+    {{ 'labels.menus.Treasury' | translate }}
+  </button>
 </mat-menu>
 
 <mat-menu #agentsMenu="matMenu" [overlapTrigger]="false">

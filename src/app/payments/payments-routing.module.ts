@@ -11,6 +11,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 /** Custom Components */
+import { TreasuryComponent } from './treasury/treasury.component';
 import { RailsDashboardComponent } from './rails-dashboard/rails-dashboard.component';
 import { PaymentBreaksComponent } from './breaks/breaks.component';
 import { PaymentFraudSlaComponent } from './fraud-sla/fraud-sla.component';
@@ -121,6 +122,11 @@ const routes: Routes = [
       path: 'schedules/create',
       component: CreateScheduleComponent,
       data: { title: 'Create Schedule', breadcrumb: 'Create', routeParamBreadcrumb: false }
+    },
+    {
+      path: 'treasury',
+      component: TreasuryComponent,
+      data: { title: 'Treasury Funding', breadcrumb: 'Treasury', routeParamBreadcrumb: false }
     }
   ])
 ];

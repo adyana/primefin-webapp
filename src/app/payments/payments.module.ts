@@ -13,6 +13,7 @@ import { NgModule } from '@angular/core';
 import { PaymentsRoutingModule } from './payments-routing.module';
 
 /** Custom Components */
+import { TreasuryComponent } from './treasury/treasury.component';
 import { RailsDashboardComponent } from './rails-dashboard/rails-dashboard.component';
 import { PaymentBreaksComponent } from './breaks/breaks.component';
 import { PaymentFraudSlaComponent } from './fraud-sla/fraud-sla.component';
@@ -33,6 +34,7 @@ import { CreateScheduleComponent } from './create-schedule/create-schedule.compo
 @NgModule({
   imports: [
     PaymentsRoutingModule,
+    TreasuryComponent,
     RailsDashboardComponent,
     PaymentBreaksComponent,
     PaymentFraudSlaComponent,

@@ -154,6 +154,22 @@ export class PaymentsService {
   }
 
   /**
+   * @returns Per-rail prefund projections (required vs limit with breach flag).
+   */
+  getPrefund(): Observable<any> {
+    return this.http.get('/v2/payment-prefund');
+  }
+
+  /**
+   * @param code Rail code.
+   * @param config Rail config (ticketMin, ticketMax, cutoffStart, cutoffEnd, timezone, prefundLimit).
+   * @returns Updated rail.
+   */
+  updateRailConfig(code: string, config: any): Observable<any> {
+    return this.http.put(`/v2/payment-rails/${code}/config`, config);
+  }
+
+  /**
    * @param status Mandate status filter (optional; all mandates when omitted).
    * @returns DDT autopay mandates.
    */

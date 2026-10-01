@@ -160,6 +160,27 @@ describe('PaymentsService', () => {
     expect(await rejectPromise).toEqual({ resourceId: 4 });
   });
 
+  it('should fetch prefund projections per rail', async () => {
+    const resultPromise = firstValueFrom(service.getPrefund());
+
+    const req = httpMock.expectOne((request) => request.url === '/v2/payment-prefund' && request.method === 'GET');
+    req.flush([{ rail: 'BCT', required: 100, limit: 200, breached: false }]);
+
+    expect(await resultPromise).toEqual([{ rail: 'BCT', required: 100, limit: 200, breached: false }]);
+  });
+
+  it('should update rail config without a deploy', async () => {
+    const resultPromise = firstValueFrom(service.updateRailConfig('BCT', { prefundLimit: 5000000 }));
+
+    const req = httpMock.expectOne(
+      (request) => request.url === '/v2/payment-rails/BCT/config' && request.method === 'PUT'
+    );
+    expect(req.request.body).toEqual({ prefundLimit: 5000000 });
+    req.flush({ code: 'BCT' });
+
+    expect(await resultPromise).toEqual({ code: 'BCT' });
+  });
+
   it('should manage schedules: list, create, update, run, runs', async () => {
     const listPromise = firstValueFrom(service.getSchedules());
     const createPromise = firstValueFrom(service.createSchedule({ code: 'S-1' }));
