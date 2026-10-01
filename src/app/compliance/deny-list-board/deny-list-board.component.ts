@@ -96,7 +96,8 @@ export class DenyListBoardComponent implements OnInit {
   hitColumns: string[] = [
     'context',
     'rawValue',
-    'createdOn'
+    'createdOn',
+    'actions'
   ];
 
   allowDataSource = new MatTableDataSource<any>([]);
@@ -104,6 +105,7 @@ export class DenyListBoardComponent implements OnInit {
     'subjectType',
     'normValue',
     'reason',
+    'status',
     'actions'
   ];
 
@@ -210,6 +212,30 @@ export class DenyListBoardComponent implements OnInit {
   revokeAllow(allowRow: any): void {
     this.complianceService
       .deleteAllow(allowRow.id)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => this.reloadAllow());
+  }
+
+  /**
+   * Maker step from a hit: prefill the release form with the hit's subject
+   * so ops only supplies the reason. Creates a PENDING release.
+   */
+  requestRelease(hitRow: any): void {
+    this.allowForm.reset({
+      subjectType: hitRow.entry?.subjectType ?? 'NAME',
+      value: hitRow.rawValue,
+      reason: ''
+    });
+    this.cdr.markForCheck();
+  }
+
+  /**
+   * Checker step: approve a pending release. The backend rejects
+   * self-approval; a different user must approve.
+   */
+  approveAllow(allowRow: any): void {
+    this.complianceService
+      .approveAllow(allowRow.id)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => this.reloadAllow());
   }

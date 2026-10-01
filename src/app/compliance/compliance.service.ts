@@ -102,4 +102,14 @@ export class ComplianceService {
   deleteAllow(allowId: number): Observable<any> {
     return this.http.delete(`/v2/compliance-allow/${allowId}`);
   }
+
+  /**
+   * Checker step: approve a pending release. The backend rejects
+   * self-approval (maker must differ from approver).
+   * @param allowId Allow id.
+   * @returns Approval result with resourceId.
+   */
+  approveAllow(allowId: number): Observable<any> {
+    return this.http.post(`/v2/compliance-allow/${allowId}/approve`, {});
+  }
 }

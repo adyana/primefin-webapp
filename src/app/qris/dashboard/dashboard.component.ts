@@ -83,7 +83,8 @@ export class QrisDashboardComponent implements OnInit {
     'value'
   ];
 
-  kpis: Array<{ labelKey: string; value: string; trend: number | null; positive: boolean }> = [];
+  kpis: Array<{ labelKey: string; value: string | number; trend: number | null; positive: boolean; money: boolean }> =
+    [];
 
   private merchants: any[] = [];
   private transactions: any[] = [];
@@ -152,32 +153,34 @@ export class QrisDashboardComponent implements OnInit {
     const activeCount = scopedMerchants.filter((m: any) => m.status === 'ACTIVE').length;
     const trend = (curValue: number, prevValue: number): number | null =>
       prevValue > 0 ? Math.abs(((curValue - prevValue) / prevValue) * 100) : null;
-    const money = (v: number) =>
-      `IDR ${v.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
     this.kpis = [
       {
         labelKey: 'labels.text.Total Merchants',
         value: `${scopedMerchants.length}`,
         trend: null,
-        positive: true
+        positive: true,
+        money: false
       },
       {
         labelKey: 'labels.text.Active Merchants',
         value: `${activeCount}`,
         trend: null,
-        positive: true
+        positive: true,
+        money: false
       },
       {
         labelKey: 'labels.text.Gross Volume',
-        value: money(sum(salesCur, 'amount')),
+        value: sum(salesCur, 'amount'),
         trend: trend(sum(salesCur, 'amount'), sum(salesPrev, 'amount')),
-        positive: sum(salesCur, 'amount') >= sum(salesPrev, 'amount')
+        positive: sum(salesCur, 'amount') >= sum(salesPrev, 'amount'),
+        money: true
       },
       {
         labelKey: 'labels.text.MDR Collected',
-        value: money(sum(salesCur, 'mdrAmount')),
+        value: sum(salesCur, 'mdrAmount'),
         trend: trend(sum(salesCur, 'mdrAmount'), sum(salesPrev, 'mdrAmount')),
-        positive: sum(salesCur, 'mdrAmount') >= sum(salesPrev, 'mdrAmount')
+        positive: sum(salesCur, 'mdrAmount') >= sum(salesPrev, 'mdrAmount'),
+        money: true
       }
     ];
     const byStatus = (items: any[], key: string): Array<[
@@ -191,8 +194,8 @@ export class QrisDashboardComponent implements OnInit {
       }
       return Object.entries(acc);
     };
-    const summary: Array<{ labelKey: string; detail: string | null; value: number | string }> = [
-      { labelKey: 'labels.text.Total Merchants', detail: null, value: scopedMerchants.length },
+    const summary: Array<{ labelKey: string; detail: string | null; value: number; money: boolean }> = [
+      { labelKey: 'labels.text.Total Merchants', detail: null, value: scopedMerchants.length, money: false },
       ...byStatus(scopedMerchants, 'status').map(
         ([
           s,
@@ -200,7 +203,8 @@ export class QrisDashboardComponent implements OnInit {
         ]) => ({
           labelKey: 'labels.text.Active Merchants',
           detail: s,
-          value: count
+          value: count,
+          money: false
         })
       ),
       ...byStatus(scopedMerchants, 'segment').map(
@@ -210,11 +214,12 @@ export class QrisDashboardComponent implements OnInit {
         ]) => ({
           labelKey: 'labels.text.Total Merchants',
           detail: s,
-          value: count
+          value: count,
+          money: false
         })
       ),
-      { labelKey: 'labels.text.Gross Volume', detail: null, value: money(sum(sales, 'amount')) },
-      { labelKey: 'labels.text.MDR Collected', detail: null, value: money(sum(sales, 'mdrAmount')) }
+      { labelKey: 'labels.text.Gross Volume', detail: null, value: sum(sales, 'amount'), money: true },
+      { labelKey: 'labels.text.MDR Collected', detail: null, value: sum(sales, 'mdrAmount'), money: true }
     ];
     this.summaryDataSource.data = summary;
     this.cdr.markForCheck();

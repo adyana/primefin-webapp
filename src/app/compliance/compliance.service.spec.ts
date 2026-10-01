@@ -87,4 +87,15 @@ describe('ComplianceService', () => {
     expect(await allowPromise).toEqual({ resourceId: 3 });
     expect(await hitsPromise).toEqual([]);
   });
+
+  it('should approve a pending release via the checker step', async () => {
+    const resultPromise = firstValueFrom(service.approveAllow(3));
+
+    const req = httpMock.expectOne(
+      (request) => request.url === '/v2/compliance-allow/3/approve' && request.method === 'POST'
+    );
+    req.flush({ resourceId: 3 });
+
+    expect(await resultPromise).toEqual({ resourceId: 3 });
+  });
 });

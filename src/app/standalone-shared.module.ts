@@ -21,6 +21,7 @@ import { MatOption } from '@angular/material/core';
 import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
 import { MatButton } from '@angular/material/button';
 import { MatCheckbox } from '@angular/material/checkbox';
+import { CompactMoneyPipe } from '@pipes/compact-money.pipe';
 import { DateFormatPipe } from '@pipes/date-format.pipe';
 import { DatatableDisplayLabelPipe } from '@pipes/datatable-display-label.pipe';
 import { DocumentationLinkPipe } from '@pipes/documentation-link.pipe';
@@ -52,6 +53,7 @@ export const STANDALONE_SHARED_IMPORTS = [
   MatDatepicker,
   MatButton,
   MatCheckbox,
+  CompactMoneyPipe,
   DateFormatPipe,
   DatatableDisplayLabelPipe,
   DocumentationLinkPipe,

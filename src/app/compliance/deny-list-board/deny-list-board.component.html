@@ -143,6 +143,20 @@
             <td mat-cell *matCellDef="let hit">{{ hit.createdOn }}</td>
           </ng-container>
 
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
+            <td mat-cell *matCellDef="let hit">
+              <button
+                mat-button
+                color="primary"
+                (click)="requestRelease(hit)"
+                *mifosxHasPermission="'CREATE_COMPLIANCE'"
+              >
+                {{ 'labels.buttons.Request Release' | translate }}
+              </button>
+            </td>
+          </ng-container>
+
           <tr mat-header-row *matHeaderRowDef="hitColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: hitColumns"></tr>
         </table>
@@ -204,12 +218,27 @@
             <td mat-cell *matCellDef="let allow">{{ allow.reason }}</td>
           </ng-container>
 
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Status' | translate }}</th>
+            <td mat-cell *matCellDef="let allow">{{ allow.status }}</td>
+          </ng-container>
+
           <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
             <td mat-cell *matCellDef="let allow">
-              <button mat-button color="warn" (click)="revokeAllow(allow)" *mifosxHasPermission="'UPDATE_COMPLIANCE'">
-                {{ 'labels.buttons.Revoke' | translate }}
-              </button>
+              <div class="layout-row gap-8px">
+                <button
+                  mat-button
+                  color="primary"
+                  (click)="approveAllow(allow)"
+                  *mifosxHasPermission="'UPDATE_COMPLIANCE'"
+                >
+                  {{ 'labels.buttons.Approve' | translate }}
+                </button>
+                <button mat-button color="warn" (click)="revokeAllow(allow)" *mifosxHasPermission="'UPDATE_COMPLIANCE'">
+                  {{ 'labels.buttons.Revoke' | translate }}
+                </button>
+              </div>
             </td>
           </ng-container>
 

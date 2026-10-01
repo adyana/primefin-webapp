@@ -21,7 +21,11 @@
         <mat-card-content>
           <p class="kpi-label">{{ kpi.labelKey | translate }}</p>
           <p class="kpi-value">
-            {{ kpi.value }}
+            @if (kpi.money) {
+              {{ kpi.value | compactMoney }}
+            } @else {
+              {{ kpi.value }}
+            }
           </p>
         </mat-card-content>
       </mat-card>
@@ -47,22 +51,22 @@
 
       <ng-container matColumnDef="required">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Required' | translate }}</th>
-        <td mat-cell *matCellDef="let row">{{ row.required }}</td>
+        <td mat-cell *matCellDef="let row">{{ row.required | compactMoney }}</td>
       </ng-container>
 
       <ng-container matColumnDef="limit">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Limit' | translate }}</th>
-        <td mat-cell *matCellDef="let row">{{ row.limit }}</td>
+        <td mat-cell *matCellDef="let row">{{ row.limit | compactMoney }}</td>
       </ng-container>
 
       <ng-container matColumnDef="headroom">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Headroom' | translate }}</th>
-        <td mat-cell *matCellDef="let row">{{ row.headroom }}</td>
+        <td mat-cell *matCellDef="let row">{{ row.headroom | compactMoney }}</td>
       </ng-container>
 
       <ng-container matColumnDef="todayVolume">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Today Volume' | translate }}</th>
-        <td mat-cell *matCellDef="let row">{{ row.todayVolume }}</td>
+        <td mat-cell *matCellDef="let row">{{ row.todayVolume | compactMoney }}</td>
       </ng-container>
 
       <ng-container matColumnDef="inFlight">
@@ -93,38 +97,41 @@
       </mat-card-title>
 
       <mat-card-content>
-        <form [formGroup]="configForm" class="layout-row gap-20px responsive-column">
-          <mat-form-field class="flex-fill">
-            <mat-label>{{ 'labels.inputs.Ticket Min' | translate }}</mat-label>
-            <input matInput type="number" formControlName="ticketMin" />
-          </mat-form-field>
+        <form [formGroup]="configForm">
+          <div class="layout-row gap-20px responsive-column">
+            <mat-form-field class="flex-fill">
+              <mat-label>{{ 'labels.inputs.Ticket Min' | translate }}</mat-label>
+              <input matInput type="number" formControlName="ticketMin" />
+            </mat-form-field>
 
-          <mat-form-field class="flex-fill">
-            <mat-label>{{ 'labels.inputs.Ticket Max' | translate }}</mat-label>
-            <input matInput type="number" formControlName="ticketMax" />
-          </mat-form-field>
+            <mat-form-field class="flex-fill">
+              <mat-label>{{ 'labels.inputs.Ticket Max' | translate }}</mat-label>
+              <input matInput type="number" formControlName="ticketMax" />
+            </mat-form-field>
 
-          <mat-form-field class="flex-fill">
-            <mat-label>{{ 'labels.inputs.Cutoff Start' | translate }}</mat-label>
-            <input matInput formControlName="cutoffStart" placeholder="06:30:00" />
-          </mat-form-field>
+            <mat-form-field class="flex-fill">
+              <mat-label>{{ 'labels.inputs.Cutoff Start' | translate }}</mat-label>
+              <input matInput formControlName="cutoffStart" placeholder="06:30:00" />
+            </mat-form-field>
 
-          <mat-form-field class="flex-fill">
-            <mat-label>{{ 'labels.inputs.Cutoff End' | translate }}</mat-label>
-            <input matInput formControlName="cutoffEnd" placeholder="16:30:00" />
-          </mat-form-field>
+            <mat-form-field class="flex-fill">
+              <mat-label>{{ 'labels.inputs.Cutoff End' | translate }}</mat-label>
+              <input matInput formControlName="cutoffEnd" placeholder="16:30:00" />
+            </mat-form-field>
 
-          <mat-form-field class="flex-fill">
-            <mat-label>{{ 'labels.inputs.Timezone' | translate }}</mat-label>
-            <input matInput formControlName="timezone" placeholder="Asia/Jakarta" />
-          </mat-form-field>
+            <mat-form-field class="flex-fill">
+              <mat-label>{{ 'labels.inputs.Timezone' | translate }}</mat-label>
+              <input matInput formControlName="timezone" placeholder="Asia/Jakarta" />
+            </mat-form-field>
 
-          <mat-form-field class="flex-fill">
-            <mat-label>{{ 'labels.inputs.Limit' | translate }}</mat-label>
-            <input matInput type="number" formControlName="prefundLimit" />
-          </mat-form-field>
+            <mat-form-field class="flex-fill">
+              <mat-label>{{ 'labels.inputs.Limit' | translate }}</mat-label>
+              <input matInput type="number" formControlName="prefundLimit" />
+            </mat-form-field>
+          </div>
 
-          <div class="in-block">
+          <div class="layout-row gap-8px m-t-20">
+            <button mat-raised-button (click)="cancelEdit()">{{ 'labels.buttons.Cancel' | translate }}</button>
             <button mat-raised-button color="primary" (click)="save()">
               {{ 'labels.buttons.Save' | translate }}
             </button>

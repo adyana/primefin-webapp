@@ -82,20 +82,22 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
         <td mat-cell *matCellDef="let mandate">
-          <button
-            mat-button
-            color="primary"
-            (click)="selectForCollect(mandate)"
-            *mifosxHasPermission="'UPDATE_PAYMENT'"
-          >
-            {{ 'labels.buttons.Collect' | translate }}
-          </button>
-          <button mat-button color="warn" (click)="suspend(mandate)" *mifosxHasPermission="'UPDATE_PAYMENT'">
-            {{ 'labels.buttons.Suspend' | translate }}
-          </button>
-          <button mat-button color="warn" (click)="revoke(mandate)" *mifosxHasPermission="'UPDATE_PAYMENT'">
-            {{ 'labels.buttons.Revoke' | translate }}
-          </button>
+          <div class="layout-row gap-8px">
+            <button
+              mat-button
+              color="primary"
+              (click)="selectForCollect(mandate)"
+              *mifosxHasPermission="'UPDATE_PAYMENT'"
+            >
+              {{ 'labels.buttons.Collect' | translate }}
+            </button>
+            <button mat-button color="warn" (click)="suspend(mandate)" *mifosxHasPermission="'UPDATE_PAYMENT'">
+              {{ 'labels.buttons.Suspend' | translate }}
+            </button>
+            <button mat-button color="warn" (click)="revoke(mandate)" *mifosxHasPermission="'UPDATE_PAYMENT'">
+              {{ 'labels.buttons.Revoke' | translate }}
+            </button>
+          </div>
         </td>
       </ng-container>
 

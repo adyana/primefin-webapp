@@ -83,7 +83,8 @@ export class AgentsDashboardComponent implements OnInit {
     'value'
   ];
 
-  kpis: Array<{ labelKey: string; value: string; trend: number | null; positive: boolean }> = [];
+  kpis: Array<{ labelKey: string; value: string | number; trend: number | null; positive: boolean; money: boolean }> =
+    [];
 
   private agents: any[] = [];
   private transactions: any[] = [];
@@ -149,27 +150,34 @@ export class AgentsDashboardComponent implements OnInit {
     const activeCount = scopedAgents.filter((a: any) => a.status === 'ACTIVE').length;
     const trend = (curValue: number, prevValue: number): number | null =>
       prevValue > 0 ? Math.abs(((curValue - prevValue) / prevValue) * 100) : null;
-    const money = (v: number) =>
-      `IDR ${v.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
     this.kpis = [
       {
         labelKey: 'labels.text.Total Agents',
         value: `${scopedAgents.length}`,
         trend: null,
-        positive: true
+        positive: true,
+        money: false
       },
       {
         labelKey: 'labels.text.Active Agents',
         value: `${activeCount}`,
         trend: null,
-        positive: true
+        positive: true,
+        money: false
       },
-      { labelKey: 'labels.text.Total Float', value: money(floatOf(scopedAgents)), trend: null, positive: true },
+      {
+        labelKey: 'labels.text.Total Float',
+        value: floatOf(scopedAgents),
+        trend: null,
+        positive: true,
+        money: true
+      },
       {
         labelKey: 'labels.text.Agent Transactions',
         value: `${txnsCur.length}`,
         trend: trend(txnsCur.length, txnsPrev.length),
-        positive: txnsCur.length >= txnsPrev.length
+        positive: txnsCur.length >= txnsPrev.length,
+        money: false
       }
     ];
     const byStatus = (items: any[], key: string): Array<[
@@ -183,8 +191,8 @@ export class AgentsDashboardComponent implements OnInit {
       }
       return Object.entries(acc);
     };
-    const summary: Array<{ labelKey: string; detail: string | null; value: number | string }> = [
-      { labelKey: 'labels.text.Total Agents', detail: null, value: scopedAgents.length },
+    const summary: Array<{ labelKey: string; detail: string | null; value: number; money: boolean }> = [
+      { labelKey: 'labels.text.Total Agents', detail: null, value: scopedAgents.length, money: false },
       ...byStatus(scopedAgents, 'status').map(
         ([
           s,
@@ -192,11 +200,12 @@ export class AgentsDashboardComponent implements OnInit {
         ]) => ({
           labelKey: 'labels.text.Active Agents',
           detail: s,
-          value: count
+          value: count,
+          money: false
         })
       ),
-      { labelKey: 'labels.text.Total Float', detail: null, value: money(floatOf(scopedAgents)) },
-      { labelKey: 'labels.text.Agent Transactions', detail: null, value: scopedTxns.length },
+      { labelKey: 'labels.text.Total Float', detail: null, value: floatOf(scopedAgents), money: true },
+      { labelKey: 'labels.text.Agent Transactions', detail: null, value: scopedTxns.length, money: false },
       ...byStatus(scopedTxns, 'type').map(
         ([
           t,
@@ -204,7 +213,8 @@ export class AgentsDashboardComponent implements OnInit {
         ]) => ({
           labelKey: 'labels.text.Agent Transactions',
           detail: t,
-          value: count
+          value: count,
+          money: false
         })
       )
     ];

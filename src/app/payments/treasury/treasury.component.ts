@@ -100,7 +100,7 @@ export class TreasuryComponent implements OnInit {
     prefundLimit: [null]
   });
 
-  kpis: Array<{ labelKey: string; value: string; positive: boolean }> = [];
+  kpis: Array<{ labelKey: string; value: string | number; positive: boolean; money: boolean }> = [];
 
   ngOnInit(): void {
     this.load();
@@ -137,10 +137,6 @@ export class TreasuryComponent implements OnInit {
       const code = batch.rail ?? 'UNKNOWN';
       inFlightByRail[code] = (inFlightByRail[code] ?? 0) + 1;
     }
-    const money = (v: number | null) =>
-      v === null || v === undefined
-        ? '—'
-        : `IDR ${Number(v).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
     const rows = projections.map((p: any) => {
       const rail = railOf.get(p.rail) ?? {};
       const required = Number(p.required ?? 0);
@@ -152,11 +148,11 @@ export class TreasuryComponent implements OnInit {
         raw: rail,
         status: rail.status ?? 'UNKNOWN',
         window: short && end ? `${short}–${end}` : '—',
-        required: money(required),
-        limit: money(limit),
-        headroom: limit === null ? '—' : money(limit - required),
+        required,
+        limit,
+        headroom: limit === null ? null : limit - required,
         breached: !!p.breached,
-        todayVolume: money(Number(perRail[p.rail]?.totalValue ?? 0)),
+        todayVolume: Number(perRail[p.rail]?.totalValue ?? 0),
         inFlight: `${inFlightByRail[p.rail] ?? 0}`
       };
     });
@@ -164,17 +160,19 @@ export class TreasuryComponent implements OnInit {
     const breached = rows.filter((r: any) => r.breached).length;
     const totalRequired = projections.reduce((s: number, p: any) => s + Number(p.required ?? 0), 0);
     this.kpis = [
-      { labelKey: 'labels.text.Breached Rails', value: `${breached}`, positive: breached === 0 },
-      { labelKey: 'labels.text.Total Required', value: money(totalRequired), positive: true },
+      { labelKey: 'labels.text.Breached Rails', value: `${breached}`, positive: breached === 0, money: false },
+      { labelKey: 'labels.text.Total Required', value: totalRequired, positive: true, money: true },
       {
         labelKey: 'labels.text.RTGS Queue',
         value: `${throughput.rtgsQueueDepth ?? 0}`,
-        positive: (throughput.rtgsQueueDepth ?? 0) === 0
+        positive: (throughput.rtgsQueueDepth ?? 0) === 0,
+        money: false
       },
       {
         labelKey: 'labels.text.Open Breaks',
         value: `${throughput.openBreaks ?? 0}`,
-        positive: (throughput.openBreaks ?? 0) === 0
+        positive: (throughput.openBreaks ?? 0) === 0,
+        money: false
       }
     ];
     this.cdr.markForCheck();
@@ -202,6 +200,11 @@ export class TreasuryComponent implements OnInit {
         this.selectedRail = null;
         this.load();
       });
+  }
+
+  cancelEdit(): void {
+    this.selectedRail = null;
+    this.cdr.markForCheck();
   }
 
   exportCsv(): void {
