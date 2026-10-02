@@ -183,6 +183,60 @@ export class ComplianceService {
   }
 
   /**
+   * @returns SLIK snapshots, newest first.
+   */
+  getSlikSnapshots(): Observable<any> {
+    return this.http.get('/v2/slik-snapshots');
+  }
+
+  /**
+   * @param period Period YYYYMM.
+   * @returns Close result with resourceId.
+   */
+  closeSlikPeriod(period: string): Observable<any> {
+    return this.http.post(`/v2/slik-snapshots/${period}/close`, {});
+  }
+
+  /**
+   * @param period Period YYYYMM.
+   * @returns Debtor rows of the period.
+   */
+  getSlikRows(period: string): Observable<any> {
+    return this.http.get(`/v2/slik-snapshots/${period}/rows`);
+  }
+
+  /**
+   * @param period Period YYYYMM.
+   * @returns Tie-out result (match, frozen, live, detail).
+   */
+  validateSlikPeriod(period: string): Observable<any> {
+    return this.http.get(`/v2/slik-snapshots/${period}/validate`);
+  }
+
+  /**
+   * @param period Period YYYYMM.
+   * @returns Submit result.
+   */
+  submitSlikPeriod(period: string): Observable<any> {
+    return this.http.post(`/v2/slik-snapshots/${period}/submit`, {});
+  }
+
+  /**
+   * Downloads the IDI-layout extract through the authenticated client.
+   * @param period Period YYYYMM.
+   */
+  downloadSlikExtract(period: string): void {
+    this.http.get(`/v2/slik-snapshots/${period}/extract`, { responseType: 'blob' }).subscribe((blob: Blob) => {
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement('a');
+      anchor.href = url;
+      anchor.download = `slik-${period}.txt`;
+      anchor.click();
+      URL.revokeObjectURL(url);
+    });
+  }
+
+  /**
    * Downloads the goAML XML through the authenticated client (an anchor
    * alone would miss the Authorization header).
    * @param reportId Report id.

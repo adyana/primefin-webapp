@@ -78,3 +78,19 @@ export class AmlReportsResolver {
     return this.complianceService.getAmlReports().pipe(catchError(() => of([])));
   }
 }
+
+/**
+ * SLIK snapshots data resolver (empty list when unreachable).
+ */
+@Injectable()
+export class SlikSnapshotsResolver {
+  private complianceService = inject(ComplianceService);
+
+  /**
+   * Returns all snapshots, newest first.
+   * @returns {Observable<any>}
+   */
+  resolve(): Observable<any> {
+    return this.complianceService.getSlikSnapshots().pipe(catchError(() => of([])));
+  }
+}

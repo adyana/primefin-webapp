@@ -375,6 +375,9 @@
   <button mat-menu-item [routerLink]="['/compliance/reports']" tabindex="0" *mifosxHasPermission="'READ_AML'">
     {{ 'labels.menus.AML Reports' | translate }}
   </button>
+  <button mat-menu-item [routerLink]="['/compliance/slik']" tabindex="0" *mifosxHasPermission="'READ_AML'">
+    {{ 'labels.menus.SLIK Snapshots' | translate }}
+  </button>
 </mat-menu>
 
 <!-- Application User Help Menu -->

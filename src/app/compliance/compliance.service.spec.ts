@@ -133,4 +133,34 @@ describe('ComplianceService', () => {
     expect(await reportsPromise).toEqual([{ id: 5 }]);
     expect(await generatePromise).toEqual({ resourceId: 5 });
   });
+
+  it('should manage SLIK snapshots end to end', async () => {
+    const listPromise = firstValueFrom(service.getSlikSnapshots());
+    const closePromise = firstValueFrom(service.closeSlikPeriod('202610'));
+    const rowsPromise = firstValueFrom(service.getSlikRows('202610'));
+    const validatePromise = firstValueFrom(service.validateSlikPeriod('202610'));
+    const submitPromise = firstValueFrom(service.submitSlikPeriod('202610'));
+
+    httpMock
+      .expectOne((request) => request.url === '/v2/slik-snapshots' && request.method === 'GET')
+      .flush([{ period: '202610' }]);
+    httpMock
+      .expectOne((request) => request.url === '/v2/slik-snapshots/202610/close' && request.method === 'POST')
+      .flush({ resourceId: 1 });
+    httpMock
+      .expectOne((request) => request.url === '/v2/slik-snapshots/202610/rows' && request.method === 'GET')
+      .flush([{ id: 9 }]);
+    httpMock
+      .expectOne((request) => request.url === '/v2/slik-snapshots/202610/validate' && request.method === 'GET')
+      .flush({ match: true });
+    httpMock
+      .expectOne((request) => request.url === '/v2/slik-snapshots/202610/submit' && request.method === 'POST')
+      .flush({ resourceId: 1 });
+
+    expect(await listPromise).toEqual([{ period: '202610' }]);
+    expect(await closePromise).toEqual({ resourceId: 1 });
+    expect(await rowsPromise).toEqual([{ id: 9 }]);
+    expect(await validatePromise).toEqual({ match: true });
+    expect(await submitPromise).toEqual({ resourceId: 1 });
+  });
 });

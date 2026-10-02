@@ -15,9 +15,16 @@ import { DenyListBoardComponent } from './deny-list-board/deny-list-board.compon
 import { AmlRulesComponent } from './aml-rules/aml-rules.component';
 import { AmlCasesComponent } from './aml-cases/aml-cases.component';
 import { AmlReportsComponent } from './aml-reports/aml-reports.component';
+import { SlikBoardComponent } from './slik-board/slik-board.component';
 
 /** Custom Resolvers */
-import { AmlCasesResolver, AmlReportsResolver, AmlRulesResolver, ComplianceListsResolver } from './compliance.resolver';
+import {
+  AmlCasesResolver,
+  AmlReportsResolver,
+  AmlRulesResolver,
+  ComplianceListsResolver,
+  SlikSnapshotsResolver
+} from './compliance.resolver';
 
 /** Custom Services */
 import { Route } from '../core/route/route.service';
@@ -56,6 +63,14 @@ const routes: Routes = [
       resolve: {
         reports: AmlReportsResolver
       }
+    },
+    {
+      path: 'slik',
+      component: SlikBoardComponent,
+      data: { title: 'SLIK Snapshots', breadcrumb: 'SLIK', routeParamBreadcrumb: false },
+      resolve: {
+        snapshots: SlikSnapshotsResolver
+      }
     }
   ])
 ];
@@ -70,7 +85,8 @@ const routes: Routes = [
     ComplianceListsResolver,
     AmlRulesResolver,
     AmlCasesResolver,
-    AmlReportsResolver
+    AmlReportsResolver,
+    SlikSnapshotsResolver
   ]
 })
 export class ComplianceRoutingModule {}

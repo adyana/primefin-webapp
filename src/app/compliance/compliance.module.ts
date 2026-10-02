@@ -17,10 +17,12 @@ import { DenyListBoardComponent } from './deny-list-board/deny-list-board.compon
 import { AmlRulesComponent } from './aml-rules/aml-rules.component';
 import { AmlCasesComponent } from './aml-cases/aml-cases.component';
 import { AmlReportsComponent } from './aml-reports/aml-reports.component';
+import { SlikBoardComponent } from './slik-board/slik-board.component';
 
 /**
  * Compliance module: deny-list board, import, hit audit, allow-list
- * (slice #1) plus AML monitoring rules, cases and reports (program #5).
+ * (slice #1) plus AML monitoring rules, cases and reports (program #5)
+ * plus SLIK snapshots (program #7).
  */
 @NgModule({
   imports: [
@@ -28,7 +30,8 @@ import { AmlReportsComponent } from './aml-reports/aml-reports.component';
     DenyListBoardComponent,
     AmlRulesComponent,
     AmlCasesComponent,
-    AmlReportsComponent
+    AmlReportsComponent,
+    SlikBoardComponent
   ],
   exports: [],
   declarations: [],
