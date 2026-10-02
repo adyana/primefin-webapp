@@ -251,4 +251,58 @@ export class ComplianceService {
       URL.revokeObjectURL(url);
     });
   }
+
+  /**
+   * @returns Filing submissions, newest first.
+   */
+  getFilings(): Observable<any> {
+    return this.http.get('/v2/filings');
+  }
+
+  /**
+   * @param period Period YYYYMM.
+   * @returns Filing result with resourceId.
+   */
+  fileLbutKredit(period: string): Observable<any> {
+    return this.http.post(`/v2/lbut/${period}/kredit/file`, {});
+  }
+
+  /**
+   * @param period Period YYYYMM.
+   * @returns Filing result with resourceId.
+   */
+  fileLbutSimpanan(period: string): Observable<any> {
+    return this.http.post(`/v2/lbut/${period}/simpanan/file`, {});
+  }
+
+  /**
+   * @param id Filing id.
+   * @returns Countersign result.
+   */
+  countersignFiling(id: number): Observable<any> {
+    return this.http.post(`/v2/filings/${id}/countersign`, {});
+  }
+
+  /**
+   * @param id Filing id.
+   * @returns Submit result.
+   */
+  submitFiling(id: number): Observable<any> {
+    return this.http.post(`/v2/filings/${id}/submit`, {});
+  }
+
+  /**
+   * Downloads a filing's rendered extract through the authenticated client.
+   * @param id Filing id.
+   */
+  downloadLbutFiling(id: number): void {
+    this.http.get(`/v2/lbut/download/${id}`, { responseType: 'blob' }).subscribe((blob: Blob) => {
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement('a');
+      anchor.href = url;
+      anchor.download = `lbut-filing-${id}.txt`;
+      anchor.click();
+      URL.revokeObjectURL(url);
+    });
+  }
 }

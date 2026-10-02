@@ -931,7 +931,10 @@
       "Add Row": "Add Row",
       "File Returns": "File Returns",
       "Show DKE": "Show DKE",
-      "Sweep to Recon Breaks": "Sweep to Recon Breaks"
+      "Sweep to Recon Breaks": "Sweep to Recon Breaks",
+      "Countersign": "Countersign",
+      "File Kredit": "File Kredit",
+      "File Simpanan": "File Simpanan"
     },
     "catalogs": {
       "% Amount": "Məbləğin %-i",
@@ -1961,7 +1964,9 @@
       "Rate Bands": "Rate Bands",
       "Caps": "Caps",
       "Windows": "Windows",
-      "Files": "Files"
+      "Files": "Files",
+      "New Filing": "New Filing",
+      "Filing Log": "Filing Log"
     },
     "inputs": {
       "Returned": "Qaytarılıb",
@@ -4109,7 +4114,11 @@
       "Line": "Line",
       "Partner Ref": "Partner Ref",
       "Our Ref": "Our Ref",
-      "Date Range": "Date Range"
+      "Date Range": "Date Range",
+      "Report": "Report",
+      "Builder": "Builder",
+      "Rows": "Rows",
+      "Checksum": "Checksum"
     },
     "links": {
       "Community": "İcma",
@@ -4294,7 +4303,8 @@
       "Payment Rails": "Payment Rails",
       "Payment Breaks": "Payment Breaks",
       "Payment Fraud SLA": "Payment Fraud SLA",
-      "Payment Batches": "Payment Batches"
+      "Payment Batches": "Payment Batches",
+      "Filing Log": "Filing Log"
     },
     "placeholders": {
       "# Remittance": "Pul köçürməsinin nömrəsi",

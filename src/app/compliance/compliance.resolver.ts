@@ -94,3 +94,19 @@ export class SlikSnapshotsResolver {
     return this.complianceService.getSlikSnapshots().pipe(catchError(() => of([])));
   }
 }
+
+/**
+ * Filing submissions data resolver (empty list when unreachable).
+ */
+@Injectable()
+export class FilingsResolver {
+  private complianceService = inject(ComplianceService);
+
+  /**
+   * Returns all filings, newest first.
+   * @returns {Observable<any>}
+   */
+  resolve(): Observable<any> {
+    return this.complianceService.getFilings().pipe(catchError(() => of([])));
+  }
+}

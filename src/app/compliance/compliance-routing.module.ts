@@ -16,6 +16,7 @@ import { AmlRulesComponent } from './aml-rules/aml-rules.component';
 import { AmlCasesComponent } from './aml-cases/aml-cases.component';
 import { AmlReportsComponent } from './aml-reports/aml-reports.component';
 import { SlikBoardComponent } from './slik-board/slik-board.component';
+import { FilingsBoardComponent } from './filings-board/filings-board.component';
 
 /** Custom Resolvers */
 import {
@@ -23,6 +24,7 @@ import {
   AmlReportsResolver,
   AmlRulesResolver,
   ComplianceListsResolver,
+  FilingsResolver,
   SlikSnapshotsResolver
 } from './compliance.resolver';
 
@@ -71,6 +73,14 @@ const routes: Routes = [
       resolve: {
         snapshots: SlikSnapshotsResolver
       }
+    },
+    {
+      path: 'filings',
+      component: FilingsBoardComponent,
+      data: { title: 'Filing Log', breadcrumb: 'Filings', routeParamBreadcrumb: false },
+      resolve: {
+        filings: FilingsResolver
+      }
     }
   ])
 ];
@@ -86,7 +96,8 @@ const routes: Routes = [
     AmlRulesResolver,
     AmlCasesResolver,
     AmlReportsResolver,
-    SlikSnapshotsResolver
+    SlikSnapshotsResolver,
+    FilingsResolver
   ]
 })
 export class ComplianceRoutingModule {}

@@ -163,4 +163,32 @@ describe('ComplianceService', () => {
     expect(await validatePromise).toEqual({ match: true });
     expect(await submitPromise).toEqual({ resourceId: 1 });
   });
+
+  it('should manage filings end to end', async () => {
+    const listPromise = firstValueFrom(service.getFilings());
+    const kreditPromise = firstValueFrom(service.fileLbutKredit('202610'));
+    const simpananPromise = firstValueFrom(service.fileLbutSimpanan('202610'));
+    const countersignPromise = firstValueFrom(service.countersignFiling(3));
+    const submitPromise = firstValueFrom(service.submitFiling(3));
+
+    httpMock.expectOne((request) => request.url === '/v2/filings' && request.method === 'GET').flush([{ id: 3 }]);
+    httpMock
+      .expectOne((request) => request.url === '/v2/lbut/202610/kredit/file' && request.method === 'POST')
+      .flush({ resourceId: 3 });
+    httpMock
+      .expectOne((request) => request.url === '/v2/lbut/202610/simpanan/file' && request.method === 'POST')
+      .flush({ resourceId: 4 });
+    httpMock
+      .expectOne((request) => request.url === '/v2/filings/3/countersign' && request.method === 'POST')
+      .flush({ resourceId: 3 });
+    httpMock
+      .expectOne((request) => request.url === '/v2/filings/3/submit' && request.method === 'POST')
+      .flush({ resourceId: 3 });
+
+    expect(await listPromise).toEqual([{ id: 3 }]);
+    expect(await kreditPromise).toEqual({ resourceId: 3 });
+    expect(await simpananPromise).toEqual({ resourceId: 4 });
+    expect(await countersignPromise).toEqual({ resourceId: 3 });
+    expect(await submitPromise).toEqual({ resourceId: 3 });
+  });
 });
