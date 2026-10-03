@@ -1,0 +1,106 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="container">
+  <mat-card class="m-b-20" *mifosxHasPermission="'CREATE_ONBOARDING'">
+    <mat-card-title class="m-b-16">{{ 'labels.heading.New Application' | translate }}</mat-card-title>
+
+    <mat-card-content>
+      <form [formGroup]="openForm" class="layout-row gap-20px">
+        <mat-form-field class="flex-fill">
+          <mat-label>{{ 'labels.inputs.Client ID' | translate }}</mat-label>
+          <input matInput formControlName="clientId" placeholder="1" required />
+        </mat-form-field>
+
+        <mat-form-field class="flex-fill">
+          <mat-label>{{ 'labels.inputs.Product ID' | translate }}</mat-label>
+          <input matInput formControlName="productId" placeholder="3" required />
+        </mat-form-field>
+
+        <mat-form-field class="flex-fill">
+          <mat-label>{{ 'labels.inputs.Principal' | translate }}</mat-label>
+          <input matInput formControlName="principalAmount" placeholder="4000" required />
+        </mat-form-field>
+
+        <div class="in-block">
+          <button
+            mat-raised-button
+            color="primary"
+            [disabled]="!openForm.valid"
+            (click)="open()"
+            *mifosxHasPermission="'CREATE_ONBOARDING'"
+          >
+            {{ 'labels.buttons.Open Application' | translate }}
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <div class="mat-elevation-z8 table-container m-b-20">
+    <table mat-table [dataSource]="applicationsDataSource">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.ID' | translate }}</th>
+        <td mat-cell *matCellDef="let app">{{ app.id }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="clientId">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Client ID' | translate }}</th>
+        <td mat-cell *matCellDef="let app">{{ app.clientId }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="principalAmount">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Principal' | translate }}</th>
+        <td mat-cell *matCellDef="let app">{{ app.principalAmount }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="currentStage">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Stage' | translate }}</th>
+        <td mat-cell *matCellDef="let app">{{ app.currentStage }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Status' | translate }}</th>
+        <td mat-cell *matCellDef="let app">{{ app.status }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="score">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Score' | translate }}</th>
+        <td mat-cell *matCellDef="let app">{{ app.score }}{{ app.scoreBand ? ' (' + app.scoreBand + ')' : '' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="loanId">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Loan ID' | translate }}</th>
+        <td mat-cell *matCellDef="let app">{{ app.loanId }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
+        <td mat-cell *matCellDef="let app">
+          <div class="layout-row gap-8px">
+            <button mat-button color="primary" (click)="advance(app.id)">
+              {{ 'labels.buttons.Advance' | translate }}
+            </button>
+            <button mat-button color="primary" (click)="score(app.id)">
+              {{ 'labels.buttons.Score' | translate }}
+            </button>
+            <button mat-button color="primary" (click)="disburse(app.id)">
+              {{ 'labels.buttons.Disburse' | translate }}
+            </button>
+            <button mat-button color="primary" (click)="book(app.id)">
+              {{ 'labels.buttons.Book Loan' | translate }}
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="applicationColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: applicationColumns"></tr>
+    </table>
+  </div>
+</div>

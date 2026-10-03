@@ -53,6 +53,10 @@ const routes: Routes = [
     loadChildren: () => import('./compliance/compliance.module').then((m) => m.ComplianceModule)
   },
   {
+    path: 'onboarding',
+    loadChildren: () => import('./onboarding/onboarding.module').then((m) => m.OnboardingModule)
+  },
+  {
     path: 'clients',
     loadChildren: () => import('./clients/clients.module').then((m) => m.ClientsModule)
   },

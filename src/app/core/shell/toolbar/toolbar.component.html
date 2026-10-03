@@ -294,6 +294,11 @@
       {{ 'labels.menus.Compliance' | translate }}
     </button>
   }
+  @if (onboardingVisible) {
+    <button mat-menu-item [matMenuTriggerFor]="onboardingMenu" tabindex="0" *mifosxHasPermission="'READ_ONBOARDING'">
+      {{ 'labels.menus.Onboarding' | translate }}
+    </button>
+  }
 </mat-menu>
 
 <mat-menu #channelingMenu="matMenu" [overlapTrigger]="false">
@@ -380,6 +385,15 @@
   </button>
   <button mat-menu-item [routerLink]="['/compliance/filings']" tabindex="0" *mifosxHasPermission="'READ_AML'">
     {{ 'labels.menus.Filing Log' | translate }}
+  </button>
+</mat-menu>
+
+<mat-menu #onboardingMenu="matMenu" [overlapTrigger]="false">
+  <button mat-menu-item [routerLink]="['/onboarding']" tabindex="0" *mifosxHasPermission="'READ_ONBOARDING'">
+    {{ 'labels.menus.Pipeline' | translate }}
+  </button>
+  <button mat-menu-item [routerLink]="['/onboarding/approvals']" tabindex="0" *mifosxHasPermission="'READ_ONBOARDING'">
+    {{ 'labels.menus.Approvals' | translate }}
   </button>
 </mat-menu>
 

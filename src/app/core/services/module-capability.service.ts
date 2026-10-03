@@ -56,4 +56,9 @@ export class ModuleCapabilityService {
   complianceAvailable(): Observable<boolean> {
     return this.probe('/v2/compliance-health');
   }
+
+  /** @returns True when the onboarding module answers. */
+  onboardingAvailable(): Observable<boolean> {
+    return this.probe('/v2/onboarding-health');
+  }
 }

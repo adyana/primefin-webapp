@@ -1009,7 +1009,12 @@
       "Sweep to Recon Breaks": "Sweep to Recon Breaks",
       "Countersign": "Countersign",
       "File Kredit": "File Kredit",
-      "File Simpanan": "File Simpanan"
+      "File Simpanan": "File Simpanan",
+      "Advance": "Advance",
+      "Score": "Score",
+      "Disburse": "Disburse",
+      "Book Loan": "Book Loan",
+      "Open Application": "Open Application"
     },
     "catalogs": {
       "% Amount": "रकम",
@@ -2058,7 +2063,9 @@
       "Windows": "Windows",
       "Files": "Files",
       "New Filing": "New Filing",
-      "Filing Log": "Filing Log"
+      "Filing Log": "Filing Log",
+      "New Application": "New Application",
+      "Decide with Reason": "Decide with Reason"
     },
     "inputs": {
       "Returned": "फिर्ता भएको",
@@ -4249,7 +4256,10 @@
       "Report": "Report",
       "Builder": "Builder",
       "Rows": "Rows",
-      "Checksum": "Checksum"
+      "Checksum": "Checksum",
+      "Product ID": "Product ID",
+      "Stage": "Stage",
+      "Decision Reason": "Decision Reason"
     },
     "links": {
       "Community": "समुदाय",
@@ -4435,7 +4445,10 @@
       "Payment Breaks": "Payment Breaks",
       "Payment Fraud SLA": "Payment Fraud SLA",
       "Payment Batches": "Payment Batches",
-      "Filing Log": "Filing Log"
+      "Filing Log": "Filing Log",
+      "Onboarding": "Onboarding",
+      "Pipeline": "Pipeline",
+      "Approvals": "Approvals"
     },
     "placeholders": {
       "Add new server": "नयाँ सर्भर थप्नुहोस्",

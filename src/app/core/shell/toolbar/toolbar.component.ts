@@ -97,6 +97,7 @@ export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChec
   agentsVisible = true;
   qrisVisible = true;
   complianceVisible = true;
+  onboardingVisible = true;
 
   /* Reference of institution */
   @ViewChild('institution') institution: ElementRef<any>;
@@ -159,6 +160,12 @@ export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChec
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((available) => {
         this.complianceVisible = available;
+      });
+    this.moduleCapability
+      .onboardingAvailable()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((available) => {
+        this.onboardingVisible = available;
       });
   }
 
