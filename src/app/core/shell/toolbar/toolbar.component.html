@@ -311,6 +311,9 @@
   <button mat-menu-item [routerLink]="['/channeling/files']" tabindex="0" *mifosxHasPermission="'READ_CHANNEL'">
     {{ 'labels.menus.Channel Files' | translate }}
   </button>
+  <button mat-menu-item [routerLink]="['/channeling/attribution']" tabindex="0" *mifosxHasPermission="'READ_CHANNEL'">
+    {{ 'labels.menus.Attribution' | translate }}
+  </button>
 </mat-menu>
 
 <mat-menu #paymentsMenu="matMenu" [overlapTrigger]="false">

@@ -16,11 +16,13 @@ import { ChannelPartnersComponent } from './partners/partners.component';
 import { CreatePartnerComponent } from './create-partner/create-partner.component';
 import { ViewPartnerComponent } from './view-partner/view-partner.component';
 import { ChannelFilesComponent } from './files/files.component';
+import { AttributionBoardComponent } from './attribution-board/attribution-board.component';
 
 /** Custom Resolvers */
 import { ChannelPartnersResolver } from './channel-partners.resolver';
 import { ChannelPartnerResolver } from './channel-partner.resolver';
 import { ChannelFilesResolver } from './channel-files.resolver';
+import { ChannelAttributionsResolver } from './channel-attributions.resolver';
 
 /** Custom Services */
 import { Route } from '../core/route/route.service';
@@ -55,6 +57,14 @@ const routes: Routes = [
       }
     },
     {
+      path: 'attribution',
+      component: AttributionBoardComponent,
+      data: { title: 'Attribution', breadcrumb: 'Attribution', routeParamBreadcrumb: false },
+      resolve: {
+        board: ChannelAttributionsResolver
+      }
+    },
+    {
       path: ':id',
       component: ViewPartnerComponent,
       data: { title: 'Channel Partner', breadcrumb: 'Partner', routeParamBreadcrumb: false },
@@ -74,7 +84,8 @@ const routes: Routes = [
   providers: [
     ChannelPartnersResolver,
     ChannelPartnerResolver,
-    ChannelFilesResolver
+    ChannelFilesResolver,
+    ChannelAttributionsResolver
   ]
 })
 export class ChannelingRoutingModule {}

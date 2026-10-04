@@ -206,4 +206,21 @@ export class ChannelingService {
     }
     return this.http.get('/v2/channel-dashboard/summary', { params });
   }
+
+  /**
+   * @returns All attributions, newest first.
+   */
+  getAttributions(): Observable<any> {
+    return this.http.get('/v2/channel-attribution');
+  }
+
+  /**
+   * @param entityType LOAN or PAYMENT.
+   * @param entityId Entity id.
+   * @param partnerCode Partner code.
+   * @returns Attribution result with resourceId.
+   */
+  attributeMoney(entityType: string, entityId: number, partnerCode: string): Observable<any> {
+    return this.http.post('/v2/channel-attribution', { entityType, entityId, partnerCode });
+  }
 }

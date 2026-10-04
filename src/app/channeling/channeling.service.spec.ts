@@ -156,4 +156,20 @@ describe('ChannelingService', () => {
       { resourceId: 7 }
     ]);
   });
+
+  it('should list attributions and file a new one', async () => {
+    const listPromise = firstValueFrom(service.getAttributions());
+    const filePromise = firstValueFrom(service.attributeMoney('LOAN', 11, 'PRIMA'));
+
+    const get = httpMock.expectOne((request) => request.url === '/v2/channel-attribution' && request.method === 'GET');
+    get.flush([{ id: 1 }]);
+    const post = httpMock.expectOne(
+      (request) => request.url === '/v2/channel-attribution' && request.method === 'POST'
+    );
+    expect(post.request.body).toEqual({ entityType: 'LOAN', entityId: 11, partnerCode: 'PRIMA' });
+    post.flush({ resourceId: 1 });
+
+    expect(await listPromise).toEqual([{ id: 1 }]);
+    expect(await filePromise).toEqual({ resourceId: 1 });
+  });
 });

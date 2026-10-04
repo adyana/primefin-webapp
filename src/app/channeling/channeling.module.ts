@@ -18,6 +18,7 @@ import { ChannelPartnersComponent } from './partners/partners.component';
 import { CreatePartnerComponent } from './create-partner/create-partner.component';
 import { ViewPartnerComponent } from './view-partner/view-partner.component';
 import { ChannelFilesComponent } from './files/files.component';
+import { AttributionBoardComponent } from './attribution-board/attribution-board.component';
 
 /**
  * Channeling module: partner registry + product/rate/cap/window config (P3).
@@ -29,7 +30,8 @@ import { ChannelFilesComponent } from './files/files.component';
     ChannelPartnersComponent,
     CreatePartnerComponent,
     ViewPartnerComponent,
-    ChannelFilesComponent
+    ChannelFilesComponent,
+    AttributionBoardComponent
   ],
   exports: [],
   declarations: [],

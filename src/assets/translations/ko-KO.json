@@ -1014,7 +1014,8 @@
       "Score": "Score",
       "Disburse": "Disburse",
       "Book Loan": "Book Loan",
-      "Open Application": "Open Application"
+      "Open Application": "Open Application",
+      "Attribute": "Attribute"
     },
     "catalogs": {
       "% Amount": "양",
@@ -2067,7 +2068,8 @@
       "New Application": "New Application",
       "Decide with Reason": "Decide with Reason",
       "Application Detail": "Application Detail",
-      "Money Movement": "Money Movement"
+      "Money Movement": "Money Movement",
+      "New Attribution": "New Attribution"
     },
     "inputs": {
       "Returned": "반환됨",
@@ -4263,7 +4265,11 @@
       "Stage": "Stage",
       "Decision Reason": "Decision Reason",
       "Actor": "Actor",
-      "Completed On": "Completed On"
+      "Completed On": "Completed On",
+      "Entity ID": "Entity ID",
+      "Partner": "Partner",
+      "Attributed By": "Attributed By",
+      "Attributed On": "Attributed On"
     },
     "links": {
       "Community": "지역 사회",
@@ -4452,7 +4458,8 @@
       "Filing Log": "Filing Log",
       "Onboarding": "Onboarding",
       "Pipeline": "Pipeline",
-      "Approvals": "Approvals"
+      "Approvals": "Approvals",
+      "Attribution": "Attribution"
     },
     "placeholders": {
       "Add new server": "새 서버 추가",
