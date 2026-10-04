@@ -2071,7 +2071,8 @@
       "Decide with Reason": "Decide with Reason",
       "Application Detail": "Application Detail",
       "Money Movement": "Money Movement",
-      "New Attribution": "New Attribution"
+      "New Attribution": "New Attribution",
+      "Pending Proposals": "Pending Proposals"
     },
     "inputs": {
       "Returned": "Returned",
@@ -4265,7 +4266,10 @@
       "Entity ID": "Entity ID",
       "Partner": "Partner",
       "Attributed By": "Attributed By",
-      "Attributed On": "Attributed On"
+      "Attributed On": "Attributed On",
+      "From Partner": "From Partner",
+      "To Partner": "To Partner",
+      "Proposed By": "Proposed By"
     },
     "links": {
       "Community": "Community",

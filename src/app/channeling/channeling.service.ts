@@ -231,4 +231,27 @@ export class ChannelingService {
   removeAttribution(id: number): Observable<any> {
     return this.http.delete(`/v2/channel-attribution/${id}`);
   }
+
+  /**
+   * @returns Pending move proposals, newest first.
+   */
+  getProposals(): Observable<any> {
+    return this.http.get('/v2/channel-attribution/proposals/pending');
+  }
+
+  /**
+   * @param id Proposal id.
+   * @returns Approval result.
+   */
+  approveProposal(id: number): Observable<any> {
+    return this.http.post(`/v2/channel-attribution/proposals/${id}/approve`, {});
+  }
+
+  /**
+   * @param id Proposal id.
+   * @returns Rejection result.
+   */
+  rejectProposal(id: number): Observable<any> {
+    return this.http.post(`/v2/channel-attribution/proposals/${id}/reject`, {});
+  }
 }

@@ -87,6 +87,15 @@ export class AttributionBoardComponent implements OnInit {
     'attributedOn',
     'actions'
   ];
+  proposalsDataSource = new MatTableDataSource<any>([]);
+  proposalColumns: string[] = [
+    'entityType',
+    'entityId',
+    'fromPartner',
+    'toPartner',
+    'proposedBy',
+    'decide'
+  ];
 
   partners: any[] = [];
 
@@ -113,6 +122,7 @@ export class AttributionBoardComponent implements OnInit {
       this.attributionsDataSource.data = Array.isArray(data.board?.attributions) ? data.board.attributions : [];
       this.partners = Array.isArray(data.board?.partners) ? data.board.partners : [];
     });
+    this.reload();
   }
 
   attribute(): void {
@@ -133,12 +143,33 @@ export class AttributionBoardComponent implements OnInit {
       .subscribe(() => this.reload());
   }
 
+  approveProposal(id: number): void {
+    this.channelingService
+      .approveProposal(id)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => this.reload());
+  }
+
+  rejectProposal(id: number): void {
+    this.channelingService
+      .rejectProposal(id)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => this.reload());
+  }
+
   private reload(): void {
     this.channelingService
       .getAttributions()
       .pipe(take(1))
       .subscribe((rows: any) => {
         this.attributionsDataSource.data = Array.isArray(rows) ? rows : [];
+        this.cdr.markForCheck();
+      });
+    this.channelingService
+      .getProposals()
+      .pipe(take(1))
+      .subscribe((rows: any) => {
+        this.proposalsDataSource.data = Array.isArray(rows) ? rows : [];
         this.cdr.markForCheck();
       });
   }

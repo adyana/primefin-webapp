@@ -172,4 +172,26 @@ describe('ChannelingService', () => {
     expect(await listPromise).toEqual([{ id: 1 }]);
     expect(await filePromise).toEqual({ resourceId: 1 });
   });
+
+  it('should decide move proposals', async () => {
+    const pendingPromise = firstValueFrom(service.getProposals());
+    const approvePromise = firstValueFrom(service.approveProposal(3));
+    const rejectPromise = firstValueFrom(service.rejectProposal(4));
+
+    httpMock
+      .expectOne((request) => request.url === '/v2/channel-attribution/proposals/pending' && request.method === 'GET')
+      .flush([{ id: 3 }]);
+    httpMock
+      .expectOne(
+        (request) => request.url === '/v2/channel-attribution/proposals/3/approve' && request.method === 'POST'
+      )
+      .flush({ resourceId: 3 });
+    httpMock
+      .expectOne((request) => request.url === '/v2/channel-attribution/proposals/4/reject' && request.method === 'POST')
+      .flush({ resourceId: 4 });
+
+    expect(await pendingPromise).toEqual([{ id: 3 }]);
+    expect(await approvePromise).toEqual({ resourceId: 3 });
+    expect(await rejectPromise).toEqual({ resourceId: 4 });
+  });
 });
