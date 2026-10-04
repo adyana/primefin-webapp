@@ -5804,7 +5804,8 @@
       "Loans Disbursed": "Loans Disbursed",
       "Disbursed Amount": "Disbursed Amount",
       "Payments Received": "Payments Received",
-      "Received Amount": "Received Amount"
+      "Received Amount": "Received Amount",
+      "None": "None"
     },
     "permissions": {
       "actions": {

@@ -84,7 +84,8 @@ export class AttributionBoardComponent implements OnInit {
     'entityId',
     'partner',
     'attributedBy',
-    'attributedOn'
+    'attributedOn',
+    'actions'
   ];
 
   partners: any[] = [];
@@ -123,6 +124,13 @@ export class AttributionBoardComponent implements OnInit {
         this.attributeForm.reset({ entityType: 'LOAN', entityId: '', partnerCode: '' });
         this.reload();
       });
+  }
+
+  remove(id: number): void {
+    this.channelingService
+      .removeAttribution(id)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => this.reload());
   }
 
   private reload(): void {

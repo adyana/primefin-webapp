@@ -19,6 +19,23 @@
       <button mat-raised-button color="primary" (click)="advance()">
         {{ 'labels.buttons.Advance' | translate }}
       </button>
+      <form [formGroup]="bookForm" class="layout-row gap-20px m-t-16">
+        <mat-form-field class="flex-fill">
+          <mat-label>{{ 'labels.inputs.Partner' | translate }} ({{ 'labels.text.Optional' | translate }})</mat-label>
+          <mat-select formControlName="partnerCode">
+            <mat-option value="">{{ 'labels.text.None' | translate }}</mat-option>
+            @for (partner of partners; track partner.code) {
+              <mat-option [value]="partner.code">{{ partner.code }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <div class="in-block">
+          <button mat-raised-button color="accent" (click)="book()">
+            {{ 'labels.buttons.Book Loan' | translate }}
+          </button>
+        </div>
+      </form>
     </mat-card-content>
   </mat-card>
 

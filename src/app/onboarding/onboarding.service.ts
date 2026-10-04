@@ -102,4 +102,21 @@ export class OnboardingService {
   getVerifications(clientId: number): Observable<any> {
     return this.http.get(`/v2/verifications/client/${clientId}`);
   }
+
+  /**
+   * @returns Channel partners for attribution pickers.
+   */
+  getChannelPartners(): Observable<any> {
+    return this.http.get('/v2/channel-partners');
+  }
+
+  /**
+   * @param entityType LOAN or PAYMENT.
+   * @param entityId Entity id.
+   * @param partnerCode Partner code.
+   * @returns Attribution result with resourceId.
+   */
+  attributeMoney(entityType: string, entityId: number, partnerCode: string): Observable<any> {
+    return this.http.post('/v2/channel-attribution', { entityType, entityId, partnerCode });
+  }
 }

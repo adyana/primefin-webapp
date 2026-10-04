@@ -223,4 +223,12 @@ export class ChannelingService {
   attributeMoney(entityType: string, entityId: number, partnerCode: string): Observable<any> {
     return this.http.post('/v2/channel-attribution', { entityType, entityId, partnerCode });
   }
+
+  /**
+   * @param id Attribution id.
+   * @returns Removal result.
+   */
+  removeAttribution(id: number): Observable<any> {
+    return this.http.delete(`/v2/channel-attribution/${id}`);
+  }
 }

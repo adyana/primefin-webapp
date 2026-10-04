@@ -76,6 +76,15 @@
         <td mat-cell *matCellDef="let row">{{ row.attributedOn }}</td>
       </ng-container>
 
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
+        <td mat-cell *matCellDef="let row">
+          <button mat-button color="warn" (click)="remove(row.id)">
+            {{ 'labels.buttons.Remove' | translate }}
+          </button>
+        </td>
+      </ng-container>
+
       <tr mat-header-row *matHeaderRowDef="attributionColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: attributionColumns"></tr>
     </table>

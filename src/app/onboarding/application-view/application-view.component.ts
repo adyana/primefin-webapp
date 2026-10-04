@@ -9,11 +9,15 @@
 /** Angular Imports */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject, DestroyRef } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { MatCard, MatCardContent, MatCardTitle } from '@angular/material/card';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatSelect, MatOption } from '@angular/material/select';
 import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell } from '@angular/material/table';
 import { MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { MatButton } from '@angular/material/button';
+import { switchMap, of } from 'rxjs';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -30,10 +34,15 @@ import { OnboardingService } from '../onboarding.service';
   templateUrl: './application-view.component.html',
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
+    ReactiveFormsModule,
     FaIconComponent,
     MatCard,
     MatCardTitle,
     MatCardContent,
+    MatFormField,
+    MatLabel,
+    MatSelect,
+    MatOption,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
@@ -51,6 +60,7 @@ import { OnboardingService } from '../onboarding.service';
 export class ApplicationViewComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private onboardingService = inject(OnboardingService);
+  private formBuilder = inject(FormBuilder);
   private destroyRef = inject(DestroyRef);
   private cdr = inject(ChangeDetectorRef);
 
@@ -70,6 +80,13 @@ export class ApplicationViewComponent implements OnInit {
       this.applyBoard(data.board);
     });
     this.route.params.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.reload());
+    this.onboardingService
+      .getChannelPartners()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((partners: any) => {
+        this.partners = Array.isArray(partners) ? partners : [];
+        this.cdr.markForCheck();
+      });
   }
 
   advance(): void {
@@ -79,6 +96,31 @@ export class ApplicationViewComponent implements OnInit {
     this.onboardingService
       .advance(this.applicationId, 'detail advance')
       .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => this.reload());
+  }
+
+  bookForm: FormGroup = this.formBuilder.group({
+    partnerCode: ['']
+  });
+
+  partners: any[] = [];
+
+  book(): void {
+    if (this.applicationId == null) {
+      return;
+    }
+    const partner = this.bookForm.value.partnerCode || null;
+    this.onboardingService
+      .book(this.applicationId)
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        switchMap((result: any) => {
+          if (partner && result?.loanId) {
+            return this.onboardingService.attributeMoney('LOAN', result.loanId, partner);
+          }
+          return of(null);
+        })
+      )
       .subscribe(() => this.reload());
   }
 
