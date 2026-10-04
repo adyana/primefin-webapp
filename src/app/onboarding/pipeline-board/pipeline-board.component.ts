@@ -15,6 +15,7 @@ import { MatCard, MatCardContent, MatCardTitle } from '@angular/material/card';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
+import { MatMenu, MatMenuTrigger, MatMenuItem } from '@angular/material/menu';
 import {
   MatTableDataSource,
   MatTable,
@@ -66,7 +67,10 @@ import { OnboardingService } from '../onboarding.service';
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    MatButton
+    MatButton,
+    MatMenu,
+    MatMenuTrigger,
+    MatMenuItem
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
