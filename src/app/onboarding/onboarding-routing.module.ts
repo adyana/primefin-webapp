@@ -13,9 +13,10 @@ import { RouterModule, Routes } from '@angular/router';
 /** Custom Components */
 import { PipelineBoardComponent } from './pipeline-board/pipeline-board.component';
 import { ApprovalsBoardComponent } from './approvals-board/approvals-board.component';
+import { ApplicationViewComponent } from './application-view/application-view.component';
 
 /** Custom Resolvers */
-import { ApplicationsResolver, ApprovalQueueResolver } from './onboarding.resolver';
+import { ApplicationsResolver, ApprovalQueueResolver, ApplicationBoardResolver } from './onboarding.resolver';
 
 /** Custom Services */
 import { Route } from '../core/route/route.service';
@@ -38,6 +39,14 @@ const routes: Routes = [
       resolve: {
         queue: ApprovalQueueResolver
       }
+    },
+    {
+      path: 'applications/:id',
+      component: ApplicationViewComponent,
+      data: { title: 'Application', breadcrumb: 'Application', routeParamBreadcrumb: 'id' },
+      resolve: {
+        board: ApplicationBoardResolver
+      }
     }
   ])
 ];
@@ -50,7 +59,8 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: [
     ApplicationsResolver,
-    ApprovalQueueResolver
+    ApprovalQueueResolver,
+    ApplicationBoardResolver
   ]
 })
 export class OnboardingRoutingModule {}

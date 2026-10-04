@@ -8,6 +8,7 @@
 
 /** Angular Imports */
 import { Injectable, inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable, catchError, of } from 'rxjs';
@@ -44,5 +45,26 @@ export class ApprovalQueueResolver {
    */
   resolve(): Observable<any> {
     return this.onboardingService.listApplications('APPROVAL').pipe(catchError(() => of({ pageItems: [] })));
+  }
+}
+
+/**
+ * Application board data resolver (null when unreachable).
+ */
+@Injectable()
+export class ApplicationBoardResolver {
+  private onboardingService = inject(OnboardingService);
+  private route = inject(ActivatedRoute);
+
+  /**
+   * Returns the board for the routed application.
+   * @returns {Observable<any>}
+   */
+  resolve(): Observable<any> {
+    const id = Number(this.route.snapshot.params['id']);
+    if (!id) {
+      return of(null);
+    }
+    return this.onboardingService.getBoard(id).pipe(catchError(() => of(null)));
   }
 }

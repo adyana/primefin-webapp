@@ -15,6 +15,7 @@ import { OnboardingRoutingModule } from './onboarding-routing.module';
 /** Custom Components */
 import { PipelineBoardComponent } from './pipeline-board/pipeline-board.component';
 import { ApprovalsBoardComponent } from './approvals-board/approvals-board.component';
+import { ApplicationViewComponent } from './application-view/application-view.component';
 
 /**
  * Onboarding module: credit-application pipeline board plus approval
@@ -24,7 +25,8 @@ import { ApprovalsBoardComponent } from './approvals-board/approvals-board.compo
   imports: [
     OnboardingRoutingModule,
     PipelineBoardComponent,
-    ApprovalsBoardComponent
+    ApprovalsBoardComponent,
+    ApplicationViewComponent
   ],
   exports: [],
   declarations: [],

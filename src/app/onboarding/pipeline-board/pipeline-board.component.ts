@@ -10,7 +10,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject, DestroyRef } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatCard, MatCardContent, MatCardTitle } from '@angular/material/card';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
@@ -45,6 +45,7 @@ import { OnboardingService } from '../onboarding.service';
 @Component({
   selector: 'mifosx-pipeline-board',
   templateUrl: './pipeline-board.component.html',
+  styleUrls: ['./pipeline-board.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     ReactiveFormsModule,
@@ -71,6 +72,7 @@ import { OnboardingService } from '../onboarding.service';
 })
 export class PipelineBoardComponent implements OnInit {
   private route = inject(ActivatedRoute);
+  private router = inject(Router);
   private onboardingService = inject(OnboardingService);
   private formBuilder = inject(FormBuilder);
   private destroyRef = inject(DestroyRef);
@@ -162,6 +164,12 @@ export class PipelineBoardComponent implements OnInit {
       .book(id)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => this.reload());
+  }
+
+  openDetail(id: number): void {
+    // navigateByUrl: array-form navigate() throws a bare NG04008 on some
+    // onboarding routes (see notifications tray note).
+    this.router.navigateByUrl(`/onboarding/applications/${id}`);
   }
 
   private reload(): void {

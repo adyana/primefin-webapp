@@ -32,7 +32,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /** rxjs Imports */
 import { forkJoin, of } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap, take } from 'rxjs/operators';
 
 /** Custom Services */
 import { ChannelingService } from '../channeling.service';
@@ -86,6 +86,14 @@ export class ChannelDashboardComponent implements OnInit {
   summaryColumns: string[] = [
     'metric',
     'value'
+  ];
+  moneyDataSource = new MatTableDataSource<any>([]);
+  moneyColumns: string[] = [
+    'date',
+    'disbCount',
+    'disbAmount',
+    'payCount',
+    'payAmount'
   ];
 
   kpis: Array<{ labelKey: string; value: string; trend: number | null; positive: boolean }> = [];
@@ -240,6 +248,46 @@ export class ChannelDashboardComponent implements OnInit {
     this.chartFrom = stamp(new Date(now - days * dayMs));
     this.chartGranularity = granularity;
     this.chartPartner = partner;
+    this.channelingService
+      .getMovement(this.chartFrom, this.chartTo)
+      .pipe(
+        take(1),
+        catchError(() => of(null))
+      )
+      .subscribe((movement: any) => {
+        if (!movement) {
+          return;
+        }
+        this.kpis = [
+          ...this.kpis,
+          {
+            labelKey: 'labels.text.Loans Disbursed',
+            value: `${movement.disbCount ?? 0}`,
+            trend: null,
+            positive: true
+          },
+          {
+            labelKey: 'labels.text.Disbursed Amount',
+            value: `${movement.disbAmount ?? 0}`,
+            trend: null,
+            positive: true
+          },
+          {
+            labelKey: 'labels.text.Payments Received',
+            value: `${movement.payCount ?? 0}`,
+            trend: null,
+            positive: true
+          },
+          {
+            labelKey: 'labels.text.Received Amount',
+            value: `${movement.payAmount ?? 0}`,
+            trend: null,
+            positive: true
+          }
+        ];
+        this.moneyDataSource.data = Array.isArray(movement.daily) ? movement.daily : [];
+        this.cdr.markForCheck();
+      });
     this.cdr.markForCheck();
   }
 

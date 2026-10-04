@@ -2065,7 +2065,9 @@
       "New Filing": "New Filing",
       "Filing Log": "Filing Log",
       "New Application": "New Application",
-      "Decide with Reason": "Decide with Reason"
+      "Decide with Reason": "Decide with Reason",
+      "Application Detail": "Application Detail",
+      "Money Movement": "Money Movement"
     },
     "inputs": {
       "Returned": "फिर्ता भएको",
@@ -4259,7 +4261,9 @@
       "Checksum": "Checksum",
       "Product ID": "Product ID",
       "Stage": "Stage",
-      "Decision Reason": "Decision Reason"
+      "Decision Reason": "Decision Reason",
+      "Actor": "Actor",
+      "Completed On": "Completed On"
     },
     "links": {
       "Community": "समुदाय",
@@ -5789,7 +5793,11 @@
       "Total Value": "Total Value",
       "Settled Orders": "Settled Orders",
       "Posted Rate": "Posted Rate",
-      "Active Partners": "Active Partners"
+      "Active Partners": "Active Partners",
+      "Loans Disbursed": "Loans Disbursed",
+      "Disbursed Amount": "Disbursed Amount",
+      "Payments Received": "Payments Received",
+      "Received Amount": "Received Amount"
     },
     "permissions": {
       "actions": {

@@ -241,6 +241,15 @@ export class NotificationsTrayComponent implements OnInit, OnDestroy {
         break;
 
       default:
+        if (objectType === 'onboarding') {
+          // Program #9 approval pings land on the approval queue.
+          // NOTE: router.navigate(['/onboarding/approvals']) throws a bare
+          // framework NG04008 here (stock-route navigate() works, hash-set
+          // and navigateByUrl to this same route work) — root cause in the
+          // router's command handling unidentified; navigateByUrl is used.
+          this.router.navigateByUrl('/onboarding/approvals');
+          break;
+        }
         // Fallback to old behavior for unknown types
         this.router.navigate([
           this.routeMap[objectType],

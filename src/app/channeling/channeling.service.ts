@@ -192,4 +192,14 @@ export class ChannelingService {
   getFileRows(fileId: number): Observable<any> {
     return this.http.get(`/v2/channel-files/${fileId}/rows`);
   }
+
+  /**
+   * @param from ISO date start.
+   * @param to ISO date end, exclusive.
+   * @returns Window totals plus per-day disbursed/received counts and amounts.
+   */
+  getMovement(from: string, to: string): Observable<any> {
+    const params = new HttpParams().set('from', from).set('to', to);
+    return this.http.get('/v2/channel-dashboard/summary', { params });
+  }
 }

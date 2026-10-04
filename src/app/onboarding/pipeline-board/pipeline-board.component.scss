@@ -1,0 +1,34 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+/* Compact action buttons: four actions must fit without meshing. */
+.row-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+
+  button {
+    font-size: 12px;
+    line-height: 28px;
+    min-width: 0;
+    padding: 0 8px;
+  }
+}
+
+/* Clickable rows navigate to the application detail. */
+.clickable-row {
+  cursor: pointer;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.04);
+  }
+}
+
+.mat-column-actions {
+  min-width: 340px;
+}

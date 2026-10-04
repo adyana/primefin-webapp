@@ -82,7 +82,7 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
         <td mat-cell *matCellDef="let app">
-          <div class="layout-row gap-8px">
+          <div class="row-actions" (click)="$event.stopPropagation()">
             <button mat-button color="primary" (click)="advance(app.id)">
               {{ 'labels.buttons.Advance' | translate }}
             </button>
@@ -100,7 +100,12 @@
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="applicationColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: applicationColumns"></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: applicationColumns"
+        class="clickable-row"
+        (click)="openDetail(row.id)"
+      ></tr>
     </table>
   </div>
 </div>
