@@ -249,7 +249,7 @@ export class ChannelDashboardComponent implements OnInit {
     this.chartGranularity = granularity;
     this.chartPartner = partner;
     this.channelingService
-      .getMovement(this.chartFrom, this.chartTo)
+      .getMovement(this.chartFrom, this.chartTo, partner)
       .pipe(
         take(1),
         catchError(() => of(null))

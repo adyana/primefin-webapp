@@ -196,10 +196,14 @@ export class ChannelingService {
   /**
    * @param from ISO date start.
    * @param to ISO date end, exclusive.
+   * @param partnerCode Partner code or ALL.
    * @returns Window totals plus per-day disbursed/received counts and amounts.
    */
-  getMovement(from: string, to: string): Observable<any> {
-    const params = new HttpParams().set('from', from).set('to', to);
+  getMovement(from: string, to: string, partnerCode?: string): Observable<any> {
+    let params = new HttpParams().set('from', from).set('to', to);
+    if (partnerCode !== undefined) {
+      params = params.set('partnerCode', partnerCode);
+    }
     return this.http.get('/v2/channel-dashboard/summary', { params });
   }
 }
