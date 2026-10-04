@@ -299,6 +299,10 @@ export class ChannelDashboardComponent implements OnInit {
     for (const row of this.summaryDataSource.data) {
       lines.push(`${row.labelKey.split('.').pop()} ${row.detail ?? ''},${row.value}`.trim().replace(/,$/, ','));
     }
+    lines.push('date,disbursed_count,disbursed_amount,payments_received,received_amount');
+    for (const row of this.moneyDataSource.data) {
+      lines.push(`${row.date},${row.disbCount},${row.disbAmount},${row.payCount},${row.payAmount}`);
+    }
     const blob = new Blob([lines.join('\n')], { type: 'text/csv' });
     const url = URL.createObjectURL(blob);
     const anchor = document.createElement('a');
