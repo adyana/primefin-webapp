@@ -218,8 +218,8 @@ export class QrisDashboardComponent implements OnInit {
           money: false
         })
       ),
-      { labelKey: 'labels.text.Gross Volume', detail: null, value: sum(sales, 'amount'), money: true },
-      { labelKey: 'labels.text.MDR Collected', detail: null, value: sum(sales, 'mdrAmount'), money: true }
+      { labelKey: 'labels.text.Gross Volume', detail: null, value: sum(salesCur, 'amount'), money: true },
+      { labelKey: 'labels.text.MDR Collected', detail: null, value: sum(salesCur, 'mdrAmount'), money: true }
     ];
     this.summaryDataSource.data = summary;
     this.cdr.markForCheck();
