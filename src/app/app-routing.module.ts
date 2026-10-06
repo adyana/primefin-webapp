@@ -53,6 +53,10 @@ const routes: Routes = [
     loadChildren: () => import('./compliance/compliance.module').then((m) => m.ComplianceModule)
   },
   {
+    path: 'collections',
+    loadChildren: () => import('./collections/collections.module').then((m) => m.CollectionsModule)
+  },
+  {
     path: 'onboarding',
     loadChildren: () => import('./onboarding/onboarding.module').then((m) => m.OnboardingModule)
   },
@@ -61,8 +65,8 @@ const routes: Routes = [
     loadChildren: () => import('./clients/clients.module').then((m) => m.ClientsModule)
   },
   {
-    path: 'collections',
-    loadChildren: () => import('./collections/collections.module').then((m) => m.CollectionsModule)
+    path: 'remedial',
+    loadChildren: () => import('./remedial/remedial.module').then((m) => m.RemedialModule)
   },
   {
     path: 'groups',

@@ -299,6 +299,11 @@
       {{ 'labels.menus.Onboarding' | translate }}
     </button>
   }
+  @if (collectionsVisible) {
+    <button mat-menu-item [matMenuTriggerFor]="collectionsMenu" tabindex="0" *mifosxHasPermission="'READ_COLLECTIONS'">
+      {{ 'labels.menus.Collections' | translate }}
+    </button>
+  }
 </mat-menu>
 
 <mat-menu #channelingMenu="matMenu" [overlapTrigger]="false">
@@ -397,6 +402,12 @@
   </button>
   <button mat-menu-item [routerLink]="['/onboarding/approvals']" tabindex="0" *mifosxHasPermission="'READ_ONBOARDING'">
     {{ 'labels.menus.Approvals' | translate }}
+  </button>
+</mat-menu>
+
+<mat-menu #collectionsMenu="matMenu" [overlapTrigger]="false">
+  <button mat-menu-item [routerLink]="['/remedial']" tabindex="0" *mifosxHasPermission="'READ_COLLECTIONS'">
+    {{ 'labels.menus.Workbench' | translate }}
   </button>
 </mat-menu>
 

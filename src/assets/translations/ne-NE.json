@@ -1015,7 +1015,19 @@
       "Disburse": "Disburse",
       "Book Loan": "Book Loan",
       "Open Application": "Open Application",
-      "Attribute": "Attribute"
+      "Attribute": "Attribute",
+      "Run Sweep": "Run Sweep",
+      "Assign": "Assign",
+      "Escalate to Legal": "Escalate to Legal",
+      "Mark Recovered": "Mark Recovered",
+      "Write Off": "Write Off",
+      "Record Visit": "Record Visit",
+      "New Promise": "New Promise",
+      "Evaluate Due": "Evaluate Due",
+      "Mark Kept": "Mark Kept",
+      "Propose": "Propose",
+      "Sync Approved": "Sync Approved",
+      "Sync Rejected": "Sync Rejected"
     },
     "catalogs": {
       "% Amount": "रकम",
@@ -4273,7 +4285,16 @@
       "Attributed On": "Attributed On",
       "From Partner": "From Partner",
       "To Partner": "To Partner",
-      "Proposed By": "Proposed By"
+      "Proposed By": "Proposed By",
+      "Agent": "Agent",
+      "Next Action": "Next Action",
+      "Scheduled On": "Scheduled On",
+      "Visited On": "Visited On",
+      "Outcome": "Outcome",
+      "Promised On": "Promised On",
+      "Reschedule JSON": "Reschedule JSON",
+      "Request ID": "Request ID",
+      "Write-off Reason": "Write-off Reason"
     },
     "links": {
       "Community": "समुदाय",
@@ -4463,7 +4484,12 @@
       "Onboarding": "Onboarding",
       "Pipeline": "Pipeline",
       "Approvals": "Approvals",
-      "Attribution": "Attribution"
+      "Attribution": "Attribution",
+      "Workbench": "Workbench",
+      "Collections": "Collections",
+      "Visits": "Visits",
+      "Promises": "Promises",
+      "Restructurings": "Restructurings"
     },
     "placeholders": {
       "Add new server": "नयाँ सर्भर थप्नुहोस्",

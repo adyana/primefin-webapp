@@ -1,0 +1,267 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="container" *ngIf="kase">
+  <mat-card class="m-b-20">
+    <mat-card-title class="m-b-16">
+      {{ 'labels.menus.Collections' | translate }} — {{ kase.loanId }} ({{ kase.stage }} / {{ kase.status }})
+    </mat-card-title>
+
+    <mat-card-content>
+      <div class="layout-row gap-20px m-b-16">
+        <span>DPD {{ kase.dpdAtOpen }}</span>
+        <span>{{ 'labels.inputs.Overdue' | translate }} {{ kase.overdueAtOpen | compactMoney }}</span>
+        <span>{{ 'labels.inputs.Agent' | translate }} {{ kase.assignedAgentId ?? '—' }}</span>
+      </div>
+
+      <form [formGroup]="assignForm" class="layout-row gap-20px m-b-16">
+        <mat-form-field>
+          <mat-label>{{ 'labels.inputs.Agent' | translate }} ID</mat-label>
+          <input matInput type="number" formControlName="agentId" required />
+        </mat-form-field>
+
+        <div class="in-block">
+          <button mat-raised-button color="primary" [disabled]="!assignForm.valid" (click)="assign()">
+            {{ 'labels.buttons.Assign' | translate }}
+          </button>
+        </div>
+
+        <div class="in-block">
+          <button mat-raised-button color="accent" (click)="escalateToLegal()">
+            {{ 'labels.buttons.Escalate to Legal' | translate }}
+          </button>
+        </div>
+
+        <div class="in-block">
+          <button mat-raised-button color="primary" (click)="close('RECOVERED')">
+            {{ 'labels.buttons.Mark Recovered' | translate }}
+          </button>
+        </div>
+      </form>
+
+      <form [formGroup]="writeOffForm" class="layout-row gap-20px">
+        <mat-form-field class="flex-fill">
+          <mat-label>{{ 'labels.inputs.Write-off Reason' | translate }}</mat-label>
+          <input matInput formControlName="reason" required />
+        </mat-form-field>
+
+        <div class="in-block">
+          <button mat-raised-button color="warn" [disabled]="!writeOffForm.valid" (click)="writeOff()">
+            {{ 'labels.buttons.Write Off' | translate }}
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="m-b-20">
+    <mat-card-title class="m-b-16">{{ 'labels.menus.Visits' | translate }}</mat-card-title>
+
+    <mat-card-content>
+      <form [formGroup]="visitForm" class="layout-row gap-20px m-b-16">
+        <mat-form-field>
+          <mat-label>{{ 'labels.inputs.Agent' | translate }} ID</mat-label>
+          <input matInput type="number" formControlName="agentId" required />
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>{{ 'labels.inputs.Scheduled On' | translate }}</mat-label>
+          <input matInput type="date" formControlName="scheduledOn" required />
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>{{ 'labels.inputs.Visited On' | translate }}</mat-label>
+          <input matInput type="date" formControlName="visitedOn" />
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>{{ 'labels.inputs.Outcome' | translate }}</mat-label>
+          <mat-select formControlName="outcome">
+            <mat-option value="PROMISED">PROMISED</mat-option>
+            <mat-option value="REFUSED">REFUSED</mat-option>
+            <mat-option value="NOT_FOUND">NOT_FOUND</mat-option>
+            <mat-option value="FOLLOW_UP">FOLLOW_UP</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="flex-fill">
+          <mat-label>{{ 'labels.inputs.Notes' | translate }}</mat-label>
+          <input matInput formControlName="notes" />
+        </mat-form-field>
+
+        <div class="in-block">
+          <button mat-raised-button color="primary" [disabled]="!visitForm.valid" (click)="recordVisit()">
+            {{ 'labels.buttons.Record Visit' | translate }}
+          </button>
+        </div>
+      </form>
+
+      <div class="mat-elevation-z8 table-container">
+        <table mat-table [dataSource]="visitsDataSource">
+          <ng-container matColumnDef="scheduledOn">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Scheduled On' | translate }}</th>
+            <td mat-cell *matCellDef="let visit">{{ visit.scheduledOn }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="visitedOn">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Visited On' | translate }}</th>
+            <td mat-cell *matCellDef="let visit">{{ visit.visitedOn ?? '—' }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="agentId">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Agent' | translate }}</th>
+            <td mat-cell *matCellDef="let visit">{{ visit.agentId }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="outcome">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Outcome' | translate }}</th>
+            <td mat-cell *matCellDef="let visit">{{ visit.outcome }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="notes">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Notes' | translate }}</th>
+            <td mat-cell *matCellDef="let visit">{{ visit.notes ?? '—' }}</td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="visitColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: visitColumns"></tr>
+        </table>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="m-b-20">
+    <mat-card-title class="m-b-16">{{ 'labels.menus.Promises' | translate }}</mat-card-title>
+
+    <mat-card-content>
+      <form [formGroup]="promiseForm" class="layout-row gap-20px m-b-16">
+        <mat-form-field>
+          <mat-label>{{ 'labels.inputs.Promised On' | translate }}</mat-label>
+          <input matInput type="date" formControlName="promisedOn" required />
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>{{ 'labels.inputs.Amount' | translate }}</mat-label>
+          <input matInput type="number" formControlName="amount" required />
+        </mat-form-field>
+
+        <div class="in-block">
+          <button mat-raised-button color="primary" [disabled]="!promiseForm.valid" (click)="createPromise()">
+            {{ 'labels.buttons.New Promise' | translate }}
+          </button>
+        </div>
+
+        <div class="in-block">
+          <button mat-raised-button color="accent" (click)="evaluatePtps()">
+            {{ 'labels.buttons.Evaluate Due' | translate }}
+          </button>
+        </div>
+      </form>
+
+      <div class="mat-elevation-z8 table-container">
+        <table mat-table [dataSource]="ptpsDataSource">
+          <ng-container matColumnDef="promisedOn">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Promised On' | translate }}</th>
+            <td mat-cell *matCellDef="let ptp">{{ ptp.promisedOn }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="amount">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Amount' | translate }}</th>
+            <td mat-cell *matCellDef="let ptp">{{ ptp.amount | number: '1.2-2' }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Status' | translate }}</th>
+            <td mat-cell *matCellDef="let ptp">{{ ptp.status }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
+            <td mat-cell *matCellDef="let ptp">
+              <div class="layout-row">
+                <button mat-button color="primary" (click)="markKept(ptp.id)">
+                  {{ 'labels.buttons.Mark Kept' | translate }}
+                </button>
+                <button mat-button color="warn" (click)="cancelPtp(ptp.id)">
+                  {{ 'labels.buttons.Cancel' | translate }}
+                </button>
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="ptpColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: ptpColumns"></tr>
+        </table>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="m-b-20">
+    <mat-card-title class="m-b-16">{{ 'labels.menus.Restructurings' | translate }}</mat-card-title>
+
+    <mat-card-content>
+      <form [formGroup]="restructureForm" class="layout-row gap-20px m-b-16">
+        <mat-form-field>
+          <mat-label>POJK {{ 'labels.inputs.Type' | translate }}</mat-label>
+          <mat-select formControlName="pojkType">
+            <mat-option value="RESCHEDULING">RESCHEDULING</mat-option>
+            <mat-option value="RECONDITIONING">RECONDITIONING</mat-option>
+            <mat-option value="RESTRUCTURING">RESTRUCTURING</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="flex-fill">
+          <mat-label>{{ 'labels.inputs.Reschedule JSON' | translate }}</mat-label>
+          <input matInput formControlName="rescheduleJson" required />
+        </mat-form-field>
+
+        <div class="in-block">
+          <button mat-raised-button color="primary" [disabled]="!restructureForm.valid" (click)="proposeRestructure()">
+            {{ 'labels.buttons.Propose' | translate }}
+          </button>
+        </div>
+      </form>
+
+      <div class="mat-elevation-z8 table-container">
+        <table mat-table [dataSource]="restructuresDataSource">
+          <ng-container matColumnDef="pojkType">
+            <th mat-header-cell *matHeaderCellDef>POJK {{ 'labels.inputs.Type' | translate }}</th>
+            <td mat-cell *matCellDef="let restructure">{{ restructure.pojkType }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="requestId">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Request ID' | translate }}</th>
+            <td mat-cell *matCellDef="let restructure">{{ restructure.rescheduleRequestId }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Status' | translate }}</th>
+            <td mat-cell *matCellDef="let restructure">{{ restructure.status }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
+            <td mat-cell *matCellDef="let restructure">
+              <div class="layout-row">
+                <button mat-button color="primary" (click)="syncRestructure(restructure.id, 'APPROVED')">
+                  {{ 'labels.buttons.Sync Approved' | translate }}
+                </button>
+                <button mat-button color="warn" (click)="syncRestructure(restructure.id, 'REJECTED')">
+                  {{ 'labels.buttons.Sync Rejected' | translate }}
+                </button>
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="restructureColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: restructureColumns"></tr>
+        </table>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

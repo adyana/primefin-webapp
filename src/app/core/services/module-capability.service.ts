@@ -61,4 +61,9 @@ export class ModuleCapabilityService {
   onboardingAvailable(): Observable<boolean> {
     return this.probe('/v2/onboarding-health');
   }
+
+  /** @returns True when the collections module answers. */
+  collectionsAvailable(): Observable<boolean> {
+    return this.probe('/v2/collections-health');
+  }
 }
