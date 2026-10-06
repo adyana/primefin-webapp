@@ -15,6 +15,7 @@ import { MatCard, MatCardContent, MatCardTitle } from '@angular/material/card';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
+import { MatTooltip } from '@angular/material/tooltip';
 import {
   MatTableDataSource,
   MatTable,
@@ -62,7 +63,8 @@ import { PaymentsService } from '../payments.service';
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    MatButton
+    MatButton,
+    MatTooltip
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })

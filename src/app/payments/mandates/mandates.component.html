@@ -82,20 +82,33 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
         <td mat-cell *matCellDef="let mandate">
-          <div class="layout-row gap-8px">
+          <div class="layout-row">
             <button
-              mat-button
+              mat-icon-button
               color="primary"
+              matTooltip="{{ 'labels.buttons.Collect' | translate }}"
               (click)="selectForCollect(mandate)"
               *mifosxHasPermission="'UPDATE_PAYMENT'"
             >
-              {{ 'labels.buttons.Collect' | translate }}
+              <fa-icon icon="download"></fa-icon>
             </button>
-            <button mat-button color="warn" (click)="suspend(mandate)" *mifosxHasPermission="'UPDATE_PAYMENT'">
-              {{ 'labels.buttons.Suspend' | translate }}
+            <button
+              mat-icon-button
+              color="accent"
+              matTooltip="{{ 'labels.buttons.Suspend' | translate }}"
+              (click)="suspend(mandate)"
+              *mifosxHasPermission="'UPDATE_PAYMENT'"
+            >
+              <fa-icon icon="pause"></fa-icon>
             </button>
-            <button mat-button color="warn" (click)="revoke(mandate)" *mifosxHasPermission="'UPDATE_PAYMENT'">
-              {{ 'labels.buttons.Revoke' | translate }}
+            <button
+              mat-icon-button
+              color="warn"
+              matTooltip="{{ 'labels.buttons.Revoke' | translate }}"
+              (click)="revoke(mandate)"
+              *mifosxHasPermission="'UPDATE_PAYMENT'"
+            >
+              <fa-icon icon="ban"></fa-icon>
             </button>
           </div>
         </td>

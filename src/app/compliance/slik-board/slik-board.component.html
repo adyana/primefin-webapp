@@ -114,6 +114,8 @@
             <tr mat-header-row *matHeaderRowDef="rowColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: rowColumns"></tr>
           </table>
+
+          <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
         </div>
       </mat-card-content>
     </mat-card>

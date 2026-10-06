@@ -7,7 +7,15 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  ViewChild,
+  inject,
+  DestroyRef
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -15,6 +23,7 @@ import { MatCard, MatCardContent, MatCardTitle } from '@angular/material/card';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
+import { MatPaginator } from '@angular/material/paginator';
 import {
   MatTableDataSource,
   MatTable,
@@ -65,7 +74,8 @@ import { ComplianceService } from '../compliance.service';
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    MatButton
+    MatButton,
+    MatPaginator
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -108,6 +118,9 @@ export class SlikBoardComponent implements OnInit {
   /** Latest tie-out result for the selected period. */
   tieOut: any = null;
 
+  /** Paginator for the period rows table (hundreds of loans per period). */
+  @ViewChild(MatPaginator) rowsPaginator: MatPaginator;
+
   ngOnInit(): void {
     this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { snapshots: any }) => {
       this.snapshotsDataSource.data = Array.isArray(data.snapshots) ? data.snapshots : [];
@@ -135,6 +148,9 @@ export class SlikBoardComponent implements OnInit {
       )
       .subscribe((rows: any) => {
         this.rowsDataSource.data = Array.isArray(rows) ? rows : [];
+        if (this.rowsPaginator) {
+          this.rowsDataSource.paginator = this.rowsPaginator;
+        }
         this.cdr.markForCheck();
       });
   }
