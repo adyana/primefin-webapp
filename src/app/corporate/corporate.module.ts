@@ -17,6 +17,7 @@ import { CorporateRegistryComponent } from './registry/registry.component';
 import { CorporateBatchesComponent } from './batches/batches.component';
 import { CorporateApprovalsComponent } from './approvals/approvals.component';
 import { CorporatePayrollComponent } from './payroll/payroll.component';
+import { CorporateStatementsComponent } from './statements/statements.component';
 
 /**
  * Corporate module: client registry for cash management + payroll
@@ -28,7 +29,8 @@ import { CorporatePayrollComponent } from './payroll/payroll.component';
     CorporateRegistryComponent,
     CorporateBatchesComponent,
     CorporateApprovalsComponent,
-    CorporatePayrollComponent
+    CorporatePayrollComponent,
+    CorporateStatementsComponent
   ],
   exports: [],
   declarations: [],

@@ -4505,7 +4505,8 @@
       "Batches": "Batches",
       "Tiers": "Tiers",
       "Payroll": "Payroll",
-      "Roster": "Roster"
+      "Roster": "Roster",
+      "Statements": "Statements"
     },
     "placeholders": {
       "Add new server": "Pridėti naują serverį",

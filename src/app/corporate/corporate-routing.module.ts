@@ -15,6 +15,7 @@ import { CorporateRegistryComponent } from './registry/registry.component';
 import { CorporateBatchesComponent } from './batches/batches.component';
 import { CorporateApprovalsComponent } from './approvals/approvals.component';
 import { CorporatePayrollComponent } from './payroll/payroll.component';
+import { CorporateStatementsComponent } from './statements/statements.component';
 
 const routes: Routes = [
   {
@@ -36,6 +37,11 @@ const routes: Routes = [
     path: 'payroll',
     component: CorporatePayrollComponent,
     data: { title: 'Corporate Payroll', breadcrumb: 'Payroll', routeParamBreadcrumb: false }
+  },
+  {
+    path: 'statements',
+    component: CorporateStatementsComponent,
+    data: { title: 'Corporate Statements', breadcrumb: 'Statements', routeParamBreadcrumb: false }
   }
 ];
 

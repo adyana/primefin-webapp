@@ -134,4 +134,26 @@ export class CorporateBatchService {
   runPayrollSchedules(): Observable<any> {
     return this.http.post('/v2/corporate-payroll/run', {});
   }
+
+  /**
+   * @returns Statement preview (balances + lines) as JSON.
+   */
+  getStatement(corporateId: number, from: string, to: string): Observable<any> {
+    return this.http.get('/v2/corporate-statements', { params: { corporateId, from, to } as any });
+  }
+
+  /**
+   * Downloads the statement file (MT940 text or camt.053 XML).
+   */
+  downloadStatement(corporateId: number, from: string, to: string, format: 'mt940' | 'camt053'): void {
+    const url = `/v2/corporate-statements/${format}?corporateId=${corporateId}&from=${from}&to=${to}`;
+    this.http.get(url, { responseType: 'blob' }).subscribe((blob: Blob) => {
+      const objectUrl = URL.createObjectURL(blob);
+      const anchor = document.createElement('a');
+      anchor.href = objectUrl;
+      anchor.download = `statement-${corporateId}-${from}.${format === 'mt940' ? 'sta' : 'xml'}`;
+      anchor.click();
+      URL.revokeObjectURL(objectUrl);
+    });
+  }
 }
