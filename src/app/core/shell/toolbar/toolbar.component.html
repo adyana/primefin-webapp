@@ -304,6 +304,11 @@
       {{ 'labels.menus.Collections' | translate }}
     </button>
   }
+  @if (corporateVisible) {
+    <button mat-menu-item [matMenuTriggerFor]="corporateMenu" tabindex="0" *mifosxHasPermission="'READ_CORPORATE'">
+      {{ 'labels.menus.Corporate' | translate }}
+    </button>
+  }
 </mat-menu>
 
 <mat-menu #channelingMenu="matMenu" [overlapTrigger]="false">
@@ -408,6 +413,12 @@
 <mat-menu #collectionsMenu="matMenu" [overlapTrigger]="false">
   <button mat-menu-item [routerLink]="['/remedial']" tabindex="0" *mifosxHasPermission="'READ_COLLECTIONS'">
     {{ 'labels.menus.Workbench' | translate }}
+  </button>
+</mat-menu>
+
+<mat-menu #corporateMenu="matMenu" [overlapTrigger]="false">
+  <button mat-menu-item [routerLink]="['/corporates']" tabindex="0" *mifosxHasPermission="'READ_CORPORATE'">
+    {{ 'labels.menus.Registry' | translate }}
   </button>
 </mat-menu>
 

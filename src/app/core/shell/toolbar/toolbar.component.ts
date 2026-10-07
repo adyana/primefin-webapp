@@ -99,6 +99,7 @@ export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChec
   complianceVisible = true;
   onboardingVisible = true;
   collectionsVisible = true;
+  corporateVisible = true;
 
   /* Reference of institution */
   @ViewChild('institution') institution: ElementRef<any>;
@@ -173,6 +174,12 @@ export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChec
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((available) => {
         this.collectionsVisible = available;
+      });
+    this.moduleCapability
+      .corporateAvailable()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((available) => {
+        this.corporateVisible = available;
       });
   }
 

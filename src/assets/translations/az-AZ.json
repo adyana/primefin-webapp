@@ -952,7 +952,8 @@
       "Mark Kept": "Mark Kept",
       "Propose": "Propose",
       "Sync Approved": "Sync Approved",
-      "Sync Rejected": "Sync Rejected"
+      "Sync Rejected": "Sync Rejected",
+      "Create Corporate": "Create Corporate"
     },
     "catalogs": {
       "% Amount": "Məbləğin %-i",
@@ -4358,7 +4359,9 @@
       "Collections": "Collections",
       "Visits": "Visits",
       "Promises": "Promises",
-      "Restructurings": "Restructurings"
+      "Restructurings": "Restructurings",
+      "Corporate": "Corporate",
+      "Registry": "Registry"
     },
     "placeholders": {
       "# Remittance": "Pul köçürməsinin nömrəsi",

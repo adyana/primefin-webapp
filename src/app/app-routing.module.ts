@@ -69,6 +69,10 @@ const routes: Routes = [
     loadChildren: () => import('./remedial/remedial.module').then((m) => m.RemedialModule)
   },
   {
+    path: 'corporates',
+    loadChildren: () => import('./corporate/corporate.module').then((m) => m.CorporateModule)
+  },
+  {
     path: 'groups',
     loadChildren: () => import('./groups/groups.module').then((m) => m.GroupsModule)
   },
