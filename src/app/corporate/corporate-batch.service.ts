@@ -68,4 +68,33 @@ export class CorporateBatchService {
   executeBatch(batchId: number): Observable<any> {
     return this.http.post(`/v2/corporate-batches/${batchId}/execute`, {});
   }
+
+  /**
+   * @returns Approval tiers by min amount.
+   */
+  getTiers(): Observable<any> {
+    return this.http.get('/v2/corporate-approvals/tiers');
+  }
+
+  /**
+   * @param tier Tier payload (minAmount, maxAmount, requiredPermission).
+   * @returns Created tier.
+   */
+  createTier(tier: any): Observable<any> {
+    return this.http.post('/v2/corporate-approvals/tiers', tier);
+  }
+
+  /**
+   * @returns APPROVED batch (below-tier auto-passes, otherwise tier permission + maker≠checker).
+   */
+  approveBatch(batchId: number): Observable<any> {
+    return this.http.post(`/v2/corporate-approvals/batches/${batchId}/approve`, {});
+  }
+
+  /**
+   * @returns REJECTED batch.
+   */
+  rejectBatch(batchId: number): Observable<any> {
+    return this.http.post(`/v2/corporate-approvals/batches/${batchId}/reject`, {});
+  }
 }

@@ -13,6 +13,7 @@ import { RouterModule, Routes } from '@angular/router';
 /** Custom Components */
 import { CorporateRegistryComponent } from './registry/registry.component';
 import { CorporateBatchesComponent } from './batches/batches.component';
+import { CorporateApprovalsComponent } from './approvals/approvals.component';
 
 const routes: Routes = [
   {
@@ -24,6 +25,11 @@ const routes: Routes = [
     path: 'batches',
     component: CorporateBatchesComponent,
     data: { title: 'Corporate Batches', breadcrumb: 'Batches', routeParamBreadcrumb: false }
+  },
+  {
+    path: 'approvals',
+    component: CorporateApprovalsComponent,
+    data: { title: 'Corporate Approvals', breadcrumb: 'Approvals', routeParamBreadcrumb: false }
   }
 ];
 

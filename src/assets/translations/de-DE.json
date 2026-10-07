@@ -1033,7 +1033,8 @@
       "Create Corporate": "Create Corporate",
       "Execute": "Execute",
       "Create Batch": "Create Batch",
-      "Items": "Items"
+      "Items": "Items",
+      "Create Tier": "Create Tier"
     },
     "catalogs": {
       "% Amount": "Menge",
@@ -4300,7 +4301,9 @@
       "Promised On": "Promised On",
       "Reschedule JSON": "Reschedule JSON",
       "Request ID": "Request ID",
-      "Write-off Reason": "Write-off Reason"
+      "Write-off Reason": "Write-off Reason",
+      "Min Amount": "Min Amount",
+      "Permission": "Permission"
     },
     "links": {
       "Community": "Gemeinschaft",
@@ -4498,7 +4501,8 @@
       "Restructurings": "Restructurings",
       "Corporate": "Corporate",
       "Registry": "Registry",
-      "Batches": "Batches"
+      "Batches": "Batches",
+      "Tiers": "Tiers"
     },
     "placeholders": {
       "Add new server": "Neuen Server hinzufügen",

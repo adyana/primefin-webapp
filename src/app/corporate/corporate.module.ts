@@ -15,6 +15,7 @@ import { CorporateRoutingModule } from './corporate-routing.module';
 /** Custom Components */
 import { CorporateRegistryComponent } from './registry/registry.component';
 import { CorporateBatchesComponent } from './batches/batches.component';
+import { CorporateApprovalsComponent } from './approvals/approvals.component';
 
 /**
  * Corporate module: client registry for cash management + payroll
@@ -24,7 +25,8 @@ import { CorporateBatchesComponent } from './batches/batches.component';
   imports: [
     CorporateRoutingModule,
     CorporateRegistryComponent,
-    CorporateBatchesComponent
+    CorporateBatchesComponent,
+    CorporateApprovalsComponent
   ],
   exports: [],
   declarations: [],

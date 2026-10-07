@@ -423,6 +423,9 @@
   <button mat-menu-item [routerLink]="['/corporates/batches']" tabindex="0" *mifosxHasPermission="'READ_CORPORATE'">
     {{ 'labels.menus.Batches' | translate }}
   </button>
+  <button mat-menu-item [routerLink]="['/corporates/approvals']" tabindex="0" *mifosxHasPermission="'READ_CORPORATE'">
+    {{ 'labels.menus.Approvals' | translate }}
+  </button>
 </mat-menu>
 
 <!-- Application User Help Menu -->
