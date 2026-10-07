@@ -1029,7 +1029,10 @@
       "Propose": "Propose",
       "Sync Approved": "Sync Approved",
       "Sync Rejected": "Sync Rejected",
-      "Create Corporate": "Create Corporate"
+      "Create Corporate": "Create Corporate",
+      "Execute": "Execute",
+      "Create Batch": "Create Batch",
+      "Items": "Items"
     },
     "catalogs": {
       "% Amount": "% částky",
@@ -4493,7 +4496,8 @@
       "Promises": "Promises",
       "Restructurings": "Restructurings",
       "Corporate": "Corporate",
-      "Registry": "Registry"
+      "Registry": "Registry",
+      "Batches": "Batches"
     },
     "placeholders": {
       "Add new server": "Přidat nový server",

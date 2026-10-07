@@ -12,12 +12,18 @@ import { RouterModule, Routes } from '@angular/router';
 
 /** Custom Components */
 import { CorporateRegistryComponent } from './registry/registry.component';
+import { CorporateBatchesComponent } from './batches/batches.component';
 
 const routes: Routes = [
   {
     path: '',
     component: CorporateRegistryComponent,
     data: { title: 'Corporate Registry', breadcrumb: 'Registry', routeParamBreadcrumb: false }
+  },
+  {
+    path: 'batches',
+    component: CorporateBatchesComponent,
+    data: { title: 'Corporate Batches', breadcrumb: 'Batches', routeParamBreadcrumb: false }
   }
 ];
 

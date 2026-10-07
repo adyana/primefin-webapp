@@ -1,0 +1,71 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+/** Angular Imports */
+import { Injectable, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
+/** rxjs Imports */
+import { Observable } from 'rxjs';
+
+/**
+ * Corporate batch service: bulk disbursement batches with validated
+ * items, prefund-checked submit and idempotent execution.
+ */
+@Injectable({ providedIn: 'root' })
+export class CorporateBatchService {
+  private http = inject(HttpClient);
+
+  /**
+   * @param status Batch status filter (optional; all when omitted).
+   * @returns Batches, newest first.
+   */
+  getBatches(status?: string): Observable<any> {
+    const params: Record<string, string> = {};
+    if (status) {
+      params['status'] = status;
+    }
+    return this.http.get('/v2/corporate-batches', { params });
+  }
+
+  /**
+   * @returns One batch.
+   */
+  getBatch(batchId: number): Observable<any> {
+    return this.http.get(`/v2/corporate-batches/${batchId}`);
+  }
+
+  /**
+   * @returns Items of a batch in line order.
+   */
+  getItems(batchId: number): Observable<any> {
+    return this.http.get(`/v2/corporate-batches/${batchId}/items`);
+  }
+
+  /**
+   * @param batch Batch payload (corporateId, reference, rail, currency, valueDate, items).
+   * @returns Created DRAFT batch (bad lines quarantined with reasons).
+   */
+  createBatch(batch: any): Observable<any> {
+    return this.http.post('/v2/corporate-batches', batch);
+  }
+
+  /**
+   * @returns SUBMITTED batch (locks the set behind the prefund check).
+   */
+  submitBatch(batchId: number): Observable<any> {
+    return this.http.post(`/v2/corporate-batches/${batchId}/submit`, {});
+  }
+
+  /**
+   * @returns EXECUTING then COMPLETED/FAILED batch (one transfer order per item).
+   */
+  executeBatch(batchId: number): Observable<any> {
+    return this.http.post(`/v2/corporate-batches/${batchId}/execute`, {});
+  }
+}

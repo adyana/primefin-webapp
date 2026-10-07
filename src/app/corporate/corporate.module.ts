@@ -14,6 +14,7 @@ import { CorporateRoutingModule } from './corporate-routing.module';
 
 /** Custom Components */
 import { CorporateRegistryComponent } from './registry/registry.component';
+import { CorporateBatchesComponent } from './batches/batches.component';
 
 /**
  * Corporate module: client registry for cash management + payroll
@@ -22,7 +23,8 @@ import { CorporateRegistryComponent } from './registry/registry.component';
 @NgModule({
   imports: [
     CorporateRoutingModule,
-    CorporateRegistryComponent
+    CorporateRegistryComponent,
+    CorporateBatchesComponent
   ],
   exports: [],
   declarations: [],

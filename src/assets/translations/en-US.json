@@ -1030,7 +1030,10 @@
       "Propose": "Propose",
       "Sync Approved": "Sync Approved",
       "Sync Rejected": "Sync Rejected",
-      "Create Corporate": "Create Corporate"
+      "Create Corporate": "Create Corporate",
+      "Execute": "Execute",
+      "Create Batch": "Create Batch",
+      "Items": "Items"
     },
     "catalogs": {
       "% Amount": "% Amount",
@@ -4488,7 +4491,8 @@
       "Promises": "Promises",
       "Restructurings": "Restructurings",
       "Corporate": "Corporate",
-      "Registry": "Registry"
+      "Registry": "Registry",
+      "Batches": "Batches"
     },
     "placeholders": {
       "# Remittance": "# Remittance",
