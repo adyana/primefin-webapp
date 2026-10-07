@@ -97,4 +97,41 @@ export class CorporateBatchService {
   rejectBatch(batchId: number): Observable<any> {
     return this.http.post(`/v2/corporate-approvals/batches/${batchId}/reject`, {});
   }
+
+  /**
+   * @returns Roster lines for a corporate.
+   */
+  getRoster(corporateId: number): Observable<any> {
+    return this.http.get(`/v2/corporate-payroll/corporates/${corporateId}/roster`);
+  }
+
+  /**
+   * @param employee Employee payload (employeeRef, account, bank, name, amount).
+   * @returns Created roster line.
+   */
+  addEmployee(corporateId: number, employee: any): Observable<any> {
+    return this.http.post(`/v2/corporate-payroll/corporates/${corporateId}/roster`, employee);
+  }
+
+  /**
+   * @returns Roster line with flipped active flag.
+   */
+  setEmployeeActive(rosterId: number, active: boolean): Observable<any> {
+    return this.http.post(`/v2/corporate-payroll/roster/${rosterId}/${active ? 'activate' : 'deactivate'}`, {});
+  }
+
+  /**
+   * @param salary Salary payload (period YYYYMM, rail).
+   * @returns Created DRAFT SALARY batch (duplicate periods rejected).
+   */
+  createSalaryBatch(corporateId: number, salary: any): Observable<any> {
+    return this.http.post(`/v2/corporate-payroll/corporates/${corporateId}/salary`, salary);
+  }
+
+  /**
+   * @returns Schedule run counts (created, skipped).
+   */
+  runPayrollSchedules(): Observable<any> {
+    return this.http.post('/v2/corporate-payroll/run', {});
+  }
 }

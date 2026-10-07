@@ -1034,7 +1034,9 @@
       "Execute": "Execute",
       "Create Batch": "Create Batch",
       "Items": "Items",
-      "Create Tier": "Create Tier"
+      "Create Tier": "Create Tier",
+      "Run Payroll Now": "Run Payroll Now",
+      "Add Employee": "Add Employee"
     },
     "catalogs": {
       "% Amount": "Menge",
@@ -4303,7 +4305,8 @@
       "Request ID": "Request ID",
       "Write-off Reason": "Write-off Reason",
       "Min Amount": "Min Amount",
-      "Permission": "Permission"
+      "Permission": "Permission",
+      "Employee": "Employee"
     },
     "links": {
       "Community": "Gemeinschaft",
@@ -4502,7 +4505,9 @@
       "Corporate": "Corporate",
       "Registry": "Registry",
       "Batches": "Batches",
-      "Tiers": "Tiers"
+      "Tiers": "Tiers",
+      "Payroll": "Payroll",
+      "Roster": "Roster"
     },
     "placeholders": {
       "Add new server": "Neuen Server hinzufügen",

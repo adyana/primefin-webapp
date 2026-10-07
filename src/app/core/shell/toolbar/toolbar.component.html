@@ -426,6 +426,9 @@
   <button mat-menu-item [routerLink]="['/corporates/approvals']" tabindex="0" *mifosxHasPermission="'READ_CORPORATE'">
     {{ 'labels.menus.Approvals' | translate }}
   </button>
+  <button mat-menu-item [routerLink]="['/corporates/payroll']" tabindex="0" *mifosxHasPermission="'READ_CORPORATE'">
+    {{ 'labels.menus.Payroll' | translate }}
+  </button>
 </mat-menu>
 
 <!-- Application User Help Menu -->

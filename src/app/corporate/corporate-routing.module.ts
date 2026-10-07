@@ -14,6 +14,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CorporateRegistryComponent } from './registry/registry.component';
 import { CorporateBatchesComponent } from './batches/batches.component';
 import { CorporateApprovalsComponent } from './approvals/approvals.component';
+import { CorporatePayrollComponent } from './payroll/payroll.component';
 
 const routes: Routes = [
   {
@@ -30,6 +31,11 @@ const routes: Routes = [
     path: 'approvals',
     component: CorporateApprovalsComponent,
     data: { title: 'Corporate Approvals', breadcrumb: 'Approvals', routeParamBreadcrumb: false }
+  },
+  {
+    path: 'payroll',
+    component: CorporatePayrollComponent,
+    data: { title: 'Corporate Payroll', breadcrumb: 'Payroll', routeParamBreadcrumb: false }
   }
 ];
 

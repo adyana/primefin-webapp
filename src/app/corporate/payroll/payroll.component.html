@@ -1,0 +1,170 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="container">
+  <mat-card class="m-b-20">
+    <mat-card-title class="m-b-16">{{ 'labels.menus.Payroll' | translate }}</mat-card-title>
+
+    <mat-card-content>
+      <form [formGroup]="pickerForm" class="layout-row gap-20px m-b-16">
+        <mat-form-field>
+          <mat-label>{{ 'labels.menus.Corporate' | translate }}</mat-label>
+          <mat-select formControlName="corporateId">
+            @for (corporate of corporates; track corporate.id) {
+              <mat-option [value]="corporate.id">{{ corporate.code }} — {{ corporate.name }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <div class="in-block">
+          <button mat-raised-button color="accent" (click)="runSchedules()">
+            {{ 'labels.buttons.Run Payroll Now' | translate }}
+          </button>
+        </div>
+
+        @if (runResult) {
+          <div class="in-block sweep-result">+{{ runResult.created }} / ~{{ runResult.skipped }}</div>
+        }
+      </form>
+
+      <form [formGroup]="salaryForm" class="layout-row gap-20px">
+        <mat-form-field>
+          <mat-label>{{ 'labels.inputs.Period' | translate }}</mat-label>
+          <input matInput formControlName="period" placeholder="YYYYMM" required />
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Rail</mat-label>
+          <mat-select formControlName="rail">
+            <mat-option value="ICT">ICT</mat-option>
+            <mat-option value="SKNBI">SKNBI</mat-option>
+            <mat-option value="RTGS">RTGS</mat-option>
+            <mat-option value="DDT">DDT</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div class="in-block">
+          <button mat-raised-button color="primary" [disabled]="!salaryForm.valid" (click)="createSalary()">
+            {{ 'labels.buttons.Create Batch' | translate }}
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="m-b-20">
+    <mat-card-title class="m-b-16">{{ 'labels.menus.Roster' | translate }}</mat-card-title>
+
+    <mat-card-content>
+      <form [formGroup]="employeeForm" class="layout-row gap-20px m-b-16">
+        <mat-form-field>
+          <mat-label>{{ 'labels.inputs.Employee' | translate }}</mat-label>
+          <input matInput formControlName="employeeRef" required />
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>{{ 'labels.inputs.Debtor Account' | translate }}</mat-label>
+          <input matInput formControlName="account" required />
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>{{ 'labels.inputs.Amount' | translate }}</mat-label>
+          <input matInput type="number" formControlName="amount" required />
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>{{ 'labels.inputs.Name' | translate }}</mat-label>
+          <input matInput formControlName="name" />
+        </mat-form-field>
+
+        <div class="in-block">
+          <button mat-raised-button color="primary" [disabled]="!employeeForm.valid" (click)="addEmployee()">
+            {{ 'labels.buttons.Add Employee' | translate }}
+          </button>
+        </div>
+      </form>
+
+      <div class="mat-elevation-z8 table-container">
+        <table mat-table [dataSource]="rosterDataSource">
+          <ng-container matColumnDef="employee">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Employee' | translate }}</th>
+            <td mat-cell *matCellDef="let row">{{ row.employeeRef }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="account">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Debtor Account' | translate }}</th>
+            <td mat-cell *matCellDef="let row">{{ row.account }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Name' | translate }}</th>
+            <td mat-cell *matCellDef="let row">{{ row.name ?? '—' }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="amount">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Amount' | translate }}</th>
+            <td mat-cell *matCellDef="let row">{{ row.amount | number: '1.2-2' }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="active">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Status' | translate }}</th>
+            <td mat-cell *matCellDef="let row">{{ row.active ? 'ACTIVE' : 'INACTIVE' }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
+            <td mat-cell *matCellDef="let row">
+              <div class="layout-row">
+                <button mat-button color="primary" (click)="setEmployeeActive(row, true)">
+                  {{ 'labels.buttons.Reactivate' | translate }}
+                </button>
+                <button mat-button color="warn" (click)="setEmployeeActive(row, false)">
+                  {{ 'labels.buttons.Suspend' | translate }}
+                </button>
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="rosterColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: rosterColumns"></tr>
+        </table>
+
+        <mat-paginator #rosterPaginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <div class="mat-elevation-z8 table-container">
+    <table mat-table [dataSource]="batchesDataSource">
+      <ng-container matColumnDef="reference">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Reference' | translate }}</th>
+        <td mat-cell *matCellDef="let row">{{ row.reference }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="period">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Period' | translate }}</th>
+        <td mat-cell *matCellDef="let row">{{ row.period }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="total">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Amount' | translate }}</th>
+        <td mat-cell *matCellDef="let row">{{ row.totalAmount | compactMoney }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Status' | translate }}</th>
+        <td mat-cell *matCellDef="let row">{{ row.status }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="batchColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: batchColumns"></tr>
+    </table>
+
+    <mat-paginator #payrollPaginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+  </div>
+</div>
