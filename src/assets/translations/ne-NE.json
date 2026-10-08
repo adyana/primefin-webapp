@@ -1034,7 +1034,10 @@
       "Items": "Items",
       "Create Tier": "Create Tier",
       "Run Payroll Now": "Run Payroll Now",
-      "Add Employee": "Add Employee"
+      "Add Employee": "Add Employee",
+      "Place": "Place",
+      "Accrue": "Accrue",
+      "Mature": "Mature"
     },
     "catalogs": {
       "% Amount": "रकम",
@@ -4304,7 +4307,9 @@
       "Write-off Reason": "Write-off Reason",
       "Min Amount": "Min Amount",
       "Permission": "Permission",
-      "Employee": "Employee"
+      "Employee": "Employee",
+      "Counterparty": "Counterparty",
+      "Rate bps": "Rate bps"
     },
     "links": {
       "Community": "समुदाय",
@@ -4506,7 +4511,8 @@
       "Tiers": "Tiers",
       "Payroll": "Payroll",
       "Roster": "Roster",
-      "Statements": "Statements"
+      "Statements": "Statements",
+      "Placements": "Placements"
     },
     "placeholders": {
       "Add new server": "नयाँ सर्भर थप्नुहोस्",
@@ -5852,7 +5858,8 @@
       "Disbursed Amount": "Disbursed Amount",
       "Payments Received": "Payments Received",
       "Received Amount": "Received Amount",
-      "None": "None"
+      "None": "None",
+      "Accrued": "Accrued"
     },
     "permissions": {
       "actions": {

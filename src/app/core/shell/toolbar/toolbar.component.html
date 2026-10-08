@@ -309,6 +309,11 @@
       {{ 'labels.menus.Corporate' | translate }}
     </button>
   }
+  @if (treasuryVisible) {
+    <button mat-menu-item [matMenuTriggerFor]="treasuryMenu" tabindex="0" *mifosxHasPermission="'READ_TREASURY'">
+      {{ 'labels.menus.Treasury' | translate }}
+    </button>
+  }
 </mat-menu>
 
 <mat-menu #channelingMenu="matMenu" [overlapTrigger]="false">
@@ -431,6 +436,12 @@
   </button>
   <button mat-menu-item [routerLink]="['/corporates/statements']" tabindex="0" *mifosxHasPermission="'READ_CORPORATE'">
     {{ 'labels.menus.Statements' | translate }}
+  </button>
+</mat-menu>
+
+<mat-menu #treasuryMenu="matMenu" [overlapTrigger]="false">
+  <button mat-menu-item [routerLink]="['/treasury']" tabindex="0" *mifosxHasPermission="'READ_TREASURY'">
+    {{ 'labels.menus.Placements' | translate }}
   </button>
 </mat-menu>
 

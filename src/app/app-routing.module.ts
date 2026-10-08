@@ -73,6 +73,10 @@ const routes: Routes = [
     loadChildren: () => import('./corporate/corporate.module').then((m) => m.CorporateModule)
   },
   {
+    path: 'treasury',
+    loadChildren: () => import('./treasury/treasury.module').then((m) => m.TreasuryModule)
+  },
+  {
     path: 'groups',
     loadChildren: () => import('./groups/groups.module').then((m) => m.GroupsModule)
   },

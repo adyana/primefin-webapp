@@ -1,0 +1,55 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+import { provideHttpClient } from '@angular/common/http';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { TestBed } from '@angular/core/testing';
+import { firstValueFrom } from 'rxjs';
+import { TreasuryService } from './treasury.service';
+
+describe('TreasuryService', () => {
+  let service: TreasuryService;
+  let httpMock: HttpTestingController;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting()
+      ]
+    });
+    service = TestBed.inject(TreasuryService);
+    httpMock = TestBed.inject(HttpTestingController);
+  });
+
+  afterEach(() => {
+    httpMock.verify();
+  });
+
+  it('should manage placements: place, accrue, mature', async () => {
+    const place = firstValueFrom(service.placePlacement({ counterpartyBank: 'BANK', amount: 10000000, rateBps: 500 }));
+    const placeRequest = httpMock.expectOne(
+      (request) => request.url === '/v2/treasury-placements' && request.method === 'POST'
+    );
+    expect(placeRequest.request.body.rateBps).toBe(500);
+    placeRequest.flush({ id: 1, status: 'PLACED' });
+    await expect(place).resolves.toEqual({ id: 1, status: 'PLACED' });
+
+    const accrue = firstValueFrom(service.accruePlacement(1));
+    httpMock
+      .expectOne((request) => request.url === '/v2/treasury-placements/1/accrue' && request.method === 'POST')
+      .flush({ id: 1, accruedInterest: 13888.89 });
+    await expect(accrue).resolves.toEqual({ id: 1, accruedInterest: 13888.89 });
+
+    const mature = firstValueFrom(service.maturePlacement(1));
+    httpMock
+      .expectOne((request) => request.url === '/v2/treasury-placements/1/mature' && request.method === 'POST')
+      .flush({ id: 1, status: 'MATURED' });
+    await expect(mature).resolves.toEqual({ id: 1, status: 'MATURED' });
+  });
+});

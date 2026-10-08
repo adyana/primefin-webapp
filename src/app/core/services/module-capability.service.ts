@@ -71,4 +71,9 @@ export class ModuleCapabilityService {
   corporateAvailable(): Observable<boolean> {
     return this.probe('/v2/corporate-health');
   }
+
+  /** @returns True when the treasury module answers. */
+  treasuryAvailable(): Observable<boolean> {
+    return this.probe('/v2/treasury-health');
+  }
 }
