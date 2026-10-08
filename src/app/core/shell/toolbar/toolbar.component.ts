@@ -101,6 +101,7 @@ export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChec
   collectionsVisible = true;
   corporateVisible = true;
   treasuryVisible = true;
+  eodVisible = true;
 
   /* Reference of institution */
   @ViewChild('institution') institution: ElementRef<any>;
@@ -187,6 +188,12 @@ export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChec
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((available) => {
         this.treasuryVisible = available;
+      });
+    this.moduleCapability
+      .eodAvailable()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((available) => {
+        this.eodVisible = available;
       });
   }
 

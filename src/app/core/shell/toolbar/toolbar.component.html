@@ -314,6 +314,11 @@
       {{ 'labels.menus.Treasury' | translate }}
     </button>
   }
+  @if (eodVisible) {
+    <button mat-menu-item [routerLink]="['/eod']" tabindex="0" *mifosxHasPermission="'READ_EOD'">
+      {{ 'labels.menus.EOD Cockpit' | translate }}
+    </button>
+  }
 </mat-menu>
 
 <mat-menu #channelingMenu="matMenu" [overlapTrigger]="false">

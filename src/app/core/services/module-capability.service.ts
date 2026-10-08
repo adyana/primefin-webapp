@@ -76,4 +76,9 @@ export class ModuleCapabilityService {
   treasuryAvailable(): Observable<boolean> {
     return this.probe('/v2/treasury-health');
   }
+
+  /** @returns True when the ops (EOD cockpit) module answers. */
+  eodAvailable(): Observable<boolean> {
+    return this.probe('/v2/eod-health');
+  }
 }

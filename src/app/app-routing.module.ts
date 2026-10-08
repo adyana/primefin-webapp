@@ -77,6 +77,10 @@ const routes: Routes = [
     loadChildren: () => import('./treasury/treasury.module').then((m) => m.TreasuryModule)
   },
   {
+    path: 'eod',
+    loadChildren: () => import('./eod/eod.module').then((m) => m.EodModule)
+  },
+  {
     path: 'groups',
     loadChildren: () => import('./groups/groups.module').then((m) => m.GroupsModule)
   },
