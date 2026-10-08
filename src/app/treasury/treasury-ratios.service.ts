@@ -60,6 +60,13 @@ export class TreasuryRatiosService {
   }
 
   /**
+   * @returns One-pane treasury overview (placements, nostro, headroom, matcher).
+   */
+  getDashboard(): Observable<any> {
+    return this.http.get('/v2/treasury-dashboard');
+  }
+
+  /**
    * @param period SLIK month-end period (YYYYMM).
    * @returns Filed KPMM submission.
    */

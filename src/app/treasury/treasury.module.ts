@@ -17,6 +17,7 @@ import { TreasuryPlacementsComponent } from './placements/placements.component';
 import { TreasuryFxComponent } from './fx/fx.component';
 import { TreasuryNostroComponent } from './nostro/nostro.component';
 import { TreasuryRatiosComponent } from './ratios/ratios.component';
+import { TreasuryDashboardComponent } from './dashboard/dashboard.component';
 
 /**
  * Treasury module: money-market placements (program #13 Phase A),
@@ -28,7 +29,8 @@ import { TreasuryRatiosComponent } from './ratios/ratios.component';
     TreasuryPlacementsComponent,
     TreasuryFxComponent,
     TreasuryNostroComponent,
-    TreasuryRatiosComponent
+    TreasuryRatiosComponent,
+    TreasuryDashboardComponent
   ],
   exports: [],
   declarations: [],

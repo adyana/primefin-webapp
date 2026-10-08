@@ -440,6 +440,9 @@
 </mat-menu>
 
 <mat-menu #treasuryMenu="matMenu" [overlapTrigger]="false">
+  <button mat-menu-item [routerLink]="['/treasury/dashboard']" tabindex="0" *mifosxHasPermission="'READ_TREASURY'">
+    {{ 'labels.menus.Dashboard' | translate }}
+  </button>
   <button mat-menu-item [routerLink]="['/treasury']" tabindex="0" *mifosxHasPermission="'READ_TREASURY'">
     {{ 'labels.menus.Placements' | translate }}
   </button>

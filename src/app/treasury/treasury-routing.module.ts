@@ -15,6 +15,7 @@ import { TreasuryPlacementsComponent } from './placements/placements.component';
 import { TreasuryFxComponent } from './fx/fx.component';
 import { TreasuryNostroComponent } from './nostro/nostro.component';
 import { TreasuryRatiosComponent } from './ratios/ratios.component';
+import { TreasuryDashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
   {
@@ -36,6 +37,11 @@ const routes: Routes = [
     path: 'ratios',
     component: TreasuryRatiosComponent,
     data: { title: 'Treasury Ratios', breadcrumb: 'Ratios', routeParamBreadcrumb: false }
+  },
+  {
+    path: 'dashboard',
+    component: TreasuryDashboardComponent,
+    data: { title: 'Treasury Dashboard', breadcrumb: 'Dashboard', routeParamBreadcrumb: false }
   }
 ];
 
