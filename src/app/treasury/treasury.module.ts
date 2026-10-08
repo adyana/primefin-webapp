@@ -15,6 +15,7 @@ import { TreasuryRoutingModule } from './treasury-routing.module';
 /** Custom Components */
 import { TreasuryPlacementsComponent } from './placements/placements.component';
 import { TreasuryFxComponent } from './fx/fx.component';
+import { TreasuryNostroComponent } from './nostro/nostro.component';
 
 /**
  * Treasury module: money-market placements (program #13 Phase A;
@@ -24,7 +25,8 @@ import { TreasuryFxComponent } from './fx/fx.component';
   imports: [
     TreasuryRoutingModule,
     TreasuryPlacementsComponent,
-    TreasuryFxComponent
+    TreasuryFxComponent,
+    TreasuryNostroComponent
   ],
   exports: [],
   declarations: [],

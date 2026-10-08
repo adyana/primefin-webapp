@@ -1041,7 +1041,8 @@
       "Mature": "Mature",
       "Import Rates": "Import Rates",
       "Revalue": "Revalue",
-      "Publish": "Publish"
+      "Publish": "Publish",
+      "Import Statement": "Import Statement"
     },
     "catalogs": {
       "% Amount": "% částky",
@@ -4314,7 +4315,8 @@
       "Employee": "Employee",
       "Counterparty": "Counterparty",
       "Rate bps": "Rate bps",
-      "Pair": "Pair"
+      "Pair": "Pair",
+      "Statement": "Statement"
     },
     "links": {
       "Community": "Společenství",
@@ -4519,7 +4521,8 @@
       "Statements": "Statements",
       "Placements": "Placements",
       "Fx Rates": "Fx Rates",
-      "Revaluation": "Revaluation"
+      "Revaluation": "Revaluation",
+      "Nostro": "Nostro"
     },
     "placeholders": {
       "Add new server": "Přidat nový server",

@@ -965,7 +965,8 @@
       "Mature": "Mature",
       "Import Rates": "Import Rates",
       "Revalue": "Revalue",
-      "Publish": "Publish"
+      "Publish": "Publish",
+      "Import Statement": "Import Statement"
     },
     "catalogs": {
       "% Amount": "Məbləğin %-i",
@@ -4182,7 +4183,8 @@
       "Employee": "Employee",
       "Counterparty": "Counterparty",
       "Rate bps": "Rate bps",
-      "Pair": "Pair"
+      "Pair": "Pair",
+      "Statement": "Statement"
     },
     "links": {
       "Community": "İcma",
@@ -4387,7 +4389,8 @@
       "Statements": "Statements",
       "Placements": "Placements",
       "Fx Rates": "Fx Rates",
-      "Revaluation": "Revaluation"
+      "Revaluation": "Revaluation",
+      "Nostro": "Nostro"
     },
     "placeholders": {
       "# Remittance": "Pul köçürməsinin nömrəsi",
