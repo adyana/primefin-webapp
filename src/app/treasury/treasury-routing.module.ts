@@ -14,6 +14,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { TreasuryPlacementsComponent } from './placements/placements.component';
 import { TreasuryFxComponent } from './fx/fx.component';
 import { TreasuryNostroComponent } from './nostro/nostro.component';
+import { TreasuryRatiosComponent } from './ratios/ratios.component';
 
 const routes: Routes = [
   {
@@ -30,6 +31,11 @@ const routes: Routes = [
     path: 'nostro',
     component: TreasuryNostroComponent,
     data: { title: 'Treasury Nostro', breadcrumb: 'Nostro', routeParamBreadcrumb: false }
+  },
+  {
+    path: 'ratios',
+    component: TreasuryRatiosComponent,
+    data: { title: 'Treasury Ratios', breadcrumb: 'Ratios', routeParamBreadcrumb: false }
   }
 ];
 

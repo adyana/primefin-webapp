@@ -16,17 +16,19 @@ import { TreasuryRoutingModule } from './treasury-routing.module';
 import { TreasuryPlacementsComponent } from './placements/placements.component';
 import { TreasuryFxComponent } from './fx/fx.component';
 import { TreasuryNostroComponent } from './nostro/nostro.component';
+import { TreasuryRatiosComponent } from './ratios/ratios.component';
 
 /**
- * Treasury module: money-market placements (program #13 Phase A;
- * FX, nostro, ratios follow).
+ * Treasury module: money-market placements (program #13 Phase A),
+ * FX (Phase B), nostro (Phase C) and prudential ratios (Phase D).
  */
 @NgModule({
   imports: [
     TreasuryRoutingModule,
     TreasuryPlacementsComponent,
     TreasuryFxComponent,
-    TreasuryNostroComponent
+    TreasuryNostroComponent,
+    TreasuryRatiosComponent
   ],
   exports: [],
   declarations: [],

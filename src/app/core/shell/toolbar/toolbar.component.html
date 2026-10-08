@@ -449,6 +449,9 @@
   <button mat-menu-item [routerLink]="['/treasury/nostro']" tabindex="0" *mifosxHasPermission="'READ_TREASURY'">
     {{ 'labels.menus.Nostro' | translate }}
   </button>
+  <button mat-menu-item [routerLink]="['/treasury/ratios']" tabindex="0" *mifosxHasPermission="'READ_TREASURY'">
+    {{ 'labels.menus.Ratios' | translate }}
+  </button>
 </mat-menu>
 
 <!-- Application User Help Menu -->
