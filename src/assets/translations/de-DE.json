@@ -1039,7 +1039,10 @@
       "Add Employee": "Add Employee",
       "Place": "Place",
       "Accrue": "Accrue",
-      "Mature": "Mature"
+      "Mature": "Mature",
+      "Import Rates": "Import Rates",
+      "Revalue": "Revalue",
+      "Publish": "Publish"
     },
     "catalogs": {
       "% Amount": "Menge",
@@ -4311,7 +4314,8 @@
       "Permission": "Permission",
       "Employee": "Employee",
       "Counterparty": "Counterparty",
-      "Rate bps": "Rate bps"
+      "Rate bps": "Rate bps",
+      "Pair": "Pair"
     },
     "links": {
       "Community": "Gemeinschaft",
@@ -4514,7 +4518,9 @@
       "Payroll": "Payroll",
       "Roster": "Roster",
       "Statements": "Statements",
-      "Placements": "Placements"
+      "Placements": "Placements",
+      "Fx Rates": "Fx Rates",
+      "Revaluation": "Revaluation"
     },
     "placeholders": {
       "Add new server": "Neuen Server hinzufügen",

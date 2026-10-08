@@ -1037,7 +1037,10 @@
       "Add Employee": "Add Employee",
       "Place": "Place",
       "Accrue": "Accrue",
-      "Mature": "Mature"
+      "Mature": "Mature",
+      "Import Rates": "Import Rates",
+      "Revalue": "Revalue",
+      "Publish": "Publish"
     },
     "catalogs": {
       "% Amount": "Suma",
@@ -4309,7 +4312,8 @@
       "Permission": "Permission",
       "Employee": "Employee",
       "Counterparty": "Counterparty",
-      "Rate bps": "Rate bps"
+      "Rate bps": "Rate bps",
+      "Pair": "Pair"
     },
     "links": {
       "Community": "bendruomenė",
@@ -4512,7 +4516,9 @@
       "Payroll": "Payroll",
       "Roster": "Roster",
       "Statements": "Statements",
-      "Placements": "Placements"
+      "Placements": "Placements",
+      "Fx Rates": "Fx Rates",
+      "Revaluation": "Revaluation"
     },
     "placeholders": {
       "Add new server": "Pridėti naują serverį",

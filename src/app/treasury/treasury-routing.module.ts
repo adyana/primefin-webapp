@@ -12,12 +12,18 @@ import { RouterModule, Routes } from '@angular/router';
 
 /** Custom Components */
 import { TreasuryPlacementsComponent } from './placements/placements.component';
+import { TreasuryFxComponent } from './fx/fx.component';
 
 const routes: Routes = [
   {
     path: '',
     component: TreasuryPlacementsComponent,
     data: { title: 'Treasury Placements', breadcrumb: 'Placements', routeParamBreadcrumb: false }
+  },
+  {
+    path: 'fx',
+    component: TreasuryFxComponent,
+    data: { title: 'Treasury FX', breadcrumb: 'FX', routeParamBreadcrumb: false }
   }
 ];
 

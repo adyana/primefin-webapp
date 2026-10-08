@@ -443,6 +443,9 @@
   <button mat-menu-item [routerLink]="['/treasury']" tabindex="0" *mifosxHasPermission="'READ_TREASURY'">
     {{ 'labels.menus.Placements' | translate }}
   </button>
+  <button mat-menu-item [routerLink]="['/treasury/fx']" tabindex="0" *mifosxHasPermission="'READ_TREASURY'">
+    {{ 'labels.menus.Fx Rates' | translate }}
+  </button>
 </mat-menu>
 
 <!-- Application User Help Menu -->

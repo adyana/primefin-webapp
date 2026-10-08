@@ -14,6 +14,7 @@ import { TreasuryRoutingModule } from './treasury-routing.module';
 
 /** Custom Components */
 import { TreasuryPlacementsComponent } from './placements/placements.component';
+import { TreasuryFxComponent } from './fx/fx.component';
 
 /**
  * Treasury module: money-market placements (program #13 Phase A;
@@ -22,7 +23,8 @@ import { TreasuryPlacementsComponent } from './placements/placements.component';
 @NgModule({
   imports: [
     TreasuryRoutingModule,
-    TreasuryPlacementsComponent
+    TreasuryPlacementsComponent,
+    TreasuryFxComponent
   ],
   exports: [],
   declarations: [],

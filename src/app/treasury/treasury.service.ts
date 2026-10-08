@@ -53,4 +53,39 @@ export class TreasuryService {
   maturePlacement(placementId: number): Observable<any> {
     return this.http.post(`/v2/treasury-placements/${placementId}/mature`, {});
   }
+
+  /**
+   * @param pair Pair filter (optional; all pairs when omitted).
+   * @returns Rates, latest first per pair.
+   */
+  getFxRates(pair?: string): Observable<any> {
+    const params: Record<string, string> = {};
+    if (pair) {
+      params['pair'] = pair;
+    }
+    return this.http.get('/v2/treasury-fx/rates', { params });
+  }
+
+  /**
+   * @param rate Rate payload (pair, rate, source, effectiveDate).
+   * @returns Published rate (re-publish overwrites).
+   */
+  publishFxRate(rate: any): Observable<any> {
+    return this.http.post('/v2/treasury-fx/rates', rate);
+  }
+
+  /**
+   * @param csv JISDOR-style lines (pair,rate[,date]).
+   * @returns Import counts (imported, skipped).
+   */
+  importFxRates(csv: string): Observable<any> {
+    return this.http.post('/v2/treasury-fx/rates/import', { csv });
+  }
+
+  /**
+   * @returns Nostro positions per currency revalued to IDR.
+   */
+  getRevaluation(): Observable<any> {
+    return this.http.get('/v2/treasury-fx/revaluation');
+  }
 }
