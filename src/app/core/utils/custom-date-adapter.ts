@@ -57,6 +57,18 @@ function usesShortYear(format: string): boolean {
 }
 
 /**
+ * Normalizes a configured date format to Angular DatePipe tokens.
+ *
+ * Deployments historically ship moment-style tokens ('YYYY-MM-DD',
+ * see config/docker/webapp/env.template.js) which DatePipe cannot
+ * render (day shows as a literal 'DD' app-wide). Parsing already
+ * sniffs components case-insensitively; this makes formatting match.
+ */
+function toDatePipeFormat(format: string): string {
+  return format.replace(/YYYY/g, 'yyyy').replace(/YY/g, 'yy').replace(/DD/g, 'dd').replace(/\bD\b/g, 'd');
+}
+
+/**
  * Custom DateAdapter that extends NativeDateAdapter to support compact numeric date input.
  *
  * When a user types a purely numeric string (e.g., '08042002' or '080402') into a date picker,
@@ -82,7 +94,7 @@ export class CustomDateAdapter extends NativeDateAdapter {
       throw Error('CustomDateAdapter: Cannot format invalid date.');
     }
 
-    const dateFormat = this.settingsService.dateFormat;
+    const dateFormat = toDatePipeFormat(this.settingsService.dateFormat);
     const langCode = this.settingsService.language?.code || 'en';
 
     try {
