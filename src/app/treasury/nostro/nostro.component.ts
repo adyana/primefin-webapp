@@ -44,6 +44,10 @@ import { catchError, of } from 'rxjs';
 /** Custom Services */
 import { TreasuryNostroService } from '../treasury-nostro.service';
 
+/** Shared Page Standard */
+import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
+import { StatusPillComponent } from '../../shared/status-pill/status-pill.component';
+
 /**
  * Nostro auto-match: MT940 paste/import, statement list with line
  * drill-down, manual sweep and the exception-only breaks table.
@@ -53,6 +57,8 @@ import { TreasuryNostroService } from '../treasury-nostro.service';
   templateUrl: './nostro.component.html',
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
+    PageToolbarComponent,
+    StatusPillComponent,
     ReactiveFormsModule,
     MatCard,
     MatCardTitle,
@@ -110,6 +116,10 @@ export class TreasuryNostroComponent implements OnInit {
   selectedStatement: any = null;
   /** Last import/sweep counts (null = no run yet this session). */
   lastRun: any = null;
+
+  /** Live table counts for the toolbar badges. */
+  statementsCount: number | null = null;
+  breaksCount: number | null = null;
 
   /** Paginators for the statements, lines and breaks tables. */
   @ViewChild('statementsPaginator') statementsPaginator: MatPaginator;
@@ -170,6 +180,7 @@ export class TreasuryNostroComponent implements OnInit {
       )
       .subscribe((statements: any) => {
         this.statementsDataSource.data = Array.isArray(statements) ? statements : [];
+        this.statementsCount = this.statementsDataSource.data.length;
         if (this.statementsPaginator) {
           this.statementsDataSource.paginator = this.statementsPaginator;
         }
@@ -183,10 +194,25 @@ export class TreasuryNostroComponent implements OnInit {
       )
       .subscribe((breaks: any) => {
         this.breaksDataSource.data = Array.isArray(breaks) ? breaks : [];
+        this.breaksCount = this.breaksDataSource.data.length;
         if (this.breaksPaginator) {
           this.breaksDataSource.paginator = this.breaksPaginator;
         }
         this.cdr.markForCheck();
       });
+  }
+
+  filterStatements(text: string): void {
+    this.statementsDataSource.filter = (text || '').trim().toLowerCase();
+    if (this.statementsPaginator) {
+      this.statementsDataSource.paginator.firstPage();
+    }
+  }
+
+  filterBreaks(text: string): void {
+    this.breaksDataSource.filter = (text || '').trim().toLowerCase();
+    if (this.breaksPaginator) {
+      this.breaksDataSource.paginator.firstPage();
+    }
   }
 }

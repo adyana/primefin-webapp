@@ -26,13 +26,19 @@
         <div class="layout-row gap-20px m-b-16">
           <span>{{ 'labels.menus.Nostro' | translate }}: {{ dashboard.nostro?.unmatched }}</span>
           <span>{{ 'labels.inputs.Breaks' | translate }}: {{ dashboard.nostro?.openBreaks }}</span>
-          <span>{{ 'labels.inputs.Matcher' | translate }}: {{ dashboard.matcher?.lastRun?.status ?? '—' }}</span>
+          <span>
+            {{ 'labels.inputs.Matcher' | translate }}:
+            <mifosx-status-pill [status]="dashboard.matcher?.lastRun?.status ?? '—'" />
+          </span>
         </div>
 
         @if (dashboard.prudential?.available) {
           <div class="layout-row gap-20px m-b-16">
             <span>{{ 'labels.inputs.CAR' | translate }}: {{ dashboard.prudential.carPct }}%</span>
-            <span>{{ 'labels.inputs.Status' | translate }}: {{ dashboard.prudential.status }}</span>
+            <span>
+              {{ 'labels.inputs.Status' | translate }}:
+              <mifosx-status-pill [status]="dashboard.prudential.status" />
+            </span>
             <span>{{ 'labels.inputs.Headroom' | translate }}: {{ dashboard.prudential.headroom }}</span>
           </div>
         }
@@ -46,12 +52,18 @@
 
             <ng-container matColumnDef="net">
               <th mat-header-cell *matHeaderCellDef>Net</th>
-              <td mat-cell *matCellDef="let row">{{ row.net | number: '1.2-2' }}</td>
+              <td mat-cell *matCellDef="let row">{{ row.net | compactMoney: row.currency }}</td>
             </ng-container>
 
             <ng-container matColumnDef="netIdr">
               <th mat-header-cell *matHeaderCellDef>Net IDR</th>
-              <td mat-cell *matCellDef="let row">{{ row.netIdr ?? '—' }}</td>
+              <td mat-cell *matCellDef="let row">
+                @if (row.netIdr === null || row.netIdr === undefined) {
+                  —
+                } @else {
+                  {{ row.netIdr | compactMoney: 'IDR' }}
+                }
+              </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="positionColumns"></tr>

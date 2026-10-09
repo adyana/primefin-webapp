@@ -45,6 +45,9 @@ import { catchError, of } from 'rxjs';
 /** Custom Services */
 import { TreasuryService } from '../treasury.service';
 
+/** Shared Page Standard */
+import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
+
 /**
  * FX rates board: manual publish, JISDOR-style CSV import and the
  * nostro revaluation table (positions per currency in IDR).
@@ -54,6 +57,7 @@ import { TreasuryService } from '../treasury.service';
   templateUrl: './fx.component.html',
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
+    PageToolbarComponent,
     ReactiveFormsModule,
     MatCard,
     MatCardTitle,
@@ -128,6 +132,10 @@ export class TreasuryFxComponent implements OnInit {
   /** Last import counts (null = no import yet this session). */
   importResult: any = null;
 
+  /** Live table counts for the toolbar badges. */
+  ratesCount: number | null = null;
+  positionsCount: number | null = null;
+
   /** Paginators for the rates and revaluation tables. */
   @ViewChild('ratesPaginator') ratesPaginator: MatPaginator;
   @ViewChild('positionsPaginator') positionsPaginator: MatPaginator;
@@ -172,11 +180,26 @@ export class TreasuryFxComponent implements OnInit {
       )
       .subscribe((positions: any) => {
         this.positionsDataSource.data = Array.isArray(positions) ? positions : [];
+        this.positionsCount = this.positionsDataSource.data.length;
         if (this.positionsPaginator) {
           this.positionsDataSource.paginator = this.positionsPaginator;
         }
         this.cdr.markForCheck();
       });
+  }
+
+  filterRates(text: string): void {
+    this.ratesDataSource.filter = (text || '').trim().toLowerCase();
+    if (this.ratesPaginator) {
+      this.ratesDataSource.paginator.firstPage();
+    }
+  }
+
+  filterPositions(text: string): void {
+    this.positionsDataSource.filter = (text || '').trim().toLowerCase();
+    if (this.positionsPaginator) {
+      this.positionsDataSource.paginator.firstPage();
+    }
   }
 
   private reload(): void {
@@ -188,6 +211,7 @@ export class TreasuryFxComponent implements OnInit {
       )
       .subscribe((rates: any) => {
         this.ratesDataSource.data = Array.isArray(rates) ? rates : [];
+        this.ratesCount = this.ratesDataSource.data.length;
         if (this.ratesPaginator) {
           this.ratesDataSource.paginator = this.ratesPaginator;
         }

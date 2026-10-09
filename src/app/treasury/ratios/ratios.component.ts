@@ -44,6 +44,10 @@ import { catchError, of } from 'rxjs';
 /** Custom Services */
 import { TreasuryRatiosService } from '../treasury-ratios.service';
 
+/** Shared Page Standard */
+import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
+import { StatusPillComponent } from '../../shared/status-pill/status-pill.component';
+
 /**
  * Prudential ratios board: board-approved capital snapshots, limit
  * thresholds, CAR/exposure computation per SLIK period and KPMM/BMPK
@@ -54,6 +58,8 @@ import { TreasuryRatiosService } from '../treasury-ratios.service';
   templateUrl: './ratios.component.html',
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
+    PageToolbarComponent,
+    StatusPillComponent,
     ReactiveFormsModule,
     MatCard,
     MatCardTitle,
@@ -128,6 +134,9 @@ export class TreasuryRatiosComponent implements OnInit {
   /** Latest computed ratios (null = nothing computed yet this session). */
   ratios: any = null;
 
+  /** Live exposures count for the toolbar badge. */
+  exposuresCount: number | null = null;
+
   /** Last filed submission ids (null = nothing filed yet this session). */
   kpmmFilingId: number | null = null;
   bmpkFilingId: number | null = null;
@@ -165,11 +174,19 @@ export class TreasuryRatiosComponent implements OnInit {
       .subscribe((ratios: any) => {
         this.ratios = ratios;
         this.exposureDataSource.data = ratios && Array.isArray(ratios.exposures) ? ratios.exposures : [];
+        this.exposuresCount = this.exposureDataSource.data.length;
         if (this.exposuresPaginator) {
           this.exposureDataSource.paginator = this.exposuresPaginator;
         }
         this.cdr.markForCheck();
       });
+  }
+
+  filterExposures(text: string): void {
+    this.exposureDataSource.filter = (text || '').trim().toLowerCase();
+    if (this.exposuresPaginator) {
+      this.exposureDataSource.paginator.firstPage();
+    }
   }
 
   fileKpmm(): void {

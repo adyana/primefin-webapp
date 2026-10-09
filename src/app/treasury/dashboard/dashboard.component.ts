@@ -29,6 +29,9 @@ import { catchError, of } from 'rxjs';
 /** Custom Services */
 import { TreasuryRatiosService } from '../treasury-ratios.service';
 
+/** Shared Page Standard */
+import { StatusPillComponent } from '../../shared/status-pill/status-pill.component';
+
 /**
  * Treasury one-pane dashboard: placements ladder, nostro balances
  * (revalued), prudential headroom and matcher health.
@@ -38,6 +41,7 @@ import { TreasuryRatiosService } from '../treasury-ratios.service';
   templateUrl: './dashboard.component.html',
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
+    StatusPillComponent,
     MatCard,
     MatCardTitle,
     MatCardContent,
