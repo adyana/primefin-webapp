@@ -138,3 +138,15 @@
   }
   /* stylelint-enable selector-class-pattern */
 }
+
+// Compact density for the Admin / Operations dropdown menus: 32px rows
+// (8px grid) so the split menus take less vertical screen property.
+::ng-deep .mat-mdc-menu-panel.toolbar-menu {
+  .mat-mdc-menu-item {
+    min-height: 32px;
+  }
+
+  .mat-mdc-menu-item .mat-mdc-menu-item-text {
+    line-height: 24px;
+  }
+}
