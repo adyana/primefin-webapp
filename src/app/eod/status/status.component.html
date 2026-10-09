@@ -90,4 +90,49 @@
       }
     </mat-card-content>
   </mat-card>
+
+  <mat-card class="m-b-20">
+    <mat-card-title class="m-b-16">{{ 'labels.buttons.Run EOD' | translate }}</mat-card-title>
+
+    <mat-card-content>
+      <form [formGroup]="runForm" class="layout-row gap-20px m-b-16">
+        <mat-form-field>
+          <mat-label>{{ 'labels.inputs.Target Date' | translate }}</mat-label>
+          <input matInput type="date" formControlName="targetDate" />
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>{{ 'labels.inputs.Max Days' | translate }}</mat-label>
+          <input matInput type="number" formControlName="maxDays" />
+        </mat-form-field>
+
+        <div class="in-block">
+          <button mat-raised-button color="accent" (click)="previewPlan()">
+            {{ 'labels.buttons.Plan' | translate }}
+          </button>
+        </div>
+
+        <div class="in-block">
+          <button mat-raised-button color="primary" (click)="startRun()">
+            {{ 'labels.buttons.Start Run' | translate }}
+          </button>
+        </div>
+      </form>
+
+      @if (plan) {
+        <div class="layout-row gap-20px m-b-16">
+          <span>{{ 'labels.inputs.Business Date' | translate }}: {{ plan.businessDate }}</span>
+          <span>{{ 'labels.inputs.Target Date' | translate }}: {{ plan.targetDate }}</span>
+          <span>{{ 'labels.inputs.Days' | translate }}: {{ plan.days?.length }}</span>
+        </div>
+      }
+
+      @if (run) {
+        <div class="layout-row gap-20px m-b-16">
+          <span>{{ 'labels.inputs.Status' | translate }}: {{ run.status }}</span>
+          <span>{{ 'labels.inputs.Current Day' | translate }}: {{ run.currentDay ?? '—' }}</span>
+        </div>
+      }
+    </mat-card-content>
+  </mat-card>
 </div>

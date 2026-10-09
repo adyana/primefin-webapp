@@ -26,4 +26,36 @@ export class EodService {
   getStatus(): Observable<any> {
     return this.http.get('/v2/eod-status');
   }
+
+  /**
+   * @param targetDate ISO target business date (optional; server wall clock when omitted).
+   * @param maxDays Catch-up cap (optional; 31 when omitted).
+   * @returns Dry-run plan: days that would close, no execution.
+   */
+  getRunPlan(targetDate?: string, maxDays?: number): Observable<any> {
+    const params: Record<string, string> = {};
+    if (targetDate) {
+      params['targetDate'] = targetDate;
+    }
+    if (maxDays) {
+      params['maxDays'] = String(maxDays);
+    }
+    return this.http.get('/v2/eod-run/plan', { params });
+  }
+
+  /**
+   * @param run Run payload (targetDate, maxDays).
+   * @returns Started run id plus the day list (no-op when dates current).
+   */
+  startRun(run: any): Observable<any> {
+    return this.http.post('/v2/eod-run', run);
+  }
+
+  /**
+   * @param runId Run id from startRun.
+   * @returns Run snapshot with step progress.
+   */
+  getRun(runId: string): Observable<any> {
+    return this.http.get(`/v2/eod-run/runs/${runId}`);
+  }
 }

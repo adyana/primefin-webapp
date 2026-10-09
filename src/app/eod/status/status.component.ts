@@ -7,9 +7,20 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+  inject,
+  DestroyRef
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatCard, MatCardContent, MatCardTitle } from '@angular/material/card';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
 import {
   MatTableDataSource,
@@ -38,9 +49,13 @@ import { EodService } from '../eod.service';
   templateUrl: './status.component.html',
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
+    ReactiveFormsModule,
     MatCard,
     MatCardTitle,
     MatCardContent,
+    MatFormField,
+    MatLabel,
+    MatInput,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
@@ -55,13 +70,27 @@ import { EodService } from '../eod.service';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EodStatusComponent implements OnInit {
+export class EodStatusComponent implements OnInit, OnDestroy {
   private eodService = inject(EodService);
+  private formBuilder = inject(FormBuilder);
   private destroyRef = inject(DestroyRef);
   private cdr = inject(ChangeDetectorRef);
 
   /** Status panes (null = not loaded yet). */
   status: any = null;
+
+  runForm: FormGroup = this.formBuilder.group({
+    targetDate: [''],
+    maxDays: [null]
+  });
+
+  /** Dry-run plan preview (null = no preview yet). */
+  plan: any = null;
+
+  /** Tracked run snapshot (null = nothing started this session). */
+  run: any = null;
+
+  private poller: ReturnType<typeof setInterval> | null = null;
 
   jobsDataSource = new MatTableDataSource<any>([]);
   jobColumns: string[] = [
@@ -81,6 +110,60 @@ export class EodStatusComponent implements OnInit {
 
   ngOnInit(): void {
     this.reload();
+  }
+
+  ngOnDestroy(): void {
+    if (this.poller) {
+      clearInterval(this.poller);
+    }
+  }
+
+  previewPlan(): void {
+    const { targetDate, maxDays } = this.runForm.value;
+    this.eodService
+      .getRunPlan(targetDate || undefined, maxDays || undefined)
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        catchError(() => of(null))
+      )
+      .subscribe((plan: any) => {
+        this.plan = plan;
+        this.cdr.markForCheck();
+      });
+  }
+
+  startRun(): void {
+    const { targetDate, maxDays } = this.runForm.value;
+    this.eodService
+      .startRun({ targetDate: targetDate || null, maxDays: maxDays || null })
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((started: any) => {
+        this.track(started.runId);
+      });
+  }
+
+  private track(runId: string): void {
+    if (this.poller) {
+      clearInterval(this.poller);
+    }
+    const fetch = () => {
+      this.eodService
+        .getRun(runId)
+        .pipe(
+          takeUntilDestroyed(this.destroyRef),
+          catchError(() => of(null))
+        )
+        .subscribe((run: any) => {
+          this.run = run;
+          if (run && run.status !== 'RUNNING' && this.poller) {
+            clearInterval(this.poller);
+            this.poller = null;
+          }
+          this.cdr.markForCheck();
+        });
+    };
+    fetch();
+    this.poller = setInterval(fetch, 15000);
   }
 
   reload(): void {
