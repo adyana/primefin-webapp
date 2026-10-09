@@ -1,0 +1,54 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="page-toolbar">
+  <mat-form-field class="search" subscriptSizing="dynamic">
+    <mat-icon matPrefix>search</mat-icon>
+    <input
+      matInput
+      type="text"
+      #searchInput
+      placeholder="{{ searchPlaceholder | translate }}"
+      (input)="searchChange.emit(searchInput.value)"
+    />
+    @if (searchInput.value) {
+      <button
+        mat-icon-button
+        matSuffix
+        type="button"
+        (click)="searchInput.value = ''; searchChange.emit('')"
+        [attr.aria-label]="'labels.buttons.Clear' | translate"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    }
+  </mat-form-field>
+
+  @if (count !== null) {
+    <span class="count-badge">
+      <strong>{{ count | number }}</strong>
+      {{ countNoun | translate | lowercase }}
+    </span>
+  }
+
+  <div class="toolbar-spacer"></div>
+
+  @if (showExport) {
+    <button
+      type="button"
+      mat-icon-button
+      class="export-btn"
+      [disabled]="exportDisabled"
+      (click)="export.emit()"
+      [attr.aria-label]="exportTitle | translate"
+      [title]="exportTitle | translate"
+    >
+      <mat-icon>download</mat-icon>
+    </button>
+  }
+</div>

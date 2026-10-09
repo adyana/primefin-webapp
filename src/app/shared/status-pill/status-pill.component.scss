@@ -1,0 +1,92 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+@use 'assets/styles/colours' as *;
+
+:host {
+  --pill-active: #{$status-active};
+  --pill-active-bg: #{rgba($status-active, 12%)};
+  --pill-pending: #{$status-pending};
+  --pill-pending-bg: #{rgba($status-pending, 12%)};
+  --pill-alert: #{$msg-danger};
+  --pill-alert-bg: #{rgba($msg-danger, 12%)};
+  --pill-neutral: #{rgba($dark-grey, 45%)};
+  --pill-neutral-bg: #{rgba($dark-grey, 6%)};
+
+  display: inline-block;
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: 100px;
+  font-size: 10.5px;
+  font-weight: 600;
+  border: 1px solid transparent;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  width: fit-content;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.status-pill .label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.status-pill .dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.status-pill.active {
+  color: var(--pill-active);
+  border-color: var(--pill-active);
+  background: var(--pill-active-bg);
+}
+
+.status-pill.active .dot {
+  background: var(--pill-active);
+}
+
+.status-pill.pending {
+  color: var(--pill-pending);
+  border-color: var(--pill-pending);
+  background: var(--pill-pending-bg);
+}
+
+.status-pill.pending .dot {
+  background: var(--pill-pending);
+}
+
+.status-pill.neutral {
+  color: var(--pill-neutral);
+  border-color: var(--pill-neutral);
+  background: var(--pill-neutral-bg);
+}
+
+.status-pill.neutral .dot {
+  background: var(--pill-neutral);
+}
+
+.status-pill.alert {
+  color: var(--pill-alert);
+  border-color: var(--pill-alert);
+  background: var(--pill-alert-bg);
+}
+
+.status-pill.alert .dot {
+  background: var(--pill-alert);
+}

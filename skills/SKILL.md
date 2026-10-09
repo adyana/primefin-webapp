@@ -70,3 +70,26 @@ This file defines the procedural knowledge required for AI agents to successfull
 
 - Before finalizing a PR or task, you MUST run `npm run headers:add` to prepend the required Mozilla Public License 2.0 (MPL-2.0) headers to your files.
 - Verify with `npm run headers:check`.
+
+## 6. Page Standard Skill
+
+**When to Apply:** Creating or restyling any board/list page (the loans
+board at `/#/loans` is the house reference).
+
+**Rules:**
+
+- Mount the route under `Route.withShell(...)` so the page gets the
+  toolbar, sidenav, breadcrumb and auth guard. A page without shell
+  chrome is a defect, not a style.
+- Use `<mifosx-page-toolbar>` for search + live count (+ export slot),
+  NOT a bespoke filter row. Wire `(search)` to the table filter.
+- Use `<mifosx-status-pill [status]="row.status">` for every status
+  cell. Raw status text in tables is prohibited. Pass `[tone]` only
+  for statuses outside the default map.
+- Render money with the `compactMoney` pipe (`row.amount |
+compactMoney: row.currency`). Raw unformatted amounts are prohibited.
+- Every table gets a `mat-paginator` (10/25/50/100). Tables without
+  pagination are prohibited.
+- Numbers that users compare down a column use tabular figures
+  (the shared components already set this; do not override with
+  proportional fonts).

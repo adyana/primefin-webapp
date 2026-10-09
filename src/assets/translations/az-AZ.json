@@ -5349,6 +5349,7 @@
       "SearchByClient": "Müştərinin adı, xarici ID-si, mobil nömrəsi üzrə axtar",
       "SearchByExternalID": "Xarici ID üzrə axtar",
       "SearchByLoan": "Hesab nömrəsi, borcalan və ya məhsul üzrə axtar",
+      "SearchByCounterparty": "Search by counterparty",
       "SearchByName": "Ad üzrə axtar",
       "Section Buttons": "Bu bölmədə istifadəçi adı, istifadəçinin şəkli, istifadəçi parametrləri və çıxış düyməsi var.",
       "SelectDate": "Tarix seç",

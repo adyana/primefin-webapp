@@ -45,6 +45,10 @@ import { catchError, of } from 'rxjs';
 /** Custom Services */
 import { TreasuryService } from '../treasury.service';
 
+/** Shared Page Standard */
+import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
+import { StatusPillComponent } from '../../shared/status-pill/status-pill.component';
+
 /**
  * Money-market placement board: filter by status, book placements,
  * accrue interest and mature with finalized interest.
@@ -54,6 +58,8 @@ import { TreasuryService } from '../treasury.service';
   templateUrl: './placements.component.html',
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
+    PageToolbarComponent,
+    StatusPillComponent,
     ReactiveFormsModule,
     MatCard,
     MatCardTitle,
@@ -130,6 +136,9 @@ export class TreasuryPlacementsComponent implements OnInit {
   /** Paginator for the placements table. */
   @ViewChild(MatPaginator) placementsPaginator: MatPaginator;
 
+  /** Live placement count for the toolbar badge. */
+  placementCount: number | null = null;
+
   ngOnInit(): void {
     this.filtersForm.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.reload());
     this.reload();
@@ -172,10 +181,18 @@ export class TreasuryPlacementsComponent implements OnInit {
       )
       .subscribe((placements: any) => {
         this.placementsDataSource.data = Array.isArray(placements) ? placements : [];
+        this.placementCount = this.placementsDataSource.data.length;
         if (this.placementsPaginator) {
           this.placementsDataSource.paginator = this.placementsPaginator;
         }
         this.cdr.markForCheck();
       });
+  }
+
+  applySearch(text: string): void {
+    this.placementsDataSource.filter = (text || '').trim().toLowerCase();
+    if (this.placementsDataSource.paginator) {
+      this.placementsDataSource.paginator.firstPage();
+    }
   }
 }

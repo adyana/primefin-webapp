@@ -5481,6 +5481,7 @@
       "SearchByClient": "Search by client name, external Id, mobile",
       "SearchByExternalID": "Search by ExternalID",
       "SearchByLoan": "Search by account number, borrower, or product",
+      "SearchByCounterparty": "Search by counterparty",
       "SearchByName": "Search by Name",
       "Section Buttons": "This section contains user name, user photograph, user settings and sign out button.",
       "SelectDate": "Select date",
