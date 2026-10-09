@@ -13,12 +13,17 @@ import { RouterModule, Routes } from '@angular/router';
 /** Custom Components */
 import { EodStatusComponent } from './status/status.component';
 
+/** Custom Services */
+import { Route } from '../core/route/route.service';
+
 const routes: Routes = [
-  {
-    path: '',
-    component: EodStatusComponent,
-    data: { title: 'EOD Cockpit', breadcrumb: 'Status', routeParamBreadcrumb: false }
-  }
+  Route.withShell([
+    {
+      path: '',
+      component: EodStatusComponent,
+      data: { title: 'EOD Cockpit', breadcrumb: 'Status', routeParamBreadcrumb: false }
+    }
+  ])
 ];
 
 @NgModule({

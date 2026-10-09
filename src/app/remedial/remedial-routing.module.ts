@@ -14,17 +14,22 @@ import { RouterModule, Routes } from '@angular/router';
 import { CollectionsWorkbenchComponent } from './workbench/workbench.component';
 import { CollectionCaseDetailComponent } from './case-detail/case-detail.component';
 
+/** Custom Services */
+import { Route } from '../core/route/route.service';
+
 const routes: Routes = [
-  {
-    path: '',
-    component: CollectionsWorkbenchComponent,
-    data: { title: 'Collections Workbench', breadcrumb: 'Workbench', routeParamBreadcrumb: false }
-  },
-  {
-    path: 'cases/:id',
-    component: CollectionCaseDetailComponent,
-    data: { title: 'Collection Case', breadcrumb: 'Case', routeParamBreadcrumb: false }
-  }
+  Route.withShell([
+    {
+      path: '',
+      component: CollectionsWorkbenchComponent,
+      data: { title: 'Collections Workbench', breadcrumb: 'Workbench', routeParamBreadcrumb: false }
+    },
+    {
+      path: 'cases/:id',
+      component: CollectionCaseDetailComponent,
+      data: { title: 'Collection Case', breadcrumb: 'Case', routeParamBreadcrumb: false }
+    }
+  ])
 ];
 
 @NgModule({

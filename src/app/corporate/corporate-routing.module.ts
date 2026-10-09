@@ -17,32 +17,37 @@ import { CorporateApprovalsComponent } from './approvals/approvals.component';
 import { CorporatePayrollComponent } from './payroll/payroll.component';
 import { CorporateStatementsComponent } from './statements/statements.component';
 
+/** Custom Services */
+import { Route } from '../core/route/route.service';
+
 const routes: Routes = [
-  {
-    path: '',
-    component: CorporateRegistryComponent,
-    data: { title: 'Corporate Registry', breadcrumb: 'Registry', routeParamBreadcrumb: false }
-  },
-  {
-    path: 'batches',
-    component: CorporateBatchesComponent,
-    data: { title: 'Corporate Batches', breadcrumb: 'Batches', routeParamBreadcrumb: false }
-  },
-  {
-    path: 'approvals',
-    component: CorporateApprovalsComponent,
-    data: { title: 'Corporate Approvals', breadcrumb: 'Approvals', routeParamBreadcrumb: false }
-  },
-  {
-    path: 'payroll',
-    component: CorporatePayrollComponent,
-    data: { title: 'Corporate Payroll', breadcrumb: 'Payroll', routeParamBreadcrumb: false }
-  },
-  {
-    path: 'statements',
-    component: CorporateStatementsComponent,
-    data: { title: 'Corporate Statements', breadcrumb: 'Statements', routeParamBreadcrumb: false }
-  }
+  Route.withShell([
+    {
+      path: '',
+      component: CorporateRegistryComponent,
+      data: { title: 'Corporate Registry', breadcrumb: 'Registry', routeParamBreadcrumb: false }
+    },
+    {
+      path: 'batches',
+      component: CorporateBatchesComponent,
+      data: { title: 'Corporate Batches', breadcrumb: 'Batches', routeParamBreadcrumb: false }
+    },
+    {
+      path: 'approvals',
+      component: CorporateApprovalsComponent,
+      data: { title: 'Corporate Approvals', breadcrumb: 'Approvals', routeParamBreadcrumb: false }
+    },
+    {
+      path: 'payroll',
+      component: CorporatePayrollComponent,
+      data: { title: 'Corporate Payroll', breadcrumb: 'Payroll', routeParamBreadcrumb: false }
+    },
+    {
+      path: 'statements',
+      component: CorporateStatementsComponent,
+      data: { title: 'Corporate Statements', breadcrumb: 'Statements', routeParamBreadcrumb: false }
+    }
+  ])
 ];
 
 @NgModule({

@@ -17,32 +17,37 @@ import { TreasuryNostroComponent } from './nostro/nostro.component';
 import { TreasuryRatiosComponent } from './ratios/ratios.component';
 import { TreasuryDashboardComponent } from './dashboard/dashboard.component';
 
+/** Custom Services */
+import { Route } from '../core/route/route.service';
+
 const routes: Routes = [
-  {
-    path: '',
-    component: TreasuryPlacementsComponent,
-    data: { title: 'Treasury Placements', breadcrumb: 'Placements', routeParamBreadcrumb: false }
-  },
-  {
-    path: 'fx',
-    component: TreasuryFxComponent,
-    data: { title: 'Treasury FX', breadcrumb: 'FX', routeParamBreadcrumb: false }
-  },
-  {
-    path: 'nostro',
-    component: TreasuryNostroComponent,
-    data: { title: 'Treasury Nostro', breadcrumb: 'Nostro', routeParamBreadcrumb: false }
-  },
-  {
-    path: 'ratios',
-    component: TreasuryRatiosComponent,
-    data: { title: 'Treasury Ratios', breadcrumb: 'Ratios', routeParamBreadcrumb: false }
-  },
-  {
-    path: 'dashboard',
-    component: TreasuryDashboardComponent,
-    data: { title: 'Treasury Dashboard', breadcrumb: 'Dashboard', routeParamBreadcrumb: false }
-  }
+  Route.withShell([
+    {
+      path: '',
+      component: TreasuryPlacementsComponent,
+      data: { title: 'Treasury Placements', breadcrumb: 'Placements', routeParamBreadcrumb: false }
+    },
+    {
+      path: 'fx',
+      component: TreasuryFxComponent,
+      data: { title: 'Treasury FX', breadcrumb: 'FX', routeParamBreadcrumb: false }
+    },
+    {
+      path: 'nostro',
+      component: TreasuryNostroComponent,
+      data: { title: 'Treasury Nostro', breadcrumb: 'Nostro', routeParamBreadcrumb: false }
+    },
+    {
+      path: 'ratios',
+      component: TreasuryRatiosComponent,
+      data: { title: 'Treasury Ratios', breadcrumb: 'Ratios', routeParamBreadcrumb: false }
+    },
+    {
+      path: 'dashboard',
+      component: TreasuryDashboardComponent,
+      data: { title: 'Treasury Dashboard', breadcrumb: 'Dashboard', routeParamBreadcrumb: false }
+    }
+  ])
 ];
 
 @NgModule({
