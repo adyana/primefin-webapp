@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, ViewChild, inject } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
 import {
   MatTableDataSource,
   MatTable,
@@ -23,6 +24,10 @@ import {
 } from '@angular/material/table';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
+/** Shared Page Standard */
+import { PageToolbarComponent } from '../../../shared/page-toolbar/page-toolbar.component';
+import { StatusPillComponent } from '../../../shared/status-pill/status-pill.component';
+
 /** rxjs Imports */
 import { catchError, of, take } from 'rxjs';
 
@@ -37,6 +42,8 @@ import { AgentsService } from '../../agents.service';
   templateUrl: './commissions-tab.component.html',
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
+    PageToolbarComponent,
+    StatusPillComponent,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
@@ -46,7 +53,8 @@ import { AgentsService } from '../../agents.service';
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
-    MatRow
+    MatRow,
+    MatPaginator
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -64,7 +72,14 @@ export class CommissionsTabComponent implements OnInit {
     'status'
   ];
 
+  /** Live commissions count for the toolbar badge. */
+  commissionsCount: number | null = null;
+
+  /** Paginator for commissions table. */
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+
   ngOnInit() {
+    this.dataSource.paginator = this.paginator;
     this.agentsService
       .getCommissions(this.agentId)
       .pipe(
@@ -73,7 +88,16 @@ export class CommissionsTabComponent implements OnInit {
       )
       .subscribe((commissions: any[]) => {
         this.dataSource.data = Array.isArray(commissions) ? commissions : [];
+        this.commissionsCount = this.dataSource.data.length;
         this.cdr.markForCheck();
       });
+  }
+
+  /**
+   * Filters data in commissions table based on passed value.
+   * @param {string} filterValue Value to filter data.
+   */
+  filterCommissions(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 }

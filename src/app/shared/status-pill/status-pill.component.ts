@@ -15,11 +15,14 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
  * pass `tone` explicitly for statuses outside the default map.
  *
  * Default map — active: ACTIVE, PASS, SUCCESS, POSTED, SENT, OK,
- * RECOVERED, APPROVED, KEPT; pending: PENDING, WATCH, SUBMITTED, DRAFT,
- * PARTIAL, OPEN, REMINDER, FIELD_VISIT, RESTRUCTURED, PROPOSED,
- * PROMISED, FOLLOW_UP; neutral: CLOSED, MATURED, RESOLVED, SKIPPED,
- * WRITTEN_OFF, CANCELLED, NOT_FOUND; alert: FAILED, BREACH, REJECTED,
- * OVERDUE, ESCALATED, LEGAL, REFUSED, BROKEN, otherwise neutral.
+ * RECOVERED, APPROVED, KEPT, MATCHED, SETTLED, collectibility 1;
+ * pending: PENDING, WATCH, SUBMITTED, DRAFT, PARTIAL, OPEN, REMINDER,
+ * FIELD_VISIT, RESTRUCTURED, PROPOSED, PROPOSED_STR, PROMISED,
+ * FOLLOW_UP, collectibility 2–3; neutral: CLOSED, MATURED, RESOLVED,
+ * SKIPPED, WRITTEN_OFF, CANCELLED, NOT_FOUND, STR_FILED,
+ * CLOSED_NO_ACTION; alert: FAILED, BREACH, REJECTED, OVERDUE,
+ * ESCALATED, LEGAL, REFUSED, BROKEN, RETURNED, SUSPENDED,
+ * collectibility 4–5; otherwise neutral.
  *
  * Usage: `<mifosx-status-pill status="PLACED" />`
  */
@@ -48,7 +51,10 @@ export class StatusPillComponent {
     'RECOVERED',
     'COMPLETED',
     'APPROVED',
-    'KEPT'
+    'KEPT',
+    'MATCHED',
+    'SETTLED',
+    '1'
   ]);
 
   private static readonly PENDING = new Set([
@@ -63,8 +69,11 @@ export class StatusPillComponent {
     'FIELD_VISIT',
     'RESTRUCTURED',
     'PROPOSED',
+    'PROPOSED_STR',
     'PROMISED',
-    'FOLLOW_UP'
+    'FOLLOW_UP',
+    '2',
+    '3'
   ]);
 
   private static readonly NEUTRAL = new Set([
@@ -74,7 +83,9 @@ export class StatusPillComponent {
     'SKIPPED',
     'WRITTEN_OFF',
     'CANCELLED',
-    'NOT_FOUND'
+    'NOT_FOUND',
+    'STR_FILED',
+    'CLOSED_NO_ACTION'
   ]);
 
   private static readonly ALERT = new Set([
@@ -85,7 +96,11 @@ export class StatusPillComponent {
     'ESCALATED',
     'LEGAL',
     'REFUSED',
-    'BROKEN'
+    'BROKEN',
+    'RETURNED',
+    'SUSPENDED',
+    '4',
+    '5'
   ]);
 
   get toneClass(): string {

@@ -7,9 +7,18 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, DestroyRef } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ViewChild,
+  inject,
+  DestroyRef
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatCard, MatCardTitle, MatCardContent } from '@angular/material/card';
 import { MatButton } from '@angular/material/button';
 import {
@@ -29,6 +38,10 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { take } from 'rxjs';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
+/** Shared Page Standard */
+import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
+import { StatusPillComponent } from '../../shared/status-pill/status-pill.component';
+
 /** Custom Services */
 import { PaymentsService } from '../payments.service';
 
@@ -43,6 +56,8 @@ import { PaymentsService } from '../payments.service';
     ...STANDALONE_SHARED_IMPORTS,
     RouterLink,
     FaIconComponent,
+    PageToolbarComponent,
+    StatusPillComponent,
     MatCard,
     MatCardTitle,
     MatCardContent,
@@ -56,11 +71,12 @@ import { PaymentsService } from '../payments.service';
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
-    MatRow
+    MatRow,
+    MatPaginator
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ViewVaComponent {
+export class ViewVaComponent implements AfterViewInit {
   private route = inject(ActivatedRoute);
   private paymentsService = inject(PaymentsService);
   private cdr = inject(ChangeDetectorRef);
@@ -77,6 +93,12 @@ export class ViewVaComponent {
     'netAmount'
   ];
 
+  /** Live transactions count for the toolbar badge. */
+  transactionsCount: number | null = null;
+
+  /** Paginator for transactions table. */
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+
   constructor() {
     this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { va: any }) => {
       this.vaData = data.va;
@@ -84,6 +106,17 @@ export class ViewVaComponent {
         this.loadTransactions();
       }
     });
+  }
+
+  ngAfterViewInit(): void {
+    this.transactionsDataSource.paginator = this.paginator;
+  }
+
+  filterTransactions(text: string): void {
+    this.transactionsDataSource.filter = (text || '').trim().toLowerCase();
+    if (this.transactionsDataSource.paginator) {
+      this.transactionsDataSource.paginator.firstPage();
+    }
   }
 
   /**
@@ -111,6 +144,7 @@ export class ViewVaComponent {
       .pipe(take(1))
       .subscribe((txns: any) => {
         this.transactionsDataSource.data = Array.isArray(txns) ? txns : [];
+        this.transactionsCount = this.transactionsDataSource.data.length;
         this.cdr.markForCheck();
       });
   }

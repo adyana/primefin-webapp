@@ -7,9 +7,18 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  ViewChild,
+  inject,
+  DestroyRef
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
+import { MatPaginator } from '@angular/material/paginator';
 import {
   MatTableDataSource,
   MatTable,
@@ -26,6 +35,9 @@ import {
 import { MatButton } from '@angular/material/button';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
+/** Shared Page Standard */
+import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
+
 /** Custom Services */
 import { PaymentsService } from '../payments.service';
 
@@ -38,6 +50,7 @@ import { PaymentsService } from '../payments.service';
   templateUrl: './fraud-sla.component.html',
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
+    PageToolbarComponent,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
@@ -48,7 +61,8 @@ import { PaymentsService } from '../payments.service';
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    MatButton
+    MatButton,
+    MatPaginator
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -69,9 +83,17 @@ export class PaymentFraudSlaComponent implements OnInit {
   ];
   sweepResult: boolean | null = null;
 
+  /** Live breaches count for the toolbar badge. */
+  breachesCount: number | null = null;
+
+  /** Paginator for breaches table. */
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+
   ngOnInit(): void {
     this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { breaches: any }) => {
       this.breachesDataSource.data = Array.isArray(data.breaches) ? data.breaches : [];
+      this.breachesCount = this.breachesDataSource.data.length;
+      this.breachesDataSource.paginator = this.paginator;
     });
   }
 
@@ -86,12 +108,21 @@ export class PaymentFraudSlaComponent implements OnInit {
       });
   }
 
+  filterBreaches(text: string): void {
+    this.breachesDataSource.filter = (text || '').trim().toLowerCase();
+    if (this.breachesDataSource.paginator) {
+      this.breachesDataSource.paginator.firstPage();
+    }
+  }
+
   private reload(): void {
     this.paymentsService
       .getFraudSla()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((breaches: any) => {
         this.breachesDataSource.data = Array.isArray(breaches) ? breaches : [];
+        this.breachesCount = this.breachesDataSource.data.length;
+        this.breachesDataSource.paginator = this.paginator;
         this.cdr.markForCheck();
       });
   }

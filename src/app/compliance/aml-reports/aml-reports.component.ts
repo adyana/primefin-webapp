@@ -7,7 +7,15 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  ViewChild,
+  inject,
+  DestroyRef
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -18,6 +26,7 @@ import { MatSelect, MatOption } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatButton } from '@angular/material/button';
+import { MatPaginator } from '@angular/material/paginator';
 import {
   MatTableDataSource,
   MatTable,
@@ -32,6 +41,10 @@ import {
   MatRow
 } from '@angular/material/table';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+
+/** Shared Page Standard */
+import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
+import { StatusPillComponent } from '../../shared/status-pill/status-pill.component';
 
 /** rxjs Imports */
 import { catchError, of, take } from 'rxjs';
@@ -50,6 +63,8 @@ import { ComplianceService } from '../compliance.service';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     ReactiveFormsModule,
+    PageToolbarComponent,
+    StatusPillComponent,
     MatCard,
     MatCardTitle,
     MatCardContent,
@@ -70,7 +85,8 @@ import { ComplianceService } from '../compliance.service';
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    MatButton
+    MatButton,
+    MatPaginator
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -88,6 +104,12 @@ export class AmlReportsComponent implements OnInit {
     'status',
     'actions'
   ];
+
+  /** Live reports count for the toolbar badge. */
+  reportsCount: number | null = null;
+
+  /** Paginator for reports table. */
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   generateForm: FormGroup = this.formBuilder.group({
     reportType: [
@@ -112,7 +134,16 @@ export class AmlReportsComponent implements OnInit {
   ngOnInit(): void {
     this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { reports: any }) => {
       this.reportsDataSource.data = Array.isArray(data.reports) ? data.reports : [];
+      this.reportsCount = this.reportsDataSource.data.length;
+      this.reportsDataSource.paginator = this.paginator;
     });
+  }
+
+  filterReports(text: string): void {
+    this.reportsDataSource.filter = (text || '').trim().toLowerCase();
+    if (this.paginator) {
+      this.reportsDataSource.paginator.firstPage();
+    }
   }
 
   generate(): void {
@@ -141,6 +172,7 @@ export class AmlReportsComponent implements OnInit {
       )
       .subscribe((reports: any) => {
         this.reportsDataSource.data = Array.isArray(reports) ? reports : [];
+        this.reportsCount = this.reportsDataSource.data.length;
         this.cdr.markForCheck();
       });
   }

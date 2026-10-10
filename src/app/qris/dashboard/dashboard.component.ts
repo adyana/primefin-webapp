@@ -7,13 +7,22 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  ViewChild,
+  inject,
+  DestroyRef
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatCard, MatCardContent } from '@angular/material/card';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatSelect, MatOption } from '@angular/material/select';
 import { MatButton } from '@angular/material/button';
+import { MatPaginator } from '@angular/material/paginator';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import {
   MatTableDataSource,
@@ -29,6 +38,9 @@ import {
   MatRow
 } from '@angular/material/table';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+
+/** Shared Page Standard */
+import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
 
 /** rxjs Imports */
 import { forkJoin, of } from 'rxjs';
@@ -47,6 +59,7 @@ import { QrisService } from '../qris.service';
   styleUrls: ['./dashboard.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
+    PageToolbarComponent,
     ReactiveFormsModule,
     MatCard,
     MatCardContent,
@@ -65,7 +78,8 @@ import { QrisService } from '../qris.service';
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
-    MatRow
+    MatRow,
+    MatPaginator
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -82,6 +96,12 @@ export class QrisDashboardComponent implements OnInit {
     'metric',
     'value'
   ];
+
+  /** Live summary-row count for the toolbar badge. */
+  summaryCount: number | null = null;
+
+  /** Paginator for summary table. */
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   kpis: Array<{ labelKey: string; value: string | number; trend: number | null; positive: boolean; money: boolean }> =
     [];
@@ -222,7 +242,17 @@ export class QrisDashboardComponent implements OnInit {
       { labelKey: 'labels.text.MDR Collected', detail: null, value: sum(salesCur, 'mdrAmount'), money: true }
     ];
     this.summaryDataSource.data = summary;
+    this.summaryCount = this.summaryDataSource.data.length;
+    this.summaryDataSource.paginator = this.paginator;
     this.cdr.markForCheck();
+  }
+
+  /**
+   * Filters data in summary table based on passed value.
+   * @param {string} filterValue Value to filter data.
+   */
+  filterSummary(filterValue: string) {
+    this.summaryDataSource.filter = (filterValue || '').trim().toLowerCase();
   }
 
   exportCsv(): void {

@@ -13,6 +13,7 @@ import {
   Component,
   Input,
   OnInit,
+  ViewChild,
   inject,
   DestroyRef
 } from '@angular/core';
@@ -20,6 +21,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatSelect, MatOption } from '@angular/material/select';
+import { MatPaginator } from '@angular/material/paginator';
 import {
   MatTableDataSource,
   MatTable,
@@ -34,6 +36,10 @@ import {
   MatRow
 } from '@angular/material/table';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+
+/** Shared Page Standard */
+import { PageToolbarComponent } from '../../../shared/page-toolbar/page-toolbar.component';
+import { StatusPillComponent } from '../../../shared/status-pill/status-pill.component';
 
 /** rxjs Imports */
 import { catchError, of, take } from 'rxjs';
@@ -50,6 +56,8 @@ import { AgentsService } from '../../agents.service';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     ReactiveFormsModule,
+    PageToolbarComponent,
+    StatusPillComponent,
     MatFormField,
     MatLabel,
     MatSelect,
@@ -63,7 +71,8 @@ import { AgentsService } from '../../agents.service';
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
-    MatRow
+    MatRow,
+    MatPaginator
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -88,9 +97,24 @@ export class TransactionsTabComponent implements OnInit {
     'status'
   ];
 
+  /** Live transactions count for the toolbar badge. */
+  transactionsCount: number | null = null;
+
+  /** Paginator for transactions table. */
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+
   ngOnInit() {
+    this.dataSource.paginator = this.paginator;
     this.load();
     this.filterForm.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.load());
+  }
+
+  /**
+   * Filters data in transactions table based on passed value.
+   * @param {string} filterValue Value to filter data.
+   */
+  filterTransactions(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   private load() {
@@ -103,6 +127,7 @@ export class TransactionsTabComponent implements OnInit {
       )
       .subscribe((txns: any[]) => {
         this.dataSource.data = Array.isArray(txns) ? txns : [];
+        this.transactionsCount = this.dataSource.data.length;
         this.cdr.markForCheck();
       });
   }

@@ -86,6 +86,12 @@
 
 <div class="container">
   <div class="mat-elevation-z8 table-container m-b-20">
+    <mifosx-page-toolbar
+      searchPlaceholder="labels.text.SearchByReference"
+      [count]="rulesCount"
+      countNoun="labels.menus.Matching"
+      (searchChange)="filterRules($event)"
+    />
     <table mat-table [dataSource]="rulesDataSource">
       <ng-container matColumnDef="code">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Rule Code' | translate }}</th>
@@ -104,12 +110,20 @@
 
       <ng-container matColumnDef="toleranceAmount">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Tolerance Amount' | translate }}</th>
-        <td mat-cell *matCellDef="let rule">{{ rule.toleranceAmount ?? '*' }}</td>
+        <td mat-cell *matCellDef="let rule">
+          {{
+            rule.toleranceAmount !== null && rule.toleranceAmount !== undefined
+              ? (rule.toleranceAmount | compactMoney)
+              : '*'
+          }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="maxAmount">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Max Amount' | translate }}</th>
-        <td mat-cell *matCellDef="let rule">{{ rule.maxAmount ?? '*' }}</td>
+        <td mat-cell *matCellDef="let rule">
+          {{ rule.maxAmount !== null && rule.maxAmount !== undefined ? (rule.maxAmount | compactMoney) : '*' }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="enabled">
@@ -134,6 +148,8 @@
       <tr mat-header-row *matHeaderRowDef="ruleColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: ruleColumns"></tr>
     </table>
+
+    <mat-paginator #rulesPaginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
   </div>
 
   <mat-card>
@@ -141,6 +157,12 @@
 
     <mat-card-content>
       <div class="mat-elevation-z8 table-container">
+        <mifosx-page-toolbar
+          searchPlaceholder="labels.text.SearchByReference"
+          [count]="runsCount"
+          countNoun="labels.menus.Matching"
+          (searchChange)="filterRuns($event)"
+        />
         <table mat-table [dataSource]="runsDataSource">
           <ng-container matColumnDef="startedOn">
             <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Started On' | translate }}</th>
@@ -149,7 +171,7 @@
 
           <ng-container matColumnDef="status">
             <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Status' | translate }}</th>
-            <td mat-cell *matCellDef="let run">{{ run.status }}</td>
+            <td mat-cell *matCellDef="let run"><mifosx-status-pill [status]="run.status" /></td>
           </ng-container>
 
           <ng-container matColumnDef="detail">
@@ -160,6 +182,8 @@
           <tr mat-header-row *matHeaderRowDef="runColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: runColumns"></tr>
         </table>
+
+        <mat-paginator #runsPaginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
       </div>
     </mat-card-content>
   </mat-card>

@@ -28,6 +28,10 @@ import {
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
+/** Shared Page Standard */
+import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
+import { StatusPillComponent } from '../../shared/status-pill/status-pill.component';
+
 /**
  * Agents list component.
  */
@@ -37,6 +41,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   styleUrls: ['./agents-list.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
+    PageToolbarComponent,
+    StatusPillComponent,
     RouterLink,
     FaIconComponent,
     MatTable,
@@ -72,6 +78,9 @@ export class AgentsListComponent implements OnInit {
   /** Data source for agents table. */
   dataSource: MatTableDataSource<any>;
 
+  /** Live agents count for the toolbar badge. */
+  agentsCount: number | null = null;
+
   /** Paginator for agents table. */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   /** Sorter for agents table. */
@@ -85,6 +94,7 @@ export class AgentsListComponent implements OnInit {
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource(this.agentsData);
+    this.agentsCount = this.dataSource.data.length;
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }

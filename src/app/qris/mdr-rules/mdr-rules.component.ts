@@ -7,7 +7,15 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  ViewChild,
+  inject,
+  DestroyRef
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -15,6 +23,7 @@ import { MatCard, MatCardContent, MatCardTitle } from '@angular/material/card';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
+import { MatPaginator } from '@angular/material/paginator';
 import {
   MatTableDataSource,
   MatTable,
@@ -30,6 +39,9 @@ import {
 } from '@angular/material/table';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
+/** Shared Page Standard */
+import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
+
 /** Custom Services */
 import { QrisService } from '../qris.service';
 
@@ -42,6 +54,7 @@ import { QrisService } from '../qris.service';
   templateUrl: './mdr-rules.component.html',
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
+    PageToolbarComponent,
     ReactiveFormsModule,
     MatCard,
     MatCardTitle,
@@ -59,7 +72,8 @@ import { QrisService } from '../qris.service';
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    MatButton
+    MatButton,
+    MatPaginator
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -79,6 +93,12 @@ export class QrisMdrRulesComponent implements OnInit {
     'agentMarginBps',
     'actions'
   ];
+
+  /** Live rules count for the toolbar badge. */
+  rulesCount: number | null = null;
+
+  /** Paginator for rules table. */
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   /** Rule selected for margin editing (null = no edit form). */
   selectedRule: any = null;
@@ -109,7 +129,17 @@ export class QrisMdrRulesComponent implements OnInit {
   ngOnInit(): void {
     this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { rules: any }) => {
       this.rulesDataSource.data = Array.isArray(data.rules) ? data.rules : [];
+      this.rulesCount = this.rulesDataSource.data.length;
+      this.rulesDataSource.paginator = this.paginator;
     });
+  }
+
+  /**
+   * Filters data in rules table based on passed value.
+   * @param {string} filterValue Value to filter data.
+   */
+  filterRules(filterValue: string) {
+    this.rulesDataSource.filter = (filterValue || '').trim().toLowerCase();
   }
 
   selectForEdit(ruleRow: any): void {
@@ -138,6 +168,8 @@ export class QrisMdrRulesComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((rules: any) => {
         this.rulesDataSource.data = Array.isArray(rules) ? rules : [];
+        this.rulesCount = this.rulesDataSource.data.length;
+        this.rulesDataSource.paginator = this.paginator;
         this.cdr.markForCheck();
       });
   }

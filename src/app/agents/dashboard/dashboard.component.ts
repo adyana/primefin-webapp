@@ -7,13 +7,22 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  ViewChild,
+  inject,
+  DestroyRef
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatCard, MatCardContent } from '@angular/material/card';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatSelect, MatOption } from '@angular/material/select';
 import { MatButton } from '@angular/material/button';
+import { MatPaginator } from '@angular/material/paginator';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import {
   MatTableDataSource,
@@ -29,6 +38,9 @@ import {
   MatRow
 } from '@angular/material/table';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+
+/** Shared Page Standard */
+import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
 
 /** rxjs Imports */
 import { forkJoin, of } from 'rxjs';
@@ -48,6 +60,7 @@ import { AgentsService } from '../agents.service';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     ReactiveFormsModule,
+    PageToolbarComponent,
     MatCard,
     MatCardContent,
     MatFormField,
@@ -65,7 +78,8 @@ import { AgentsService } from '../agents.service';
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
-    MatRow
+    MatRow,
+    MatPaginator
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -82,6 +96,12 @@ export class AgentsDashboardComponent implements OnInit {
     'metric',
     'value'
   ];
+
+  /** Live summary count for the toolbar badge. */
+  summaryCount: number | null = null;
+
+  /** Paginator for summary table. */
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   kpis: Array<{ labelKey: string; value: string | number; trend: number | null; positive: boolean; money: boolean }> =
     [];
@@ -118,7 +138,16 @@ export class AgentsDashboardComponent implements OnInit {
           });
       });
     this.filtersForm.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.refresh());
+    this.summaryDataSource.paginator = this.paginator;
     this.refresh();
+  }
+
+  /**
+   * Filters data in summary table based on passed value.
+   * @param {string} filterValue Value to filter data.
+   */
+  filterSummary(filterValue: string) {
+    this.summaryDataSource.filter = filterValue.trim().toLowerCase();
   }
 
   private windowDays(): number {
@@ -219,6 +248,7 @@ export class AgentsDashboardComponent implements OnInit {
       )
     ];
     this.summaryDataSource.data = summary;
+    this.summaryCount = this.summaryDataSource.data.length;
     this.cdr.markForCheck();
   }
 

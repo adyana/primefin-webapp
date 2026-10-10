@@ -7,10 +7,19 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  ViewChild,
+  inject,
+  DestroyRef
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatPaginator } from '@angular/material/paginator';
 import {
   MatTableDataSource,
   MatTable,
@@ -31,6 +40,10 @@ import { MatOption } from '@angular/material/core';
 import { MatSelect } from '@angular/material/select';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
+/** Shared Page Standard */
+import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
+import { StatusPillComponent } from '../../shared/status-pill/status-pill.component';
+
 /** Custom Services */
 import { PaymentsService } from '../payments.service';
 
@@ -44,6 +57,8 @@ import { PaymentsService } from '../payments.service';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     ReactiveFormsModule,
+    PageToolbarComponent,
+    StatusPillComponent,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
@@ -54,6 +69,7 @@ import { PaymentsService } from '../payments.service';
     MatHeaderRow,
     MatRowDef,
     MatRow,
+    MatPaginator,
     MatButton,
     MatFormField,
     MatLabel,
@@ -79,6 +95,10 @@ export class ViewPaymentBatchComponent implements OnInit {
     'amount',
     'status'
   ];
+  /** Live members count for the toolbar badge. */
+  membersCount: number | null = null;
+  /** Paginator for members table. */
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   dkeContent: string | null = null;
   returnRows: any[] = [];
   filedCount: number | null = null;
@@ -113,6 +133,8 @@ export class ViewPaymentBatchComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((members: any) => {
         this.membersDataSource.data = Array.isArray(members) ? members : [];
+        this.membersCount = this.membersDataSource.data.length;
+        this.membersDataSource.paginator = this.paginator;
         this.cdr.markForCheck();
       });
   }
@@ -132,6 +154,13 @@ export class ViewPaymentBatchComponent implements OnInit {
       .sendBatch(this.batch.id)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => this.loadMembers());
+  }
+
+  filterMembers(text: string): void {
+    this.membersDataSource.filter = (text || '').trim().toLowerCase();
+    if (this.membersDataSource.paginator) {
+      this.membersDataSource.paginator.firstPage();
+    }
   }
 
   addReturnRow(): void {

@@ -54,6 +54,12 @@
   </div>
 
   <div class="mat-elevation-z8 table-container">
+    <mifosx-page-toolbar
+      searchPlaceholder="labels.text.SearchByAgent"
+      [count]="summaryCount"
+      countNoun="labels.menus.Agent Dashboard"
+      (searchChange)="filterSummary($event)"
+    />
     <table mat-table [dataSource]="summaryDataSource">
       <ng-container matColumnDef="metric">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Metric' | translate }}</th>
@@ -74,5 +80,7 @@
       <tr mat-header-row *matHeaderRowDef="summaryColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: summaryColumns"></tr>
     </table>
+
+    <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
   </div>
 </div>

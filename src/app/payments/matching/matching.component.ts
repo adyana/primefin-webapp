@@ -7,10 +7,19 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  ViewChild,
+  inject,
+  DestroyRef
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatCard, MatCardContent, MatCardTitle } from '@angular/material/card';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
@@ -33,6 +42,10 @@ import {
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
+/** Shared Page Standard */
+import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
+import { StatusPillComponent } from '../../shared/status-pill/status-pill.component';
+
 /** rxjs Imports */
 import { catchError, of, take } from 'rxjs';
 
@@ -51,6 +64,8 @@ import { PaymentsService } from '../payments.service';
     ...STANDALONE_SHARED_IMPORTS,
     ReactiveFormsModule,
     FaIconComponent,
+    PageToolbarComponent,
+    StatusPillComponent,
     MatCard,
     MatCardTitle,
     MatCardContent,
@@ -70,7 +85,8 @@ import { PaymentsService } from '../payments.service';
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    MatButton
+    MatButton,
+    MatPaginator
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -98,6 +114,15 @@ export class PaymentMatchingComponent implements OnInit {
     'status',
     'detail'
   ];
+
+  /** Live rules count for the toolbar badge. */
+  rulesCount: number | null = null;
+  /** Live runs count for the toolbar badge. */
+  runsCount: number | null = null;
+
+  /** Paginators for the rules and runs tables. */
+  @ViewChild('rulesPaginator', { static: true }) rulesPaginator: MatPaginator;
+  @ViewChild('runsPaginator', { static: true }) runsPaginator: MatPaginator;
 
   /** Rule selected for editing (null = create form instead). */
   selectedRule: any = null;
@@ -130,6 +155,8 @@ export class PaymentMatchingComponent implements OnInit {
   ngOnInit(): void {
     this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { rules: any }) => {
       this.rulesDataSource.data = Array.isArray(data.rules) ? data.rules : [];
+      this.rulesCount = this.rulesDataSource.data.length;
+      this.rulesDataSource.paginator = this.rulesPaginator;
     });
     this.reloadRuns();
   }
@@ -194,6 +221,20 @@ export class PaymentMatchingComponent implements OnInit {
       .subscribe(() => this.reloadRuns());
   }
 
+  filterRules(text: string): void {
+    this.rulesDataSource.filter = (text || '').trim().toLowerCase();
+    if (this.rulesDataSource.paginator) {
+      this.rulesDataSource.paginator.firstPage();
+    }
+  }
+
+  filterRuns(text: string): void {
+    this.runsDataSource.filter = (text || '').trim().toLowerCase();
+    if (this.runsDataSource.paginator) {
+      this.runsDataSource.paginator.firstPage();
+    }
+  }
+
   private reloadRules(): void {
     this.paymentsService
       .getMatchRules()
@@ -203,6 +244,8 @@ export class PaymentMatchingComponent implements OnInit {
       )
       .subscribe((rules: any) => {
         this.rulesDataSource.data = Array.isArray(rules) ? rules : [];
+        this.rulesCount = this.rulesDataSource.data.length;
+        this.rulesDataSource.paginator = this.rulesPaginator;
         this.cdr.markForCheck();
       });
   }
@@ -216,6 +259,8 @@ export class PaymentMatchingComponent implements OnInit {
       )
       .subscribe((runs: any) => {
         this.runsDataSource.data = Array.isArray(runs) ? runs : [];
+        this.runsCount = this.runsDataSource.data.length;
+        this.runsDataSource.paginator = this.runsPaginator;
         this.cdr.markForCheck();
       });
   }

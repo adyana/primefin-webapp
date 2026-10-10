@@ -5905,7 +5905,10 @@
       "Payments Received": "Payments Received",
       "Received Amount": "Received Amount",
       "None": "None",
-      "Accrued": "Accrued"
+      "Accrued": "Accrued",
+      "SearchByAgent": "Search by agent",
+      "SearchByMerchant": "Search by merchant",
+      "SearchBySegment": "Search by segment"
     },
     "permissions": {
       "actions": {

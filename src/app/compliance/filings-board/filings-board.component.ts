@@ -7,7 +7,15 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  ViewChild,
+  inject,
+  DestroyRef
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -15,6 +23,7 @@ import { MatCard, MatCardContent, MatCardTitle } from '@angular/material/card';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
+import { MatPaginator } from '@angular/material/paginator';
 import {
   MatTableDataSource,
   MatTable,
@@ -30,6 +39,10 @@ import {
 } from '@angular/material/table';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+
+/** Shared Page Standard */
+import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
+import { StatusPillComponent } from '../../shared/status-pill/status-pill.component';
 
 /** rxjs Imports */
 import { take } from 'rxjs';
@@ -48,6 +61,8 @@ import { ComplianceService } from '../compliance.service';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     ReactiveFormsModule,
+    PageToolbarComponent,
+    StatusPillComponent,
     FaIconComponent,
     MatCard,
     MatCardTitle,
@@ -65,7 +80,8 @@ import { ComplianceService } from '../compliance.service';
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    MatButton
+    MatButton,
+    MatPaginator
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -97,10 +113,25 @@ export class FilingsBoardComponent implements OnInit {
     ]
   });
 
+  /** Live filings count for the toolbar badge. */
+  filingsCount: number | null = null;
+
+  /** Paginator for filings table. */
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+
   ngOnInit(): void {
     this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { filings: any }) => {
       this.filingsDataSource.data = Array.isArray(data.filings) ? data.filings : [];
+      this.filingsCount = this.filingsDataSource.data.length;
+      this.filingsDataSource.paginator = this.paginator;
     });
+  }
+
+  filterFilings(text: string): void {
+    this.filingsDataSource.filter = (text || '').trim().toLowerCase();
+    if (this.paginator) {
+      this.filingsDataSource.paginator.firstPage();
+    }
   }
 
   fileKredit(): void {
@@ -147,6 +178,7 @@ export class FilingsBoardComponent implements OnInit {
       .pipe(take(1))
       .subscribe((filings: any) => {
         this.filingsDataSource.data = Array.isArray(filings) ? filings : [];
+        this.filingsCount = this.filingsDataSource.data.length;
         this.cdr.markForCheck();
       });
   }

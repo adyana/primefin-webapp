@@ -7,7 +7,15 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  ViewChild,
+  inject,
+  DestroyRef
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -16,6 +24,7 @@ import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { MatSelect, MatOption } from '@angular/material/select';
 import { MatButton } from '@angular/material/button';
+import { MatPaginator } from '@angular/material/paginator';
 import {
   MatTableDataSource,
   MatTable,
@@ -30,6 +39,10 @@ import {
   MatRow
 } from '@angular/material/table';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+
+/** Shared Page Standard */
+import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
+import { StatusPillComponent } from '../../shared/status-pill/status-pill.component';
 
 /** rxjs Imports */
 import { catchError, of, take } from 'rxjs';
@@ -48,6 +61,8 @@ import { ComplianceService } from '../compliance.service';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     ReactiveFormsModule,
+    PageToolbarComponent,
+    StatusPillComponent,
     MatCard,
     MatCardTitle,
     MatCardContent,
@@ -66,7 +81,8 @@ import { ComplianceService } from '../compliance.service';
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    MatButton
+    MatButton,
+    MatPaginator
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -108,6 +124,18 @@ export class DenyListBoardComponent implements OnInit {
     'status',
     'actions'
   ];
+
+  /** Live table counts for the toolbar badges. */
+  listsCount: number | null = null;
+  entriesCount: number | null = null;
+  hitsCount: number | null = null;
+  allowCount: number | null = null;
+
+  /** Paginators for the four board tables. */
+  @ViewChild('listsPaginator', { static: true }) listsPaginator: MatPaginator;
+  @ViewChild('entriesPaginator') entriesPaginator: MatPaginator;
+  @ViewChild('hitsPaginator', { static: true }) hitsPaginator: MatPaginator;
+  @ViewChild('allowPaginator', { static: true }) allowPaginator: MatPaginator;
 
   /** List selected for entries/import (null = none selected). */
   selectedList: any = null;
@@ -160,9 +188,39 @@ export class DenyListBoardComponent implements OnInit {
   ngOnInit(): void {
     this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { lists: any }) => {
       this.listsDataSource.data = Array.isArray(data.lists) ? data.lists : [];
+      this.listsCount = this.listsDataSource.data.length;
+      this.listsDataSource.paginator = this.listsPaginator;
     });
     this.reloadHits();
     this.reloadAllow();
+  }
+
+  filterLists(text: string): void {
+    this.listsDataSource.filter = (text || '').trim().toLowerCase();
+    if (this.listsPaginator) {
+      this.listsDataSource.paginator.firstPage();
+    }
+  }
+
+  filterEntries(text: string): void {
+    this.entriesDataSource.filter = (text || '').trim().toLowerCase();
+    if (this.entriesPaginator) {
+      this.entriesDataSource.paginator.firstPage();
+    }
+  }
+
+  filterHits(text: string): void {
+    this.hitsDataSource.filter = (text || '').trim().toLowerCase();
+    if (this.hitsPaginator) {
+      this.hitsDataSource.paginator.firstPage();
+    }
+  }
+
+  filterAllow(text: string): void {
+    this.allowDataSource.filter = (text || '').trim().toLowerCase();
+    if (this.allowPaginator) {
+      this.allowDataSource.paginator.firstPage();
+    }
   }
 
   selectList(listRow: any): void {
@@ -252,6 +310,10 @@ export class DenyListBoardComponent implements OnInit {
       )
       .subscribe((entries: any) => {
         this.entriesDataSource.data = Array.isArray(entries) ? entries : [];
+        this.entriesCount = this.entriesDataSource.data.length;
+        if (this.entriesPaginator) {
+          this.entriesDataSource.paginator = this.entriesPaginator;
+        }
         this.cdr.markForCheck();
       });
   }
@@ -265,6 +327,8 @@ export class DenyListBoardComponent implements OnInit {
       )
       .subscribe((hits: any) => {
         this.hitsDataSource.data = Array.isArray(hits) ? hits : [];
+        this.hitsCount = this.hitsDataSource.data.length;
+        this.hitsDataSource.paginator = this.hitsPaginator;
         this.cdr.markForCheck();
       });
   }
@@ -278,6 +342,8 @@ export class DenyListBoardComponent implements OnInit {
       )
       .subscribe((allow: any) => {
         this.allowDataSource.data = Array.isArray(allow) ? allow : [];
+        this.allowCount = this.allowDataSource.data.length;
+        this.allowDataSource.paginator = this.allowPaginator;
         this.cdr.markForCheck();
       });
   }

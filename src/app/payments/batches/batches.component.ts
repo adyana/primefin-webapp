@@ -7,9 +7,10 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject, DestroyRef } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { MatPaginator } from '@angular/material/paginator';
 import {
   MatTableDataSource,
   MatTable,
@@ -25,6 +26,10 @@ import {
 } from '@angular/material/table';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
+/** Shared Page Standard */
+import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
+import { StatusPillComponent } from '../../shared/status-pill/status-pill.component';
+
 /** Custom Services */
 import { PaymentsService } from '../payments.service';
 
@@ -37,6 +42,8 @@ import { PaymentsService } from '../payments.service';
   templateUrl: './batches.component.html',
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
+    PageToolbarComponent,
+    StatusPillComponent,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
@@ -47,6 +54,7 @@ import { PaymentsService } from '../payments.service';
     MatHeaderRow,
     MatRowDef,
     MatRow,
+    MatPaginator,
     RouterLink
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -65,9 +73,24 @@ export class PaymentBatchesComponent implements OnInit {
     'valueDate'
   ];
 
+  /** Live batches count for the toolbar badge. */
+  batchesCount: number | null = null;
+
+  /** Paginator for batches table. */
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+
   ngOnInit(): void {
     this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { batches: any }) => {
       this.batchesDataSource.data = Array.isArray(data.batches) ? data.batches : [];
+      this.batchesCount = this.batchesDataSource.data.length;
+      this.batchesDataSource.paginator = this.paginator;
     });
+  }
+
+  filterBatches(text: string): void {
+    this.batchesDataSource.filter = (text || '').trim().toLowerCase();
+    if (this.batchesDataSource.paginator) {
+      this.batchesDataSource.paginator.firstPage();
+    }
   }
 }

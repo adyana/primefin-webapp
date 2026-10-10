@@ -7,10 +7,19 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  ViewChild,
+  inject,
+  DestroyRef
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatCard, MatCardContent, MatCardTitle } from '@angular/material/card';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
@@ -33,6 +42,10 @@ import {
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
+/** Shared Page Standard */
+import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
+import { StatusPillComponent } from '../../shared/status-pill/status-pill.component';
+
 /** Custom Services */
 import { PaymentsService } from '../payments.service';
 
@@ -50,6 +63,8 @@ import { PaymentsService } from '../payments.service';
     ReactiveFormsModule,
     RouterLink,
     FaIconComponent,
+    PageToolbarComponent,
+    StatusPillComponent,
     MatCard,
     MatCardTitle,
     MatCardContent,
@@ -69,7 +84,8 @@ import { PaymentsService } from '../payments.service';
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    MatButton
+    MatButton,
+    MatPaginator
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -98,6 +114,16 @@ export class PaymentSchedulesComponent implements OnInit {
     'detail'
   ];
 
+  /** Live schedules count for the toolbar badge. */
+  schedulesCount: number | null = null;
+  /** Live runs count for the toolbar badge. */
+  runsCount: number | null = null;
+
+  /** Paginator for schedules table (always rendered). */
+  @ViewChild('schedulesPaginator', { static: true }) schedulesPaginator: MatPaginator;
+  /** Paginator for runs table (rendered once a schedule is selected). */
+  @ViewChild('runsPaginator') runsPaginator: MatPaginator;
+
   /** Schedule selected for editing (null = no edit form). */
   selectedSchedule: any = null;
   editForm: FormGroup = this.formBuilder.group({
@@ -119,6 +145,8 @@ export class PaymentSchedulesComponent implements OnInit {
   ngOnInit(): void {
     this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { schedules: any }) => {
       this.schedulesDataSource.data = Array.isArray(data.schedules) ? data.schedules : [];
+      this.schedulesCount = this.schedulesDataSource.data.length;
+      this.schedulesDataSource.paginator = this.schedulesPaginator;
     });
   }
 
@@ -166,8 +194,26 @@ export class PaymentSchedulesComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((runs: any) => {
         this.runsDataSource.data = Array.isArray(runs) ? runs : [];
+        this.runsCount = this.runsDataSource.data.length;
+        if (this.runsPaginator) {
+          this.runsDataSource.paginator = this.runsPaginator;
+        }
         this.cdr.markForCheck();
       });
+  }
+
+  filterSchedules(text: string): void {
+    this.schedulesDataSource.filter = (text || '').trim().toLowerCase();
+    if (this.schedulesDataSource.paginator) {
+      this.schedulesDataSource.paginator.firstPage();
+    }
+  }
+
+  filterRuns(text: string): void {
+    this.runsDataSource.filter = (text || '').trim().toLowerCase();
+    if (this.runsDataSource.paginator) {
+      this.runsDataSource.paginator.firstPage();
+    }
   }
 
   private reload(): void {
@@ -176,6 +222,8 @@ export class PaymentSchedulesComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((schedules: any) => {
         this.schedulesDataSource.data = Array.isArray(schedules) ? schedules : [];
+        this.schedulesCount = this.schedulesDataSource.data.length;
+        this.schedulesDataSource.paginator = this.schedulesPaginator;
         this.cdr.markForCheck();
       });
   }

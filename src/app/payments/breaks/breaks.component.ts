@@ -7,12 +7,21 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  ViewChild,
+  inject,
+  DestroyRef
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatSelect, MatOption } from '@angular/material/select';
+import { MatPaginator } from '@angular/material/paginator';
 import {
   MatTableDataSource,
   MatTable,
@@ -29,6 +38,10 @@ import {
 import { MatButton } from '@angular/material/button';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
+/** Shared Page Standard */
+import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
+import { StatusPillComponent } from '../../shared/status-pill/status-pill.component';
+
 /** Custom Services */
 import { PaymentsService } from '../payments.service';
 
@@ -43,6 +56,8 @@ import { PaymentsService } from '../payments.service';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     ReactiveFormsModule,
+    PageToolbarComponent,
+    StatusPillComponent,
     MatFormField,
     MatLabel,
     MatSelect,
@@ -57,7 +72,8 @@ import { PaymentsService } from '../payments.service';
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    MatButton
+    MatButton,
+    MatPaginator
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -81,9 +97,17 @@ export class PaymentBreaksComponent implements OnInit {
     'actions'
   ];
 
+  /** Live breaks count for the toolbar badge. */
+  breaksCount: number | null = null;
+
+  /** Paginator for breaks table. */
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+
   ngOnInit(): void {
     this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { breaks: any }) => {
       this.breaksDataSource.data = Array.isArray(data.breaks) ? data.breaks : [];
+      this.breaksCount = this.breaksDataSource.data.length;
+      this.breaksDataSource.paginator = this.paginator;
     });
     this.filterForm.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.reload());
   }
@@ -102,6 +126,13 @@ export class PaymentBreaksComponent implements OnInit {
       .subscribe(() => this.reload());
   }
 
+  filterBreaks(text: string): void {
+    this.breaksDataSource.filter = (text || '').trim().toLowerCase();
+    if (this.breaksDataSource.paginator) {
+      this.breaksDataSource.paginator.firstPage();
+    }
+  }
+
   private reload(): void {
     const status = this.filterForm.value.status === 'ALL' ? undefined : this.filterForm.value.status;
     this.paymentsService
@@ -109,6 +140,8 @@ export class PaymentBreaksComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((breaks: any) => {
         this.breaksDataSource.data = Array.isArray(breaks) ? breaks : [];
+        this.breaksCount = this.breaksDataSource.data.length;
+        this.breaksDataSource.paginator = this.paginator;
         this.cdr.markForCheck();
       });
   }

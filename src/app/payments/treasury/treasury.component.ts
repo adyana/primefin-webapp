@@ -7,8 +7,17 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  ViewChild,
+  inject,
+  DestroyRef
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MatPaginator } from '@angular/material/paginator';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatCard, MatCardContent, MatCardTitle } from '@angular/material/card';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
@@ -30,6 +39,10 @@ import {
 } from '@angular/material/table';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
+/** Shared Page Standard */
+import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
+import { StatusPillComponent } from '../../shared/status-pill/status-pill.component';
+
 /** rxjs Imports */
 import { forkJoin, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -48,6 +61,8 @@ import { PaymentsService } from '../payments.service';
   styleUrls: ['./treasury.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
+    PageToolbarComponent,
+    StatusPillComponent,
     ReactiveFormsModule,
     MatCard,
     MatCardTitle,
@@ -66,7 +81,8 @@ import { PaymentsService } from '../payments.service';
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
-    MatRow
+    MatRow,
+    MatPaginator
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -77,6 +93,12 @@ export class TreasuryComponent implements OnInit {
   private cdr = inject(ChangeDetectorRef);
 
   rowsDataSource = new MatTableDataSource<any>([]);
+
+  /** Live rails count for the toolbar badge. */
+  railsCount: number | null = null;
+
+  /** Paginator for rails table. */
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   rowColumns: string[] = [
     'rail',
     'status',
@@ -103,7 +125,12 @@ export class TreasuryComponent implements OnInit {
   kpis: Array<{ labelKey: string; value: string | number; positive: boolean; money: boolean }> = [];
 
   ngOnInit(): void {
+    this.rowsDataSource.paginator = this.paginator;
     this.load();
+  }
+
+  filterRails(text: string): void {
+    this.rowsDataSource.filter = (text || '').trim().toLowerCase();
   }
 
   private load(): void {
@@ -157,6 +184,7 @@ export class TreasuryComponent implements OnInit {
       };
     });
     this.rowsDataSource.data = rows;
+    this.railsCount = rows.length;
     const breached = rows.filter((r: any) => r.breached).length;
     const totalRequired = projections.reduce((s: number, p: any) => s + Number(p.required ?? 0), 0);
     this.kpis = [

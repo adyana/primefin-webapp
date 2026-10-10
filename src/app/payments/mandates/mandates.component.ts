@@ -7,10 +7,19 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  ViewChild,
+  inject,
+  DestroyRef
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatCard, MatCardContent, MatCardTitle } from '@angular/material/card';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
@@ -32,6 +41,10 @@ import {
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
+/** Shared Page Standard */
+import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
+import { StatusPillComponent } from '../../shared/status-pill/status-pill.component';
+
 /** Custom Services */
 import { PaymentsService } from '../payments.service';
 
@@ -47,6 +60,8 @@ import { PaymentsService } from '../payments.service';
     ReactiveFormsModule,
     RouterLink,
     FaIconComponent,
+    PageToolbarComponent,
+    StatusPillComponent,
     MatCard,
     MatCardTitle,
     MatCardContent,
@@ -64,7 +79,8 @@ import { PaymentsService } from '../payments.service';
     MatRowDef,
     MatRow,
     MatButton,
-    MatTooltip
+    MatTooltip,
+    MatPaginator
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -89,6 +105,10 @@ export class PaymentMandatesComponent implements OnInit {
 
   /** Row selected for collection (null = no collect form). */
   selectedMandate: any = null;
+  /** Live mandates count for the toolbar badge. */
+  mandatesCount: number | null = null;
+  /** Paginator for mandates table. */
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   collectForm: FormGroup = this.formBuilder.group({
     amount: [
       null,
@@ -102,6 +122,8 @@ export class PaymentMandatesComponent implements OnInit {
   ngOnInit(): void {
     this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { mandates: any }) => {
       this.mandatesDataSource.data = Array.isArray(data.mandates) ? data.mandates : [];
+      this.mandatesCount = this.mandatesDataSource.data.length;
+      this.mandatesDataSource.paginator = this.paginator;
     });
   }
 
@@ -109,6 +131,13 @@ export class PaymentMandatesComponent implements OnInit {
     this.selectedMandate = mandateRow;
     this.collectForm.reset({ amount: mandateRow.maxAmount });
     this.cdr.markForCheck();
+  }
+
+  filterMandates(text: string): void {
+    this.mandatesDataSource.filter = (text || '').trim().toLowerCase();
+    if (this.mandatesDataSource.paginator) {
+      this.mandatesDataSource.paginator.firstPage();
+    }
   }
 
   collect(): void {
@@ -141,6 +170,8 @@ export class PaymentMandatesComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((mandates: any) => {
         this.mandatesDataSource.data = Array.isArray(mandates) ? mandates : [];
+        this.mandatesCount = this.mandatesDataSource.data.length;
+        this.mandatesDataSource.paginator = this.paginator;
         this.cdr.markForCheck();
       });
   }

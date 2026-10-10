@@ -7,10 +7,19 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  ViewChild,
+  inject,
+  DestroyRef
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatCard, MatCardContent } from '@angular/material/card';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatSelect, MatOption } from '@angular/material/select';
@@ -31,6 +40,10 @@ import {
 } from '@angular/material/table';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
+/** Shared Page Standard */
+import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
+import { StatusPillComponent } from '../../shared/status-pill/status-pill.component';
+
 /** Custom Services */
 import { PaymentsService } from '../payments.service';
 
@@ -49,6 +62,8 @@ import { PaymentTrafficChartComponent } from '../traffic-chart/traffic-chart.com
     ...STANDALONE_SHARED_IMPORTS,
     ReactiveFormsModule,
     PaymentTrafficChartComponent,
+    PageToolbarComponent,
+    StatusPillComponent,
     MatCard,
     MatCardContent,
     MatFormField,
@@ -66,7 +81,8 @@ import { PaymentTrafficChartComponent } from '../traffic-chart/traffic-chart.com
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
-    MatRow
+    MatRow,
+    MatPaginator
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -93,6 +109,12 @@ export class RailsDashboardComponent implements OnInit {
   oldestQueuedHours: number | null = null;
   openBreaks = 0;
 
+  /** Live rails count for the toolbar badge. */
+  railsCount: number | null = null;
+
+  /** Paginator for rails table. */
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+
   kpis: Array<{
     labelKey: string;
     value: string;
@@ -118,6 +140,8 @@ export class RailsDashboardComponent implements OnInit {
         count: perRail[rail.code]?.count ?? 0,
         totalValue: perRail[rail.code]?.totalValue ?? 0
       }));
+      this.railsCount = this.railsDataSource.data.length;
+      this.railsDataSource.paginator = this.paginator;
       this.queueDepth = throughput.rtgsQueueDepth ?? null;
       this.oldestQueuedHours = throughput.oldestQueuedHours ?? null;
       this.openBreaks = throughput.openBreaks ?? 0;
@@ -210,6 +234,13 @@ export class RailsDashboardComponent implements OnInit {
     this.chartGranularity = granularity;
     this.chartRail = rail;
     this.cdr.markForCheck();
+  }
+
+  filterRails(text: string): void {
+    this.railsDataSource.filter = (text || '').trim().toLowerCase();
+    if (this.railsDataSource.paginator) {
+      this.railsDataSource.paginator.firstPage();
+    }
   }
 
   exportCsv(): void {

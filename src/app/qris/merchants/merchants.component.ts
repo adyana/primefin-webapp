@@ -28,6 +28,10 @@ import {
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
+/** Shared Page Standard */
+import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
+import { StatusPillComponent } from '../../shared/status-pill/status-pill.component';
+
 /**
  * QRIS merchants list component.
  */
@@ -36,6 +40,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   templateUrl: './merchants.component.html',
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
+    PageToolbarComponent,
+    StatusPillComponent,
     RouterLink,
     FaIconComponent,
     MatTable,
@@ -71,6 +77,9 @@ export class QrisMerchantsComponent implements OnInit {
   /** Data source for merchants table. */
   dataSource: MatTableDataSource<any>;
 
+  /** Live merchants count for the toolbar badge. */
+  merchantsCount: number | null = null;
+
   /** Paginator for merchants table. */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   /** Sorter for merchants table. */
@@ -84,6 +93,7 @@ export class QrisMerchantsComponent implements OnInit {
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource(this.merchantsData);
+    this.merchantsCount = this.dataSource.data.length;
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }

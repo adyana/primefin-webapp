@@ -38,6 +38,10 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { take } from 'rxjs';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
+/** Shared Page Standard */
+import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
+import { StatusPillComponent } from '../../shared/status-pill/status-pill.component';
+
 /** Custom Services */
 import { PaymentsService } from '../payments.service';
 
@@ -52,6 +56,8 @@ import { PaymentsService } from '../payments.service';
     ...STANDALONE_SHARED_IMPORTS,
     RouterLink,
     FaIconComponent,
+    PageToolbarComponent,
+    StatusPillComponent,
     MatTable,
     MatSort,
     MatColumnDef,
@@ -88,6 +94,9 @@ export class VasListComponent implements OnInit {
   /** Data source for VAs table. */
   dataSource: MatTableDataSource<any>;
 
+  /** Live VAs count for the toolbar badge. */
+  vasCount: number | null = null;
+
   /** Paginator for VAs table. */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   /** Sorter for VAs table. */
@@ -101,6 +110,7 @@ export class VasListComponent implements OnInit {
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource(this.vasData);
+    this.vasCount = this.dataSource.data.length;
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
@@ -126,6 +136,7 @@ export class VasListComponent implements OnInit {
           .pipe(take(1))
           .subscribe((vas: any) => {
             this.dataSource.data = Array.isArray(vas) ? vas : [];
+            this.vasCount = this.dataSource.data.length;
             this.cdr.markForCheck();
           });
       });

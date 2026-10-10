@@ -40,6 +40,10 @@ import {
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
+/** Shared Page Standard */
+import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
+import { StatusPillComponent } from '../../shared/status-pill/status-pill.component';
+
 /** rxjs Imports */
 import { catchError, of, take } from 'rxjs';
 
@@ -57,6 +61,8 @@ import { ComplianceService } from '../compliance.service';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     ReactiveFormsModule,
+    PageToolbarComponent,
+    StatusPillComponent,
     FaIconComponent,
     MatCard,
     MatCardTitle,
@@ -118,13 +124,35 @@ export class SlikBoardComponent implements OnInit {
   /** Latest tie-out result for the selected period. */
   tieOut: any = null;
 
+  /** Live table counts for the toolbar badges. */
+  snapshotsCount: number | null = null;
+  rowsCount: number | null = null;
+
+  /** Paginator for the snapshots table. */
+  @ViewChild('snapshotsPaginator', { static: true }) snapshotsPaginator: MatPaginator;
   /** Paginator for the period rows table (hundreds of loans per period). */
-  @ViewChild(MatPaginator) rowsPaginator: MatPaginator;
+  @ViewChild('rowsPaginator') rowsPaginator: MatPaginator;
 
   ngOnInit(): void {
     this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { snapshots: any }) => {
       this.snapshotsDataSource.data = Array.isArray(data.snapshots) ? data.snapshots : [];
+      this.snapshotsCount = this.snapshotsDataSource.data.length;
+      this.snapshotsDataSource.paginator = this.snapshotsPaginator;
     });
+  }
+
+  filterSnapshots(text: string): void {
+    this.snapshotsDataSource.filter = (text || '').trim().toLowerCase();
+    if (this.snapshotsPaginator) {
+      this.snapshotsDataSource.paginator.firstPage();
+    }
+  }
+
+  filterRows(text: string): void {
+    this.rowsDataSource.filter = (text || '').trim().toLowerCase();
+    if (this.rowsPaginator) {
+      this.rowsDataSource.paginator.firstPage();
+    }
   }
 
   closePeriod(): void {
@@ -148,6 +176,7 @@ export class SlikBoardComponent implements OnInit {
       )
       .subscribe((rows: any) => {
         this.rowsDataSource.data = Array.isArray(rows) ? rows : [];
+        this.rowsCount = this.rowsDataSource.data.length;
         if (this.rowsPaginator) {
           this.rowsDataSource.paginator = this.rowsPaginator;
         }
@@ -194,6 +223,7 @@ export class SlikBoardComponent implements OnInit {
       )
       .subscribe((snapshots: any) => {
         this.snapshotsDataSource.data = Array.isArray(snapshots) ? snapshots : [];
+        this.snapshotsCount = this.snapshotsDataSource.data.length;
         this.cdr.markForCheck();
       });
   }

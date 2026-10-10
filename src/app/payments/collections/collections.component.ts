@@ -7,10 +7,19 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  ViewChild,
+  inject,
+  DestroyRef
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatCard, MatCardContent, MatCardTitle } from '@angular/material/card';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
@@ -31,6 +40,10 @@ import {
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
+/** Shared Page Standard */
+import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
+import { StatusPillComponent } from '../../shared/status-pill/status-pill.component';
+
 /** Custom Services */
 import { PaymentsService } from '../payments.service';
 
@@ -46,6 +59,8 @@ import { PaymentsService } from '../payments.service';
     ReactiveFormsModule,
     RouterLink,
     FaIconComponent,
+    PageToolbarComponent,
+    StatusPillComponent,
     MatCard,
     MatCardTitle,
     MatCardContent,
@@ -62,7 +77,8 @@ import { PaymentsService } from '../payments.service';
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    MatButton
+    MatButton,
+    MatPaginator
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -86,6 +102,10 @@ export class PaymentCollectionsComponent implements OnInit {
 
   /** Row selected for review (null = no review form). */
   selectedRequest: any = null;
+  /** Live collections count for the toolbar badge. */
+  collectionsCount: number | null = null;
+  /** Paginator for collections table. */
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   reviewForm: FormGroup = this.formBuilder.group({
     externalRef: [
       '',
@@ -96,6 +116,8 @@ export class PaymentCollectionsComponent implements OnInit {
   ngOnInit(): void {
     this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { collections: any }) => {
       this.collectionsDataSource.data = Array.isArray(data.collections) ? data.collections : [];
+      this.collectionsCount = this.collectionsDataSource.data.length;
+      this.collectionsDataSource.paginator = this.paginator;
     });
   }
 
@@ -103,6 +125,13 @@ export class PaymentCollectionsComponent implements OnInit {
     this.selectedRequest = requestRow;
     this.reviewForm.reset({ externalRef: requestRow.reference });
     this.cdr.markForCheck();
+  }
+
+  filterCollections(text: string): void {
+    this.collectionsDataSource.filter = (text || '').trim().toLowerCase();
+    if (this.collectionsDataSource.paginator) {
+      this.collectionsDataSource.paginator.firstPage();
+    }
   }
 
   approve(): void {
@@ -131,6 +160,8 @@ export class PaymentCollectionsComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((collections: any) => {
         this.collectionsDataSource.data = Array.isArray(collections) ? collections : [];
+        this.collectionsCount = this.collectionsDataSource.data.length;
+        this.collectionsDataSource.paginator = this.paginator;
         this.cdr.markForCheck();
       });
   }

@@ -7,7 +7,15 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  ViewChild,
+  inject,
+  DestroyRef
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -16,6 +24,7 @@ import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatButton } from '@angular/material/button';
+import { MatPaginator } from '@angular/material/paginator';
 import {
   MatTableDataSource,
   MatTable,
@@ -30,6 +39,9 @@ import {
   MatRow
 } from '@angular/material/table';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+
+/** Shared Page Standard */
+import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
 
 /** rxjs Imports */
 import { catchError, of, take } from 'rxjs';
@@ -48,6 +60,7 @@ import { ComplianceService } from '../compliance.service';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     ReactiveFormsModule,
+    PageToolbarComponent,
     MatCard,
     MatCardTitle,
     MatCardContent,
@@ -65,7 +78,8 @@ import { ComplianceService } from '../compliance.service';
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    MatButton
+    MatButton,
+    MatPaginator
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -89,6 +103,12 @@ export class AmlRulesComponent implements OnInit {
 
   /** Rule selected for retuning (null = no edit form). */
   selectedRule: any = null;
+
+  /** Live rules count for the toolbar badge. */
+  rulesCount: number | null = null;
+
+  /** Paginator for rules table. */
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   editForm: FormGroup = this.formBuilder.group({
     thresholdAmount: [null],
     windowDays: [null],
@@ -99,7 +119,16 @@ export class AmlRulesComponent implements OnInit {
   ngOnInit(): void {
     this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { rules: any }) => {
       this.rulesDataSource.data = Array.isArray(data.rules) ? data.rules : [];
+      this.rulesCount = this.rulesDataSource.data.length;
+      this.rulesDataSource.paginator = this.paginator;
     });
+  }
+
+  filterRules(text: string): void {
+    this.rulesDataSource.filter = (text || '').trim().toLowerCase();
+    if (this.paginator) {
+      this.rulesDataSource.paginator.firstPage();
+    }
   }
 
   selectForEdit(ruleRow: any): void {
@@ -137,6 +166,7 @@ export class AmlRulesComponent implements OnInit {
       )
       .subscribe((rules: any) => {
         this.rulesDataSource.data = Array.isArray(rules) ? rules : [];
+        this.rulesCount = this.rulesDataSource.data.length;
         this.cdr.markForCheck();
       });
   }
