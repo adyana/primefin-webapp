@@ -14,10 +14,12 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
  * lifted from the loans board. Tone resolves from the status value;
  * pass `tone` explicitly for statuses outside the default map.
  *
- * Default map — active: ACTIVE, PASS, SUCCESS, POSTED, SENT, OK;
- * pending: PENDING, WATCH, SUBMITTED, DRAFT, PARTIAL, OPEN; neutral:
- * CLOSED, MATURED, RESOLVED, SKIPPED; alert: FAILED, BREACH,
- * REJECTED, OVERDUE, otherwise neutral.
+ * Default map — active: ACTIVE, PASS, SUCCESS, POSTED, SENT, OK,
+ * RECOVERED, APPROVED, KEPT; pending: PENDING, WATCH, SUBMITTED, DRAFT,
+ * PARTIAL, OPEN, REMINDER, FIELD_VISIT, RESTRUCTURED, PROPOSED,
+ * PROMISED, FOLLOW_UP; neutral: CLOSED, MATURED, RESOLVED, SKIPPED,
+ * WRITTEN_OFF, CANCELLED, NOT_FOUND; alert: FAILED, BREACH, REJECTED,
+ * OVERDUE, ESCALATED, LEGAL, REFUSED, BROKEN, otherwise neutral.
  *
  * Usage: `<mifosx-status-pill status="PLACED" />`
  */
@@ -42,7 +44,11 @@ export class StatusPillComponent {
     'SUCCESS',
     'POSTED',
     'SENT',
-    'OK'
+    'OK',
+    'RECOVERED',
+    'COMPLETED',
+    'APPROVED',
+    'KEPT'
   ]);
 
   private static readonly PENDING = new Set([
@@ -51,21 +57,35 @@ export class StatusPillComponent {
     'SUBMITTED',
     'DRAFT',
     'PARTIAL',
-    'OPEN'
+    'OPEN',
+    'EXECUTING',
+    'REMINDER',
+    'FIELD_VISIT',
+    'RESTRUCTURED',
+    'PROPOSED',
+    'PROMISED',
+    'FOLLOW_UP'
   ]);
 
   private static readonly NEUTRAL = new Set([
     'CLOSED',
     'MATURED',
     'RESOLVED',
-    'SKIPPED'
+    'SKIPPED',
+    'WRITTEN_OFF',
+    'CANCELLED',
+    'NOT_FOUND'
   ]);
 
   private static readonly ALERT = new Set([
     'FAILED',
     'BREACH',
     'REJECTED',
-    'OVERDUE'
+    'OVERDUE',
+    'ESCALATED',
+    'LEGAL',
+    'REFUSED',
+    'BROKEN'
   ]);
 
   get toneClass(): string {

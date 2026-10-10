@@ -5322,6 +5322,7 @@
       "Search by user": "Buscar por usuario",
       "SearchByClient": "Buscar por nombre de cliente, ID externo, móvil",
       "SearchByClientId": "Search by client ID",
+      "SearchByCase": "Search by loan or client",
       "SearchByExternalID": "Buscar por ID externo",
       "SearchByName": "Buscar por nombre",
       "Section Buttons": "Esta sección contiene el nombre de usuario, la fotografía del usuario, la configuración del usuario y el botón de cerrar sesión.",

@@ -5296,6 +5296,7 @@
       "Search by user": "Ieškokite vartotojo",
       "SearchByClient": "Ieškoti pagal kliento vardą, išorinį ID, mobilųjį",
       "SearchByClientId": "Search by client ID",
+      "SearchByCase": "Search by loan or client",
       "SearchByExternalID": "Ieškoti pagal išorinį ID",
       "SearchByName": "Ieškoti pagal vardą",
       "Section Buttons": "Šiame skyriuje yra vartotojo vardas, vartotojo nuotrauka, vartotojo nustatymai ir atsijungimo mygtukas.",

@@ -23,6 +23,10 @@ describe('StatusPillComponent', () => {
       'POSTED',
       'SENT',
       'OK',
+      'COMPLETED',
+      'RECOVERED',
+      'APPROVED',
+      'KEPT',
       'active'
     ]) {
       expect(toneFor(status)).toBe('active');
@@ -36,7 +40,14 @@ describe('StatusPillComponent', () => {
       'SUBMITTED',
       'DRAFT',
       'PARTIAL',
-      'OPEN'
+      'EXECUTING',
+      'OPEN',
+      'REMINDER',
+      'FIELD_VISIT',
+      'RESTRUCTURED',
+      'PROPOSED',
+      'PROMISED',
+      'FOLLOW_UP'
     ]) {
       expect(toneFor(status)).toBe('pending');
     }
@@ -47,7 +58,10 @@ describe('StatusPillComponent', () => {
       'CLOSED',
       'MATURED',
       'RESOLVED',
-      'SKIPPED'
+      'SKIPPED',
+      'WRITTEN_OFF',
+      'CANCELLED',
+      'NOT_FOUND'
     ]) {
       expect(toneFor(status)).toBe('neutral');
     }
@@ -58,7 +72,11 @@ describe('StatusPillComponent', () => {
       'FAILED',
       'BREACH',
       'REJECTED',
-      'OVERDUE'
+      'OVERDUE',
+      'ESCALATED',
+      'LEGAL',
+      'REFUSED',
+      'BROKEN'
     ]) {
       expect(toneFor(status)).toBe('alert');
     }

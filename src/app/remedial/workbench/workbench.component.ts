@@ -46,6 +46,9 @@ import { catchError, of } from 'rxjs';
 /** Custom Services */
 import { RemedialService } from '../remedial.service';
 
+/** Shared Page Standard */
+import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
+import { StatusPillComponent } from '../../shared/status-pill/status-pill.component';
 /**
  * Collections workbench: delinquent-loan queue with stage/status/agent
  * filters, one-click arrears sweep and drill-down into the case.
@@ -55,6 +58,8 @@ import { RemedialService } from '../remedial.service';
   templateUrl: './workbench.component.html',
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
+    PageToolbarComponent,
+    StatusPillComponent,
     ReactiveFormsModule,
     RouterLink,
     MatCard,
@@ -105,6 +110,9 @@ export class CollectionsWorkbenchComponent implements OnInit {
   /** Last sweep counts (null = no sweep run yet this session). */
   sweepResult: any = null;
 
+  /** Live queue count for the toolbar badge. */
+  casesCount: number | null = null;
+
   /** Paginator for the queue table. */
   @ViewChild(MatPaginator) queuePaginator: MatPaginator;
 
@@ -149,9 +157,17 @@ export class CollectionsWorkbenchComponent implements OnInit {
         const stage = this.filtersForm.value.stage ?? 'ALL';
         const rows = Array.isArray(cases) ? cases : [];
         this.casesDataSource.data = stage === 'ALL' ? rows : rows.filter((row: any) => row.stage === stage);
+        this.casesCount = this.casesDataSource.data.length;
         this.attachPaginator();
         this.cdr.markForCheck();
       });
+  }
+
+  filterCases(text: string): void {
+    this.casesDataSource.filter = (text || '').trim().toLowerCase();
+    if (this.queuePaginator) {
+      this.casesDataSource.paginator.firstPage();
+    }
   }
 
   private attachPaginator(): void {

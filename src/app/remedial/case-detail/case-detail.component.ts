@@ -37,6 +37,9 @@ import { catchError, forkJoin, of } from 'rxjs';
 /** Custom Services */
 import { RemedialService } from '../remedial.service';
 
+/** Shared Page Standard */
+import { StatusPillComponent } from '../../shared/status-pill/status-pill.component';
+
 /**
  * Collection case detail: assignment + legal/close/write-off actions,
  * visit timeline with record form, promises with kept/cancel, POJK
@@ -47,6 +50,7 @@ import { RemedialService } from '../remedial.service';
   templateUrl: './case-detail.component.html',
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
+    StatusPillComponent,
     ReactiveFormsModule,
     MatCard,
     MatCardTitle,

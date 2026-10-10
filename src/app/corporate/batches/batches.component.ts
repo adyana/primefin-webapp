@@ -46,6 +46,10 @@ import { catchError, of } from 'rxjs';
 import { CorporateService } from '../corporate.service';
 import { CorporateBatchService } from '../corporate-batch.service';
 
+/** Shared Page Standard */
+import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
+import { StatusPillComponent } from '../../shared/status-pill/status-pill.component';
+
 /**
  * Bulk disbursement batches: filter bar, create form with pasted CSV
  * items (account,name,amount[,reference,bank] per line), batch table
@@ -56,6 +60,8 @@ import { CorporateBatchService } from '../corporate-batch.service';
   templateUrl: './batches.component.html',
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
+    PageToolbarComponent,
+    StatusPillComponent,
     ReactiveFormsModule,
     MatCard,
     MatCardTitle,
@@ -129,6 +135,9 @@ export class CorporateBatchesComponent implements OnInit {
 
   /** Selected batch for the item table (null = none selected). */
   selectedBatch: any = null;
+
+  /** Live batch count for the toolbar badge. */
+  batchesCount: number | null = null;
 
   /** Paginators for the batch and item tables. */
   @ViewChild('batchesPaginator') batchesPaginator: MatPaginator;
@@ -231,10 +240,18 @@ export class CorporateBatchesComponent implements OnInit {
       )
       .subscribe((batches: any) => {
         this.batchesDataSource.data = Array.isArray(batches) ? batches : [];
+        this.batchesCount = this.batchesDataSource.data.length;
         if (this.batchesPaginator) {
           this.batchesDataSource.paginator = this.batchesPaginator;
         }
         this.cdr.markForCheck();
       });
+  }
+
+  filterBatches(text: string): void {
+    this.batchesDataSource.filter = (text || '').trim().toLowerCase();
+    if (this.batchesPaginator) {
+      this.batchesDataSource.paginator.firstPage();
+    }
   }
 }

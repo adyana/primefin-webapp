@@ -43,7 +43,7 @@
 
             <ng-container matColumnDef="lastStatus">
               <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Status' | translate }}</th>
-              <td mat-cell *matCellDef="let row">{{ row.lastStatus ?? '—' }}</td>
+              <td mat-cell *matCellDef="let row"><mifosx-status-pill [status]="row.lastStatus ?? '—'" /></td>
             </ng-container>
 
             <ng-container matColumnDef="lastEnd">
@@ -80,7 +80,7 @@
 
             <ng-container matColumnDef="lastStatus">
               <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Status' | translate }}</th>
-              <td mat-cell *matCellDef="let row">{{ row.lastStatus ?? '—' }}</td>
+              <td mat-cell *matCellDef="let row"><mifosx-status-pill [status]="row.lastStatus ?? '—'" /></td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="scheduleColumns"></tr>

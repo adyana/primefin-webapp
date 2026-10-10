@@ -40,6 +40,9 @@ import { catchError, of } from 'rxjs';
 /** Custom Services */
 import { EodService } from '../eod.service';
 
+/** Shared Page Standard */
+import { StatusPillComponent } from '../../shared/status-pill/status-pill.component';
+
 /**
  * EOD cockpit status pane: business dates, EOD job health with last
  * runs, catch-up watermarks and module poller summaries.
@@ -49,6 +52,7 @@ import { EodService } from '../eod.service';
   templateUrl: './status.component.html',
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
+    StatusPillComponent,
     ReactiveFormsModule,
     MatCard,
     MatCardTitle,

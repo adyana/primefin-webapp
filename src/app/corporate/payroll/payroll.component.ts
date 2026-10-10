@@ -39,6 +39,10 @@ import {
 } from '@angular/material/table';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
+/** Shared Page Standard */
+import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
+import { StatusPillComponent } from '../../shared/status-pill/status-pill.component';
+
 /** rxjs Imports */
 import { catchError, of } from 'rxjs';
 
@@ -56,6 +60,8 @@ import { CorporateBatchService } from '../corporate-batch.service';
   templateUrl: './payroll.component.html',
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
+    PageToolbarComponent,
+    StatusPillComponent,
     ReactiveFormsModule,
     MatCard,
     MatCardTitle,
@@ -149,6 +155,9 @@ export class CorporatePayrollComponent implements OnInit {
   @ViewChild('rosterPaginator') rosterPaginator: MatPaginator;
   @ViewChild('payrollPaginator') payrollPaginator: MatPaginator;
 
+  /** Live salary-batch count for the toolbar badge. */
+  salaryCount: number | null = null;
+
   ngOnInit(): void {
     this.corporateService
       .getCorporates('ACTIVE')
@@ -208,6 +217,13 @@ export class CorporatePayrollComponent implements OnInit {
       });
   }
 
+  filterSalary(text: string): void {
+    this.batchesDataSource.filter = (text || '').trim().toLowerCase();
+    if (this.payrollPaginator) {
+      this.batchesDataSource.paginator.firstPage();
+    }
+  }
+
   private reload(): void {
     const corporateId = this.pickerForm.value.corporateId;
     if (!corporateId) {
@@ -237,6 +253,7 @@ export class CorporatePayrollComponent implements OnInit {
         this.batchesDataSource.data = rows.filter(
           (row: any) => row.kind === 'SALARY' && row.corporateId === corporateId
         );
+        this.salaryCount = this.batchesDataSource.data.length;
         if (this.payrollPaginator) {
           this.batchesDataSource.paginator = this.payrollPaginator;
         }

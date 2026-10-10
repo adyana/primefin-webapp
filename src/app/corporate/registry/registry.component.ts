@@ -39,6 +39,10 @@ import {
 } from '@angular/material/table';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
+/** Shared Page Standard */
+import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
+import { StatusPillComponent } from '../../shared/status-pill/status-pill.component';
+
 /** rxjs Imports */
 import { catchError, of } from 'rxjs';
 
@@ -54,6 +58,8 @@ import { CorporateService } from '../corporate.service';
   templateUrl: './registry.component.html',
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
+    PageToolbarComponent,
+    StatusPillComponent,
     ReactiveFormsModule,
     MatCard,
     MatCardTitle,
@@ -114,9 +120,19 @@ export class CorporateRegistryComponent implements OnInit {
   /** Paginator for the registry table. */
   @ViewChild(MatPaginator) registryPaginator: MatPaginator;
 
+  /** Live registry count for the toolbar badge. */
+  corporatesCount: number | null = null;
+
   ngOnInit(): void {
     this.filtersForm.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.reload());
     this.reload();
+  }
+
+  filterCorporates(text: string): void {
+    this.corporatesDataSource.filter = (text || '').trim().toLowerCase();
+    if (this.registryPaginator) {
+      this.corporatesDataSource.paginator.firstPage();
+    }
   }
 
   create(): void {
@@ -163,6 +179,7 @@ export class CorporateRegistryComponent implements OnInit {
       )
       .subscribe((corporates: any) => {
         this.corporatesDataSource.data = Array.isArray(corporates) ? corporates : [];
+        this.corporatesCount = this.corporatesDataSource.data.length;
         if (this.registryPaginator) {
           this.corporatesDataSource.paginator = this.registryPaginator;
         }

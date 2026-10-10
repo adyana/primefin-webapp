@@ -5297,6 +5297,7 @@
       "Search by user": "Suche nach Benutzern",
       "SearchByClient": "Suche nach Kundennamen, externer ID, Mobiltelefon",
       "SearchByClientId": "Search by client ID",
+      "SearchByCase": "Search by loan or client",
       "SearchByExternalID": "Suche nach externer ID",
       "SearchByName": "Suche nach Namen",
       "Section Buttons": "Dieser Abschnitt enthält den Benutzernamen, das Benutzerfoto, die Benutzereinstellungen und die Schaltfläche zum Abmelden.",

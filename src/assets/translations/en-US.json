@@ -5480,6 +5480,7 @@
       "Search by user": "Search by user",
       "SearchByClient": "Search by client name, external Id, mobile",
       "SearchByClientId": "Search by client ID",
+      "SearchByCase": "Search by loan or client",
       "SearchByExternalID": "Search by ExternalID",
       "SearchByLoan": "Search by account number, borrower, or product",
       "SearchByCounterparty": "Search by counterparty",

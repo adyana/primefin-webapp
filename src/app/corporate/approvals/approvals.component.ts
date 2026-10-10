@@ -38,6 +38,10 @@ import {
 } from '@angular/material/table';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
+/** Shared Page Standard */
+import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
+import { StatusPillComponent } from '../../shared/status-pill/status-pill.component';
+
 /** rxjs Imports */
 import { catchError, of } from 'rxjs';
 
@@ -54,6 +58,8 @@ import { CorporateBatchService } from '../corporate-batch.service';
   templateUrl: './approvals.component.html',
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
+    PageToolbarComponent,
+    StatusPillComponent,
     ReactiveFormsModule,
     MatCard,
     MatCardTitle,
@@ -109,12 +115,22 @@ export class CorporateApprovalsComponent implements OnInit {
     'permission'
   ];
 
+  /** Live approval-queue count for the toolbar badge. */
+  queueCount: number | null = null;
+
   /** Paginators for the queue and tier tables. */
   @ViewChild('queuePaginator') queuePaginator: MatPaginator;
   @ViewChild('tiersPaginator') tiersPaginator: MatPaginator;
 
   ngOnInit(): void {
     this.reload();
+  }
+
+  filterQueue(text: string): void {
+    this.queueDataSource.filter = (text || '').trim().toLowerCase();
+    if (this.queuePaginator) {
+      this.queueDataSource.paginator.firstPage();
+    }
   }
 
   createTier(): void {
@@ -153,6 +169,7 @@ export class CorporateApprovalsComponent implements OnInit {
       )
       .subscribe((batches: any) => {
         this.queueDataSource.data = Array.isArray(batches) ? batches : [];
+        this.queueCount = this.queueDataSource.data.length;
         if (this.queuePaginator) {
           this.queueDataSource.paginator = this.queuePaginator;
         }

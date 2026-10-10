@@ -9,7 +9,9 @@
 <div class="container" *ngIf="kase">
   <mat-card class="m-b-20">
     <mat-card-title class="m-b-16">
-      {{ 'labels.menus.Collections' | translate }} — {{ kase.loanId }} ({{ kase.stage }} / {{ kase.status }})
+      {{ 'labels.menus.Collections' | translate }} — {{ kase.loanId }}
+      <mifosx-status-pill [status]="kase.stage" />
+      <mifosx-status-pill [status]="kase.status" />
     </mat-card-title>
 
     <mat-card-content>
@@ -120,7 +122,7 @@
 
           <ng-container matColumnDef="outcome">
             <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Outcome' | translate }}</th>
-            <td mat-cell *matCellDef="let visit">{{ visit.outcome }}</td>
+            <td mat-cell *matCellDef="let visit"><mifosx-status-pill [status]="visit.outcome" /></td>
           </ng-container>
 
           <ng-container matColumnDef="notes">
@@ -172,12 +174,12 @@
 
           <ng-container matColumnDef="amount">
             <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Amount' | translate }}</th>
-            <td mat-cell *matCellDef="let ptp">{{ ptp.amount | number: '1.2-2' }}</td>
+            <td mat-cell *matCellDef="let ptp">{{ ptp.amount | compactMoney }}</td>
           </ng-container>
 
           <ng-container matColumnDef="status">
             <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Status' | translate }}</th>
-            <td mat-cell *matCellDef="let ptp">{{ ptp.status }}</td>
+            <td mat-cell *matCellDef="let ptp"><mifosx-status-pill [status]="ptp.status" /></td>
           </ng-container>
 
           <ng-container matColumnDef="actions">
@@ -241,7 +243,7 @@
 
           <ng-container matColumnDef="status">
             <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Status' | translate }}</th>
-            <td mat-cell *matCellDef="let restructure">{{ restructure.status }}</td>
+            <td mat-cell *matCellDef="let restructure"><mifosx-status-pill [status]="restructure.status" /></td>
           </ng-container>
 
           <ng-container matColumnDef="actions">
