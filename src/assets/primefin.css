@@ -261,3 +261,56 @@ mat-card-header.header.header span:not(.account-status-pill) {
 mifosx-loans-view mat-card-header.header.header .account-status-pill.status-overpaid {
   background-color: #ffa500 !important;
 }
+
+/* PrimeFin page standard: board table treatment matching the /loans
+   house style (small uppercase gray headers, tabular figures).
+   Scoped to .pf-board so upstream tables keep their default look. */
+.pf-board .mat-mdc-header-cell {
+  font-size: 10.5px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  color: rgba(0, 0, 0, 0.54) !important;
+  white-space: nowrap;
+}
+.pf-board .mat-mdc-cell {
+  font-size: 12.5px !important;
+  color: rgba(0, 0, 0, 0.87) !important;
+  font-variant-numeric: tabular-nums !important;
+}
+body.dark-theme .pf-board .mat-mdc-header-cell {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+body.dark-theme .pf-board .mat-mdc-cell {
+  color: rgba(255, 255, 255, 0.87) !important;
+}
+
+/* PrimeFin page standard: card titles carrying actions — title left,
+   actions right, never meshed. */
+.pf-card-title.mat-mdc-card-title {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+.pf-card-title .pf-card-title-actions {
+  margin-left: auto !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+/* PrimeFin page standard: KPI readout strips on dashboard/cockpit
+   cards — quiet surface so loose spans read as a header block. */
+.pf-kpis {
+  background: rgba(10, 109, 140, 0.06) !important;
+  border: 1px solid rgba(10, 109, 140, 0.16) !important;
+  border-radius: 8px !important;
+  padding: 8px 16px !important;
+}
+.pf-kpis > span {
+  font-size: 12.5px !important;
+}
+body.dark-theme .pf-kpis {
+  background: rgba(11, 181, 164, 0.1) !important;
+  border-color: rgba(11, 181, 164, 0.24) !important;
+}

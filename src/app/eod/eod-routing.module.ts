@@ -21,7 +21,7 @@ const routes: Routes = [
     {
       path: '',
       component: EodStatusComponent,
-      data: { title: 'EOD Cockpit', breadcrumb: 'Status', routeParamBreadcrumb: false }
+      data: { title: 'EOD Cockpit', breadcrumb: 'EOD Cockpit', routeParamBreadcrumb: false }
     }
   ])
 ];

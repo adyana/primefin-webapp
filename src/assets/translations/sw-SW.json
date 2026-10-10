@@ -4338,7 +4338,9 @@
       "Counterparty": "Counterparty",
       "Rate bps": "Rate bps",
       "Pair": "Pair",
-      "Statement": "Statement"
+      "Statement": "Statement",
+      "Net": "Net",
+      "Net IDR": "Net IDR"
     },
     "links": {
       "Community": "Jumuiya",

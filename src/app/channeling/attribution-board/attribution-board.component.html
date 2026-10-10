@@ -52,7 +52,7 @@
     </mat-card-content>
   </mat-card>
 
-  <div class="mat-elevation-z8 table-container m-b-20">
+  <div class="mat-elevation-z8 table-container pf-board m-b-20">
     <mifosx-page-toolbar
       searchPlaceholder="labels.text.SearchByPartner"
       [count]="attributionsCount"
@@ -103,7 +103,7 @@
     <mat-card-title class="m-b-16">{{ 'labels.heading.Pending Proposals' | translate }}</mat-card-title>
   </mat-card>
 
-  <div class="mat-elevation-z8 table-container m-b-20">
+  <div class="mat-elevation-z8 table-container pf-board m-b-20">
     <table mat-table [dataSource]="proposalsDataSource">
       <ng-container matColumnDef="entityType">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Entity Type' | translate }}</th>

@@ -34,7 +34,7 @@
         }
       </form>
 
-      <div class="mat-elevation-z8 table-container">
+      <div class="mat-elevation-z8 table-container pf-board">
         <mifosx-page-toolbar
           searchPlaceholder="labels.text.SearchByReference"
           [count]="statementsCount"
@@ -78,7 +78,7 @@
       </mat-card-title>
 
       <mat-card-content>
-        <div class="mat-elevation-z8 table-container">
+        <div class="mat-elevation-z8 table-container pf-board">
           <table mat-table [dataSource]="linesDataSource">
             <ng-container matColumnDef="date">
               <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Date' | translate }}</th>
@@ -119,7 +119,7 @@
     <mat-card-title class="m-b-16">Breaks</mat-card-title>
 
     <mat-card-content>
-      <div class="mat-elevation-z8 table-container">
+      <div class="mat-elevation-z8 table-container pf-board">
         <mifosx-page-toolbar
           searchPlaceholder="labels.text.SearchByReference"
           [count]="breaksCount"

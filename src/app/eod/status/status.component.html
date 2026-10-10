@@ -8,23 +8,25 @@
 
 <div class="container">
   <mat-card class="m-b-20">
-    <mat-card-title class="m-b-16">
+    <mat-card-title class="m-b-16 pf-card-title">
       {{ 'labels.menus.EOD Cockpit' | translate }}
-      <button mat-raised-button color="primary" (click)="reload()">
-        {{ 'labels.buttons.Refresh' | translate }}
-      </button>
+      <span class="pf-card-title-actions">
+        <button mat-raised-button color="primary" (click)="reload()">
+          {{ 'labels.buttons.Refresh' | translate }}
+        </button>
+      </span>
     </mat-card-title>
 
     <mat-card-content>
       @if (status) {
-        <div class="layout-row gap-20px m-b-16">
+        <div class="layout-row gap-20px m-b-16 pf-kpis">
           <span>{{ 'labels.inputs.Business Date' | translate }}: {{ status.dates?.BUSINESS_DATE }}</span>
           <span>{{ 'labels.inputs.COB Date' | translate }}: {{ status.dates?.COB_DATE }}</span>
           <span>{{ 'labels.inputs.Stragglers' | translate }}: {{ status.catchUp?.loanStragglers }}</span>
           <span>WC {{ 'labels.inputs.Stragglers' | translate }}: {{ status.catchUp?.wcStragglers }}</span>
         </div>
 
-        <div class="mat-elevation-z8 table-container m-b-16">
+        <div class="mat-elevation-z8 table-container pf-board m-b-16">
           <table mat-table [dataSource]="jobsDataSource">
             <ng-container matColumnDef="job">
               <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Job' | translate }}</th>
@@ -56,12 +58,12 @@
           </table>
         </div>
 
-        <div class="layout-row gap-20px m-b-16">
+        <div class="layout-row gap-20px m-b-16 pf-kpis">
           <span>{{ 'labels.inputs.Open Cases' | translate }}: {{ status.modules?.aml?.open }}</span>
           <span>{{ 'labels.inputs.Draft Batches' | translate }}: {{ status.modules?.corporateDraftBatches }}</span>
         </div>
 
-        <div class="mat-elevation-z8 table-container">
+        <div class="mat-elevation-z8 table-container pf-board">
           <table mat-table [dataSource]="schedulesDataSource">
             <ng-container matColumnDef="code">
               <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Code' | translate }}</th>
@@ -120,7 +122,7 @@
       </form>
 
       @if (plan) {
-        <div class="layout-row gap-20px m-b-16">
+        <div class="layout-row gap-20px m-b-16 pf-kpis">
           <span>{{ 'labels.inputs.Business Date' | translate }}: {{ plan.businessDate }}</span>
           <span>{{ 'labels.inputs.Target Date' | translate }}: {{ plan.targetDate }}</span>
           <span>{{ 'labels.inputs.Days' | translate }}: {{ plan.days?.length }}</span>
@@ -128,7 +130,7 @@
       }
 
       @if (run) {
-        <div class="layout-row gap-20px m-b-16">
+        <div class="layout-row gap-20px m-b-16 pf-kpis">
           <span>{{ 'labels.inputs.Status' | translate }}: {{ run.status }}</span>
           <span>{{ 'labels.inputs.Current Day' | translate }}: {{ run.currentDay ?? '—' }}</span>
         </div>

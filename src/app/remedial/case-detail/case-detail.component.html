@@ -15,7 +15,7 @@
     </mat-card-title>
 
     <mat-card-content>
-      <div class="layout-row gap-20px m-b-16">
+      <div class="layout-row gap-20px m-b-16 pf-kpis">
         <span>DPD {{ kase.dpdAtOpen }}</span>
         <span>{{ 'labels.inputs.Overdue' | translate }} {{ kase.overdueAtOpen | compactMoney }}</span>
         <span>{{ 'labels.inputs.Agent' | translate }} {{ kase.assignedAgentId ?? '—' }}</span>
@@ -103,7 +103,7 @@
         </div>
       </form>
 
-      <div class="mat-elevation-z8 table-container">
+      <div class="mat-elevation-z8 table-container pf-board">
         <table mat-table [dataSource]="visitsDataSource">
           <ng-container matColumnDef="scheduledOn">
             <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Scheduled On' | translate }}</th>
@@ -165,7 +165,7 @@
         </div>
       </form>
 
-      <div class="mat-elevation-z8 table-container">
+      <div class="mat-elevation-z8 table-container pf-board">
         <table mat-table [dataSource]="ptpsDataSource">
           <ng-container matColumnDef="promisedOn">
             <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Promised On' | translate }}</th>
@@ -229,7 +229,7 @@
         </div>
       </form>
 
-      <div class="mat-elevation-z8 table-container">
+      <div class="mat-elevation-z8 table-container pf-board">
         <table mat-table [dataSource]="restructuresDataSource">
           <ng-container matColumnDef="pojkType">
             <th mat-header-cell *matHeaderCellDef>POJK {{ 'labels.inputs.Type' | translate }}</th>

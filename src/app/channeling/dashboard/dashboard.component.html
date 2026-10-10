@@ -56,7 +56,7 @@
     [partner]="chartPartner"
   ></mifosx-channel-traffic-chart>
 
-  <div class="mat-elevation-z8 table-container">
+  <div class="mat-elevation-z8 table-container pf-board">
     <table mat-table [dataSource]="summaryDataSource">
       <ng-container matColumnDef="metric">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Metric' | translate }}</th>
@@ -74,7 +74,7 @@
   </div>
 
   <h3 class="m-t-20 m-b-16">{{ 'labels.heading.Money Movement' | translate }}</h3>
-  <div class="mat-elevation-z8 table-container">
+  <div class="mat-elevation-z8 table-container pf-board">
     <table mat-table [dataSource]="moneyDataSource">
       <ng-container matColumnDef="date">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Date' | translate }}</th>
