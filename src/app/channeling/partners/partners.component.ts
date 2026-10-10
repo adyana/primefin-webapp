@@ -28,6 +28,10 @@ import {
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
+/** Shared Page Standard */
+import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
+import { StatusPillComponent } from '../../shared/status-pill/status-pill.component';
+
 /** Custom Services */
 import { ChannelingService } from '../channeling.service';
 
@@ -40,6 +44,8 @@ import { ChannelingService } from '../channeling.service';
   styleUrls: ['./partners.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
+    PageToolbarComponent,
+    StatusPillComponent,
     RouterLink,
     FaIconComponent,
     MatTable,
@@ -76,6 +82,9 @@ export class ChannelPartnersComponent implements OnInit {
   /** Data source for partners table. */
   dataSource: MatTableDataSource<any>;
 
+  /** Live partners count for the toolbar badge. */
+  partnersCount: number | null = null;
+
   /** Paginator for partners table. */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   /** Sorter for partners table. */
@@ -89,6 +98,7 @@ export class ChannelPartnersComponent implements OnInit {
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource(this.partnersData);
+    this.partnersCount = this.dataSource.data.length;
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }

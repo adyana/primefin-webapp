@@ -27,6 +27,10 @@ import {
 } from '@angular/material/table';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
+/** Shared Page Standard */
+import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
+import { StatusPillComponent } from '../../shared/status-pill/status-pill.component';
+
 /** Custom Services */
 import { ChannelingService } from '../channeling.service';
 
@@ -39,6 +43,8 @@ import { ChannelingService } from '../channeling.service';
   templateUrl: './files.component.html',
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
+    PageToolbarComponent,
+    StatusPillComponent,
     MatTable,
     MatSort,
     MatColumnDef,
@@ -75,6 +81,9 @@ export class ChannelFilesComponent implements OnInit {
   /** Data source for files table. */
   dataSource = new MatTableDataSource<any>([]);
 
+  /** Live files count for the toolbar badge. */
+  filesCount: number | null = null;
+
   /** Paginator for files table. */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   /** Sorter for files table. */
@@ -83,6 +92,7 @@ export class ChannelFilesComponent implements OnInit {
   constructor() {
     this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { files: any }) => {
       this.dataSource.data = data.files || [];
+      this.filesCount = this.dataSource.data.length;
     });
   }
 

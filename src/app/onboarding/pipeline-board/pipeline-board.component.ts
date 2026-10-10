@@ -32,6 +32,10 @@ import {
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
+/** Shared Page Standard */
+import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
+import { StatusPillComponent } from '../../shared/status-pill/status-pill.component';
+
 /** rxjs Imports */
 import { take } from 'rxjs';
 
@@ -49,6 +53,8 @@ import { OnboardingService } from '../onboarding.service';
   styleUrls: ['./pipeline-board.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
+    PageToolbarComponent,
+    StatusPillComponent,
     ReactiveFormsModule,
     FaIconComponent,
     MatCard,
@@ -83,6 +89,9 @@ export class PipelineBoardComponent implements OnInit {
   private cdr = inject(ChangeDetectorRef);
 
   applicationsDataSource = new MatTableDataSource<any>([]);
+
+  /** Live applications count for the toolbar badge. */
+  applicationsCount: number | null = null;
   applicationColumns: string[] = [
     'id',
     'clientId',
@@ -121,7 +130,12 @@ export class PipelineBoardComponent implements OnInit {
   ngOnInit(): void {
     this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { applications: any }) => {
       this.applicationsDataSource.data = Array.isArray(data.applications?.pageItems) ? data.applications.pageItems : [];
+      this.applicationsCount = this.applicationsDataSource.data.length;
     });
+  }
+
+  filterApplications(text: string): void {
+    this.applicationsDataSource.filter = (text || '').trim().toLowerCase();
   }
 
   open(): void {
@@ -182,6 +196,7 @@ export class PipelineBoardComponent implements OnInit {
       .pipe(take(1))
       .subscribe((page: any) => {
         this.applicationsDataSource.data = Array.isArray(page?.pageItems) ? page.pageItems : [];
+        this.applicationsCount = this.applicationsDataSource.data.length;
         this.cdr.markForCheck();
       });
   }

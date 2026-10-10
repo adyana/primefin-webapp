@@ -32,6 +32,9 @@ import {
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
+/** Shared Page Standard */
+import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
+
 /** rxjs Imports */
 import { take } from 'rxjs';
 
@@ -47,6 +50,7 @@ import { ChannelingService } from '../channeling.service';
   templateUrl: './attribution-board.component.html',
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
+    PageToolbarComponent,
     ReactiveFormsModule,
     FaIconComponent,
     MatCard,
@@ -79,6 +83,9 @@ export class AttributionBoardComponent implements OnInit {
   private cdr = inject(ChangeDetectorRef);
 
   attributionsDataSource = new MatTableDataSource<any>([]);
+
+  /** Live attributions count for the toolbar badge. */
+  attributionsCount: number | null = null;
   attributionColumns: string[] = [
     'entityType',
     'entityId',
@@ -157,12 +164,17 @@ export class AttributionBoardComponent implements OnInit {
       .subscribe(() => this.reload());
   }
 
+  filterAttributions(text: string): void {
+    this.attributionsDataSource.filter = (text || '').trim().toLowerCase();
+  }
+
   private reload(): void {
     this.channelingService
       .getAttributions()
       .pipe(take(1))
       .subscribe((rows: any) => {
         this.attributionsDataSource.data = Array.isArray(rows) ? rows : [];
+        this.attributionsCount = this.attributionsDataSource.data.length;
         this.cdr.markForCheck();
       });
     this.channelingService

@@ -21,6 +21,9 @@ import { switchMap, of } from 'rxjs';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
+/** Shared Page Standard */
+import { StatusPillComponent } from '../../shared/status-pill/status-pill.component';
+
 /** Custom Services */
 import { OnboardingService } from '../onboarding.service';
 
@@ -34,6 +37,7 @@ import { OnboardingService } from '../onboarding.service';
   templateUrl: './application-view.component.html',
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
+    StatusPillComponent,
     ReactiveFormsModule,
     FaIconComponent,
     MatCard,

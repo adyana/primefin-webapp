@@ -31,6 +31,9 @@ import {
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
+/** Shared Page Standard */
+import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
+
 /** rxjs Imports */
 import { take } from 'rxjs';
 
@@ -47,6 +50,7 @@ import { OnboardingService } from '../onboarding.service';
   templateUrl: './approvals-board.component.html',
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
+    PageToolbarComponent,
     ReactiveFormsModule,
     FaIconComponent,
     MatCard,
@@ -77,6 +81,13 @@ export class ApprovalsBoardComponent implements OnInit {
   private cdr = inject(ChangeDetectorRef);
 
   queueDataSource = new MatTableDataSource<any>([]);
+
+  /** Live approval-queue count for the toolbar badge. */
+  queueCount: number | null = null;
+
+  filterQueue(text: string): void {
+    this.queueDataSource.filter = (text || '').trim().toLowerCase();
+  }
   queueColumns: string[] = [
     'id',
     'clientId',
@@ -98,6 +109,7 @@ export class ApprovalsBoardComponent implements OnInit {
   ngOnInit(): void {
     this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { queue: any }) => {
       this.queueDataSource.data = Array.isArray(data.queue?.pageItems) ? data.queue.pageItems : [];
+      this.queueCount = this.queueDataSource.data.length;
     });
   }
 
