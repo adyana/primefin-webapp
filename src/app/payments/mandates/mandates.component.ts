@@ -105,8 +105,6 @@ export class PaymentMandatesComponent implements OnInit {
 
   /** Row selected for collection (null = no collect form). */
   selectedMandate: any = null;
-  /** Live mandates count for the toolbar badge. */
-  mandatesCount: number | null = null;
   /** Paginator for mandates table. */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   collectForm: FormGroup = this.formBuilder.group({
@@ -122,7 +120,6 @@ export class PaymentMandatesComponent implements OnInit {
   ngOnInit(): void {
     this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { mandates: any }) => {
       this.mandatesDataSource.data = Array.isArray(data.mandates) ? data.mandates : [];
-      this.mandatesCount = this.mandatesDataSource.data.length;
       this.mandatesDataSource.paginator = this.paginator;
     });
   }
@@ -170,7 +167,6 @@ export class PaymentMandatesComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((mandates: any) => {
         this.mandatesDataSource.data = Array.isArray(mandates) ? mandates : [];
-        this.mandatesCount = this.mandatesDataSource.data.length;
         this.mandatesDataSource.paginator = this.paginator;
         this.cdr.markForCheck();
       });

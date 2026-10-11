@@ -136,9 +136,6 @@ export class CorporateBatchesComponent implements OnInit {
   /** Selected batch for the item table (null = none selected). */
   selectedBatch: any = null;
 
-  /** Live batch count for the toolbar badge. */
-  batchesCount: number | null = null;
-
   /** Paginators for the batch and item tables. */
   @ViewChild('batchesPaginator') batchesPaginator: MatPaginator;
   @ViewChild('itemsPaginator') itemsPaginator: MatPaginator;
@@ -240,7 +237,6 @@ export class CorporateBatchesComponent implements OnInit {
       )
       .subscribe((batches: any) => {
         this.batchesDataSource.data = Array.isArray(batches) ? batches : [];
-        this.batchesCount = this.batchesDataSource.data.length;
         if (this.batchesPaginator) {
           this.batchesDataSource.paginator = this.batchesPaginator;
         }

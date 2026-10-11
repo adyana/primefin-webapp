@@ -10,8 +10,6 @@
   <div class="mat-elevation-z8 table-container pf-board">
     <mifosx-page-toolbar
       searchPlaceholder="labels.text.SearchByExternalID"
-      [count]="commissionsCount"
-      countNoun="labels.menus.Agents"
       (searchChange)="filterCommissions($event)"
     />
     <table mat-table [dataSource]="dataSource">

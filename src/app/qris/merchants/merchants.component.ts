@@ -77,9 +77,6 @@ export class QrisMerchantsComponent implements OnInit {
   /** Data source for merchants table. */
   dataSource: MatTableDataSource<any>;
 
-  /** Live merchants count for the toolbar badge. */
-  merchantsCount: number | null = null;
-
   /** Paginator for merchants table. */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   /** Sorter for merchants table. */
@@ -93,7 +90,6 @@ export class QrisMerchantsComponent implements OnInit {
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource(this.merchantsData);
-    this.merchantsCount = this.dataSource.data.length;
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }

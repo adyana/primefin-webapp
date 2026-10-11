@@ -115,9 +115,6 @@ export class CorporateApprovalsComponent implements OnInit {
     'permission'
   ];
 
-  /** Live approval-queue count for the toolbar badge. */
-  queueCount: number | null = null;
-
   /** Paginators for the queue and tier tables. */
   @ViewChild('queuePaginator') queuePaginator: MatPaginator;
   @ViewChild('tiersPaginator') tiersPaginator: MatPaginator;
@@ -169,7 +166,6 @@ export class CorporateApprovalsComponent implements OnInit {
       )
       .subscribe((batches: any) => {
         this.queueDataSource.data = Array.isArray(batches) ? batches : [];
-        this.queueCount = this.queueDataSource.data.length;
         if (this.queuePaginator) {
           this.queueDataSource.paginator = this.queuePaginator;
         }

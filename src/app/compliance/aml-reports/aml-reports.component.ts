@@ -105,9 +105,6 @@ export class AmlReportsComponent implements OnInit {
     'actions'
   ];
 
-  /** Live reports count for the toolbar badge. */
-  reportsCount: number | null = null;
-
   /** Paginator for reports table. */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
@@ -134,7 +131,6 @@ export class AmlReportsComponent implements OnInit {
   ngOnInit(): void {
     this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { reports: any }) => {
       this.reportsDataSource.data = Array.isArray(data.reports) ? data.reports : [];
-      this.reportsCount = this.reportsDataSource.data.length;
       this.reportsDataSource.paginator = this.paginator;
     });
   }
@@ -172,7 +168,6 @@ export class AmlReportsComponent implements OnInit {
       )
       .subscribe((reports: any) => {
         this.reportsDataSource.data = Array.isArray(reports) ? reports : [];
-        this.reportsCount = this.reportsDataSource.data.length;
         this.cdr.markForCheck();
       });
   }

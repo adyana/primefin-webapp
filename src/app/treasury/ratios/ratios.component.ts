@@ -134,9 +134,6 @@ export class TreasuryRatiosComponent implements OnInit {
   /** Latest computed ratios (null = nothing computed yet this session). */
   ratios: any = null;
 
-  /** Live exposures count for the toolbar badge. */
-  exposuresCount: number | null = null;
-
   /** Last filed submission ids (null = nothing filed yet this session). */
   kpmmFilingId: number | null = null;
   bmpkFilingId: number | null = null;
@@ -174,7 +171,6 @@ export class TreasuryRatiosComponent implements OnInit {
       .subscribe((ratios: any) => {
         this.ratios = ratios;
         this.exposureDataSource.data = ratios && Array.isArray(ratios.exposures) ? ratios.exposures : [];
-        this.exposuresCount = this.exposureDataSource.data.length;
         if (this.exposuresPaginator) {
           this.exposureDataSource.paginator = this.exposuresPaginator;
         }

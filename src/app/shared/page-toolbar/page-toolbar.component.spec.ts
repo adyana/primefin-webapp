@@ -10,9 +10,8 @@ import { firstValueFrom, toArray } from 'rxjs';
 import { PageToolbarComponent } from './page-toolbar.component';
 
 describe('PageToolbarComponent', () => {
-  it('should default to no count and no export', () => {
+  it('should default to no export', () => {
     const toolbar = new PageToolbarComponent();
-    expect(toolbar.count).toBeNull();
     expect(toolbar.showExport).toBe(false);
   });
 

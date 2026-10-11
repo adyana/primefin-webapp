@@ -17,12 +17,7 @@
 
 <div class="container">
   <div class="mat-elevation-z8 table-container pf-board">
-    <mifosx-page-toolbar
-      searchPlaceholder="labels.text.SearchByMerchant"
-      [count]="merchantsCount"
-      countNoun="labels.menus.QRIS Merchants"
-      (searchChange)="applyFilter($event)"
-    />
+    <mifosx-page-toolbar searchPlaceholder="labels.text.SearchByMerchant" (searchChange)="applyFilter($event)" />
     <table mat-table [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="code">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Merchant Code' | translate }}</th>

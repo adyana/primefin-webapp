@@ -8,12 +8,7 @@
 
 <div class="container">
   <div class="mat-elevation-z8 table-container pf-board">
-    <mifosx-page-toolbar
-      searchPlaceholder="labels.text.SearchByFile"
-      [count]="filesCount"
-      countNoun="labels.menus.Channel Files"
-      (searchChange)="applyFilter($event)"
-    />
+    <mifosx-page-toolbar searchPlaceholder="labels.text.SearchByFile" (searchChange)="applyFilter($event)" />
     <table mat-table [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="partner">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Partner Code' | translate }}</th>

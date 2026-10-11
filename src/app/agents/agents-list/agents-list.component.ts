@@ -78,9 +78,6 @@ export class AgentsListComponent implements OnInit {
   /** Data source for agents table. */
   dataSource: MatTableDataSource<any>;
 
-  /** Live agents count for the toolbar badge. */
-  agentsCount: number | null = null;
-
   /** Paginator for agents table. */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   /** Sorter for agents table. */
@@ -94,7 +91,6 @@ export class AgentsListComponent implements OnInit {
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource(this.agentsData);
-    this.agentsCount = this.dataSource.data.length;
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }

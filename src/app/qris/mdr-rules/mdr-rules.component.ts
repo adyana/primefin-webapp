@@ -94,9 +94,6 @@ export class QrisMdrRulesComponent implements OnInit {
     'actions'
   ];
 
-  /** Live rules count for the toolbar badge. */
-  rulesCount: number | null = null;
-
   /** Paginator for rules table. */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
@@ -129,7 +126,6 @@ export class QrisMdrRulesComponent implements OnInit {
   ngOnInit(): void {
     this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { rules: any }) => {
       this.rulesDataSource.data = Array.isArray(data.rules) ? data.rules : [];
-      this.rulesCount = this.rulesDataSource.data.length;
       this.rulesDataSource.paginator = this.paginator;
     });
   }
@@ -168,7 +164,6 @@ export class QrisMdrRulesComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((rules: any) => {
         this.rulesDataSource.data = Array.isArray(rules) ? rules : [];
-        this.rulesCount = this.rulesDataSource.data.length;
         this.rulesDataSource.paginator = this.paginator;
         this.cdr.markForCheck();
       });

@@ -19,12 +19,7 @@
   </div>
 
   <div class="mat-elevation-z8 table-container pf-board">
-    <mifosx-page-toolbar
-      searchPlaceholder="labels.text.SearchByReference"
-      [count]="breachesCount"
-      countNoun="labels.menus.Payment Fraud SLA"
-      (searchChange)="filterBreaches($event)"
-    />
+    <mifosx-page-toolbar searchPlaceholder="labels.text.SearchByReference" (searchChange)="filterBreaches($event)" />
     <table mat-table [dataSource]="breachesDataSource">
       <ng-container matColumnDef="orderId">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Order' | translate }}</th>

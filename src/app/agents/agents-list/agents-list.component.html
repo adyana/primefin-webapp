@@ -17,12 +17,7 @@
 
 <div class="container">
   <div class="mat-elevation-z8 table-container pf-board">
-    <mifosx-page-toolbar
-      searchPlaceholder="labels.text.SearchByAgent"
-      [count]="agentsCount"
-      countNoun="labels.menus.Agents"
-      (searchChange)="applyFilter($event)"
-    />
+    <mifosx-page-toolbar searchPlaceholder="labels.text.SearchByAgent" (searchChange)="applyFilter($event)" />
     <table mat-table [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="code">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Agent Code' | translate }}</th>

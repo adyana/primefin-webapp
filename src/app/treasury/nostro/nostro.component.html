@@ -37,8 +37,6 @@
       <div class="mat-elevation-z8 table-container pf-board">
         <mifosx-page-toolbar
           searchPlaceholder="labels.text.SearchByReference"
-          [count]="statementsCount"
-          countNoun="labels.menus.Statements"
           (searchChange)="filterStatements($event)"
         />
         <table mat-table [dataSource]="statementsDataSource">
@@ -120,12 +118,7 @@
 
     <mat-card-content>
       <div class="mat-elevation-z8 table-container pf-board">
-        <mifosx-page-toolbar
-          searchPlaceholder="labels.text.SearchByReference"
-          [count]="breaksCount"
-          countNoun="labels.inputs.Breaks"
-          (searchChange)="filterBreaks($event)"
-        />
+        <mifosx-page-toolbar searchPlaceholder="labels.text.SearchByReference" (searchChange)="filterBreaks($event)" />
         <table mat-table [dataSource]="breaksDataSource">
           <ng-container matColumnDef="reason">
             <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Notes' | translate }}</th>

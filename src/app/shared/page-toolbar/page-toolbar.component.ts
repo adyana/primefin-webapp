@@ -16,16 +16,14 @@ import { MatIconButton } from '@angular/material/button';
 import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 
 /**
- * Standard board toolbar (PrimeFin page standard, Phase 1): search field
- * with clear affordance, live count badge and an optional export action.
- * Mirrors the loans board toolbar that defines the house style.
+ * Standard board toolbar (PrimeFin page standard): search field with
+ * clear affordance and an optional export action. Mirrors the loans
+ * board search field that defines the house style.
  *
  * Usage:
  * ```
  * <mifosx-page-toolbar
  *   searchPlaceholder="labels.text.SearchByLoan"
- *   [count]="totalRows"
- *   countNoun="labels.menus.Loans"
  *   [showExport]="true"
  *   [exportDisabled]="exporting"
  *   (searchChange)="onSearchInput($event)"
@@ -52,12 +50,6 @@ import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 export class PageToolbarComponent {
   /** i18n key for the search input placeholder. */
   @Input() searchPlaceholder = '';
-
-  /** Total rows behind the board; badge hidden when null. */
-  @Input() count: number | null = null;
-
-  /** i18n key for the count noun (lowercased at render, loans-style). */
-  @Input() countNoun = '';
 
   /** Show the export icon-button. */
   @Input() showExport = false;

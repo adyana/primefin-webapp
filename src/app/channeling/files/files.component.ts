@@ -81,9 +81,6 @@ export class ChannelFilesComponent implements OnInit {
   /** Data source for files table. */
   dataSource = new MatTableDataSource<any>([]);
 
-  /** Live files count for the toolbar badge. */
-  filesCount: number | null = null;
-
   /** Paginator for files table. */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   /** Sorter for files table. */
@@ -92,7 +89,6 @@ export class ChannelFilesComponent implements OnInit {
   constructor() {
     this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { files: any }) => {
       this.dataSource.data = data.files || [];
-      this.filesCount = this.dataSource.data.length;
     });
   }
 

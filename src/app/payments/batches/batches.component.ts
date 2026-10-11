@@ -73,16 +73,12 @@ export class PaymentBatchesComponent implements OnInit {
     'valueDate'
   ];
 
-  /** Live batches count for the toolbar badge. */
-  batchesCount: number | null = null;
-
   /** Paginator for batches table. */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   ngOnInit(): void {
     this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { batches: any }) => {
       this.batchesDataSource.data = Array.isArray(data.batches) ? data.batches : [];
-      this.batchesCount = this.batchesDataSource.data.length;
       this.batchesDataSource.paginator = this.paginator;
     });
   }

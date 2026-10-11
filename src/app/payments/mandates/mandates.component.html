@@ -43,12 +43,7 @@
 
 <div class="container">
   <div class="mat-elevation-z8 table-container pf-board">
-    <mifosx-page-toolbar
-      searchPlaceholder="labels.text.SearchByReference"
-      [count]="mandatesCount"
-      countNoun="labels.menus.Payment Mandates"
-      (searchChange)="filterMandates($event)"
-    />
+    <mifosx-page-toolbar searchPlaceholder="labels.text.SearchByReference" (searchChange)="filterMandates($event)" />
     <table mat-table [dataSource]="mandatesDataSource">
       <ng-container matColumnDef="reference">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Reference' | translate }}</th>

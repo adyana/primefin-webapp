@@ -60,12 +60,7 @@
       </form>
 
       <div class="mat-elevation-z8 table-container pf-board">
-        <mifosx-page-toolbar
-          searchPlaceholder="labels.text.SearchByPair"
-          [count]="ratesCount"
-          countNoun="labels.menus.Fx Rates"
-          (searchChange)="filterRates($event)"
-        />
+        <mifosx-page-toolbar searchPlaceholder="labels.text.SearchByPair" (searchChange)="filterRates($event)" />
         <table mat-table [dataSource]="ratesDataSource">
           <ng-container matColumnDef="pair">
             <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Pair' | translate }}</th>
@@ -110,8 +105,6 @@
       <div class="mat-elevation-z8 table-container pf-board">
         <mifosx-page-toolbar
           searchPlaceholder="labels.text.SearchByCurrency"
-          [count]="positionsCount"
-          countNoun="labels.menus.Revaluation"
           (searchChange)="filterPositions($event)"
         />
         <table mat-table [dataSource]="positionsDataSource">

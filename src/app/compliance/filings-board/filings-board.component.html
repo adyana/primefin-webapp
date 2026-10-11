@@ -42,12 +42,7 @@
   </mat-card>
 
   <div class="mat-elevation-z8 table-container pf-board m-b-20">
-    <mifosx-page-toolbar
-      searchPlaceholder="labels.text.SearchByReference"
-      [count]="filingsCount"
-      countNoun="labels.menus.Filing Log"
-      (searchChange)="filterFilings($event)"
-    />
+    <mifosx-page-toolbar searchPlaceholder="labels.text.SearchByReference" (searchChange)="filterFilings($event)" />
     <table mat-table [dataSource]="filingsDataSource">
       <ng-container matColumnDef="reportCode">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Report' | translate }}</th>

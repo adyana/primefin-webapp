@@ -95,8 +95,6 @@ export class ViewPaymentBatchComponent implements OnInit {
     'amount',
     'status'
   ];
-  /** Live members count for the toolbar badge. */
-  membersCount: number | null = null;
   /** Paginator for members table. */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   dkeContent: string | null = null;
@@ -133,7 +131,6 @@ export class ViewPaymentBatchComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((members: any) => {
         this.membersDataSource.data = Array.isArray(members) ? members : [];
-        this.membersCount = this.membersDataSource.data.length;
         this.membersDataSource.paginator = this.paginator;
         this.cdr.markForCheck();
       });

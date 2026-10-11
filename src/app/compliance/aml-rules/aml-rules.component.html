@@ -50,12 +50,7 @@
 
 <div class="container">
   <div class="mat-elevation-z8 table-container pf-board">
-    <mifosx-page-toolbar
-      searchPlaceholder="labels.text.SearchByName"
-      [count]="rulesCount"
-      countNoun="labels.menus.AML Rules"
-      (searchChange)="filterRules($event)"
-    />
+    <mifosx-page-toolbar searchPlaceholder="labels.text.SearchByName" (searchChange)="filterRules($event)" />
     <table mat-table [dataSource]="rulesDataSource">
       <ng-container matColumnDef="code">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Rule Code' | translate }}</th>

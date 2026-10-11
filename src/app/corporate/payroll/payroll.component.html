@@ -140,12 +140,7 @@
   </mat-card>
 
   <div class="mat-elevation-z8 table-container pf-board">
-    <mifosx-page-toolbar
-      searchPlaceholder="labels.text.SearchByReference"
-      [count]="salaryCount"
-      countNoun="labels.menus.Payroll"
-      (searchChange)="filterSalary($event)"
-    />
+    <mifosx-page-toolbar searchPlaceholder="labels.text.SearchByReference" (searchChange)="filterSalary($event)" />
     <table mat-table [dataSource]="batchesDataSource">
       <ng-container matColumnDef="reference">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Reference' | translate }}</th>

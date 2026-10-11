@@ -54,12 +54,7 @@
   </div>
 
   <div class="mat-elevation-z8 table-container pf-board">
-    <mifosx-page-toolbar
-      searchPlaceholder="labels.text.SearchByAgent"
-      [count]="summaryCount"
-      countNoun="labels.menus.Agent Dashboard"
-      (searchChange)="filterSummary($event)"
-    />
+    <mifosx-page-toolbar searchPlaceholder="labels.text.SearchByAgent" (searchChange)="filterSummary($event)" />
     <table mat-table [dataSource]="summaryDataSource">
       <ng-container matColumnDef="metric">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Metric' | translate }}</th>

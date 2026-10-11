@@ -59,12 +59,7 @@
   </mat-card>
 
   <div class="mat-elevation-z8 table-container pf-board">
-    <mifosx-page-toolbar
-      searchPlaceholder="labels.text.SearchByName"
-      [count]="corporatesCount"
-      countNoun="labels.menus.Corporate"
-      (searchChange)="filterCorporates($event)"
-    />
+    <mifosx-page-toolbar searchPlaceholder="labels.text.SearchByName" (searchChange)="filterCorporates($event)" />
     <table mat-table [dataSource]="corporatesDataSource">
       <ng-container matColumnDef="code">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Code' | translate }}</th>

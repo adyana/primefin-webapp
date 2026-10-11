@@ -93,9 +93,6 @@ export class ViewVaComponent implements AfterViewInit {
     'netAmount'
   ];
 
-  /** Live transactions count for the toolbar badge. */
-  transactionsCount: number | null = null;
-
   /** Paginator for transactions table. */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
@@ -144,7 +141,6 @@ export class ViewVaComponent implements AfterViewInit {
       .pipe(take(1))
       .subscribe((txns: any) => {
         this.transactionsDataSource.data = Array.isArray(txns) ? txns : [];
-        this.transactionsCount = this.transactionsDataSource.data.length;
         this.cdr.markForCheck();
       });
   }

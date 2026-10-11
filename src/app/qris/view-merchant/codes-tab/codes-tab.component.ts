@@ -72,9 +72,6 @@ export class QrisCodesTabComponent implements OnInit {
     'status'
   ];
 
-  /** Live codes count for the toolbar badge. */
-  codesCount: number | null = null;
-
   /** Paginator for codes table. */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
@@ -87,7 +84,6 @@ export class QrisCodesTabComponent implements OnInit {
       )
       .subscribe((codes: any[]) => {
         this.dataSource.data = Array.isArray(codes) ? codes : [];
-        this.codesCount = this.dataSource.data.length;
         this.dataSource.paginator = this.paginator;
         this.cdr.markForCheck();
       });

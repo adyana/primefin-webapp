@@ -82,9 +82,6 @@ export class ChannelPartnersComponent implements OnInit {
   /** Data source for partners table. */
   dataSource: MatTableDataSource<any>;
 
-  /** Live partners count for the toolbar badge. */
-  partnersCount: number | null = null;
-
   /** Paginator for partners table. */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   /** Sorter for partners table. */
@@ -98,7 +95,6 @@ export class ChannelPartnersComponent implements OnInit {
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource(this.partnersData);
-    this.partnersCount = this.dataSource.data.length;
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }

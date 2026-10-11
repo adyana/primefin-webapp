@@ -103,9 +103,6 @@ export class AmlCasesComponent implements OnInit {
     'actions'
   ];
 
-  /** Live cases count for the toolbar badge. */
-  casesCount: number | null = null;
-
   /** Paginator for cases table. */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
@@ -128,7 +125,6 @@ export class AmlCasesComponent implements OnInit {
   ngOnInit(): void {
     this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { cases: any }) => {
       this.casesDataSource.data = Array.isArray(data.cases) ? data.cases : [];
-      this.casesCount = this.casesDataSource.data.length;
       this.casesDataSource.paginator = this.paginator;
     });
     this.filterForm.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.reload());
@@ -187,7 +183,6 @@ export class AmlCasesComponent implements OnInit {
       )
       .subscribe((cases: any) => {
         this.casesDataSource.data = Array.isArray(cases) ? cases : [];
-        this.casesCount = this.casesDataSource.data.length;
         this.cdr.markForCheck();
       });
   }

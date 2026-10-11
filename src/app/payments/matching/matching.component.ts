@@ -115,11 +115,6 @@ export class PaymentMatchingComponent implements OnInit {
     'detail'
   ];
 
-  /** Live rules count for the toolbar badge. */
-  rulesCount: number | null = null;
-  /** Live runs count for the toolbar badge. */
-  runsCount: number | null = null;
-
   /** Paginators for the rules and runs tables. */
   @ViewChild('rulesPaginator', { static: true }) rulesPaginator: MatPaginator;
   @ViewChild('runsPaginator', { static: true }) runsPaginator: MatPaginator;
@@ -155,7 +150,6 @@ export class PaymentMatchingComponent implements OnInit {
   ngOnInit(): void {
     this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { rules: any }) => {
       this.rulesDataSource.data = Array.isArray(data.rules) ? data.rules : [];
-      this.rulesCount = this.rulesDataSource.data.length;
       this.rulesDataSource.paginator = this.rulesPaginator;
     });
     this.reloadRuns();
@@ -244,7 +238,6 @@ export class PaymentMatchingComponent implements OnInit {
       )
       .subscribe((rules: any) => {
         this.rulesDataSource.data = Array.isArray(rules) ? rules : [];
-        this.rulesCount = this.rulesDataSource.data.length;
         this.rulesDataSource.paginator = this.rulesPaginator;
         this.cdr.markForCheck();
       });
@@ -259,7 +252,6 @@ export class PaymentMatchingComponent implements OnInit {
       )
       .subscribe((runs: any) => {
         this.runsDataSource.data = Array.isArray(runs) ? runs : [];
-        this.runsCount = this.runsDataSource.data.length;
         this.runsDataSource.paginator = this.runsPaginator;
         this.cdr.markForCheck();
       });

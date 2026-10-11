@@ -124,10 +124,6 @@ export class SlikBoardComponent implements OnInit {
   /** Latest tie-out result for the selected period. */
   tieOut: any = null;
 
-  /** Live table counts for the toolbar badges. */
-  snapshotsCount: number | null = null;
-  rowsCount: number | null = null;
-
   /** Paginator for the snapshots table. */
   @ViewChild('snapshotsPaginator', { static: true }) snapshotsPaginator: MatPaginator;
   /** Paginator for the period rows table (hundreds of loans per period). */
@@ -136,7 +132,6 @@ export class SlikBoardComponent implements OnInit {
   ngOnInit(): void {
     this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { snapshots: any }) => {
       this.snapshotsDataSource.data = Array.isArray(data.snapshots) ? data.snapshots : [];
-      this.snapshotsCount = this.snapshotsDataSource.data.length;
       this.snapshotsDataSource.paginator = this.snapshotsPaginator;
     });
   }
@@ -176,7 +171,6 @@ export class SlikBoardComponent implements OnInit {
       )
       .subscribe((rows: any) => {
         this.rowsDataSource.data = Array.isArray(rows) ? rows : [];
-        this.rowsCount = this.rowsDataSource.data.length;
         if (this.rowsPaginator) {
           this.rowsDataSource.paginator = this.rowsPaginator;
         }
@@ -223,7 +217,6 @@ export class SlikBoardComponent implements OnInit {
       )
       .subscribe((snapshots: any) => {
         this.snapshotsDataSource.data = Array.isArray(snapshots) ? snapshots : [];
-        this.snapshotsCount = this.snapshotsDataSource.data.length;
         this.cdr.markForCheck();
       });
   }

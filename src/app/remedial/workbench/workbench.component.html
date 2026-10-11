@@ -51,12 +51,7 @@
   </mat-card>
 
   <div class="mat-elevation-z8 table-container pf-board">
-    <mifosx-page-toolbar
-      searchPlaceholder="labels.text.SearchByCase"
-      [count]="casesCount"
-      countNoun="labels.menus.Collections"
-      (searchChange)="filterCases($event)"
-    />
+    <mifosx-page-toolbar searchPlaceholder="labels.text.SearchByCase" (searchChange)="filterCases($event)" />
     <table mat-table [dataSource]="casesDataSource">
       <ng-container matColumnDef="loanId">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Loan ID' | translate }}</th>

@@ -125,12 +125,6 @@ export class DenyListBoardComponent implements OnInit {
     'actions'
   ];
 
-  /** Live table counts for the toolbar badges. */
-  listsCount: number | null = null;
-  entriesCount: number | null = null;
-  hitsCount: number | null = null;
-  allowCount: number | null = null;
-
   /** Paginators for the four board tables. */
   @ViewChild('listsPaginator', { static: true }) listsPaginator: MatPaginator;
   @ViewChild('entriesPaginator') entriesPaginator: MatPaginator;
@@ -188,7 +182,6 @@ export class DenyListBoardComponent implements OnInit {
   ngOnInit(): void {
     this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { lists: any }) => {
       this.listsDataSource.data = Array.isArray(data.lists) ? data.lists : [];
-      this.listsCount = this.listsDataSource.data.length;
       this.listsDataSource.paginator = this.listsPaginator;
     });
     this.reloadHits();
@@ -310,7 +303,6 @@ export class DenyListBoardComponent implements OnInit {
       )
       .subscribe((entries: any) => {
         this.entriesDataSource.data = Array.isArray(entries) ? entries : [];
-        this.entriesCount = this.entriesDataSource.data.length;
         if (this.entriesPaginator) {
           this.entriesDataSource.paginator = this.entriesPaginator;
         }
@@ -327,7 +319,6 @@ export class DenyListBoardComponent implements OnInit {
       )
       .subscribe((hits: any) => {
         this.hitsDataSource.data = Array.isArray(hits) ? hits : [];
-        this.hitsCount = this.hitsDataSource.data.length;
         this.hitsDataSource.paginator = this.hitsPaginator;
         this.cdr.markForCheck();
       });
@@ -342,7 +333,6 @@ export class DenyListBoardComponent implements OnInit {
       )
       .subscribe((allow: any) => {
         this.allowDataSource.data = Array.isArray(allow) ? allow : [];
-        this.allowCount = this.allowDataSource.data.length;
         this.allowDataSource.paginator = this.allowPaginator;
         this.cdr.markForCheck();
       });

@@ -97,9 +97,6 @@ export class AgentsDashboardComponent implements OnInit {
     'value'
   ];
 
-  /** Live summary count for the toolbar badge. */
-  summaryCount: number | null = null;
-
   /** Paginator for summary table. */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
@@ -248,7 +245,6 @@ export class AgentsDashboardComponent implements OnInit {
       )
     ];
     this.summaryDataSource.data = summary;
-    this.summaryCount = this.summaryDataSource.data.length;
     this.cdr.markForCheck();
   }
 

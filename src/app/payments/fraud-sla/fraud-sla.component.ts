@@ -83,16 +83,12 @@ export class PaymentFraudSlaComponent implements OnInit {
   ];
   sweepResult: boolean | null = null;
 
-  /** Live breaches count for the toolbar badge. */
-  breachesCount: number | null = null;
-
   /** Paginator for breaches table. */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   ngOnInit(): void {
     this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { breaches: any }) => {
       this.breachesDataSource.data = Array.isArray(data.breaches) ? data.breaches : [];
-      this.breachesCount = this.breachesDataSource.data.length;
       this.breachesDataSource.paginator = this.paginator;
     });
   }
@@ -121,7 +117,6 @@ export class PaymentFraudSlaComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((breaches: any) => {
         this.breachesDataSource.data = Array.isArray(breaches) ? breaches : [];
-        this.breachesCount = this.breachesDataSource.data.length;
         this.breachesDataSource.paginator = this.paginator;
         this.cdr.markForCheck();
       });

@@ -136,9 +136,6 @@ export class TreasuryPlacementsComponent implements OnInit {
   /** Paginator for the placements table. */
   @ViewChild(MatPaginator) placementsPaginator: MatPaginator;
 
-  /** Live placement count for the toolbar badge. */
-  placementCount: number | null = null;
-
   ngOnInit(): void {
     this.filtersForm.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.reload());
     this.reload();
@@ -181,7 +178,6 @@ export class TreasuryPlacementsComponent implements OnInit {
       )
       .subscribe((placements: any) => {
         this.placementsDataSource.data = Array.isArray(placements) ? placements : [];
-        this.placementCount = this.placementsDataSource.data.length;
         if (this.placementsPaginator) {
           this.placementsDataSource.paginator = this.placementsPaginator;
         }

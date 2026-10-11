@@ -21,12 +21,7 @@
   </mat-card>
 
   <div class="mat-elevation-z8 table-container pf-board m-b-20">
-    <mifosx-page-toolbar
-      searchPlaceholder="labels.text.SearchByApplication"
-      [count]="queueCount"
-      countNoun="labels.menus.Approvals"
-      (searchChange)="filterQueue($event)"
-    />
+    <mifosx-page-toolbar searchPlaceholder="labels.text.SearchByApplication" (searchChange)="filterQueue($event)" />
     <table mat-table [dataSource]="queueDataSource">
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.ID' | translate }}</th>

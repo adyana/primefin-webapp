@@ -8,12 +8,7 @@
 
 <div class="container m-t-20">
   <div class="mat-elevation-z8 table-container pf-board">
-    <mifosx-page-toolbar
-      searchPlaceholder="labels.text.SearchByReference"
-      [count]="codesCount"
-      countNoun="labels.menus.QRIS"
-      (searchChange)="filterCodes($event)"
-    />
+    <mifosx-page-toolbar searchPlaceholder="labels.text.SearchByReference" (searchChange)="filterCodes($event)" />
     <table mat-table [dataSource]="dataSource">
       <ng-container matColumnDef="payload">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Payload' | translate }}</th>

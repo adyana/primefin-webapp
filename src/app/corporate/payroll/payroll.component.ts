@@ -155,9 +155,6 @@ export class CorporatePayrollComponent implements OnInit {
   @ViewChild('rosterPaginator') rosterPaginator: MatPaginator;
   @ViewChild('payrollPaginator') payrollPaginator: MatPaginator;
 
-  /** Live salary-batch count for the toolbar badge. */
-  salaryCount: number | null = null;
-
   ngOnInit(): void {
     this.corporateService
       .getCorporates('ACTIVE')
@@ -253,7 +250,6 @@ export class CorporatePayrollComponent implements OnInit {
         this.batchesDataSource.data = rows.filter(
           (row: any) => row.kind === 'SALARY' && row.corporateId === corporateId
         );
-        this.salaryCount = this.batchesDataSource.data.length;
         if (this.payrollPaginator) {
           this.batchesDataSource.paginator = this.payrollPaginator;
         }

@@ -94,9 +94,6 @@ export class VasListComponent implements OnInit {
   /** Data source for VAs table. */
   dataSource: MatTableDataSource<any>;
 
-  /** Live VAs count for the toolbar badge. */
-  vasCount: number | null = null;
-
   /** Paginator for VAs table. */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   /** Sorter for VAs table. */
@@ -110,7 +107,6 @@ export class VasListComponent implements OnInit {
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource(this.vasData);
-    this.vasCount = this.dataSource.data.length;
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
@@ -136,7 +132,6 @@ export class VasListComponent implements OnInit {
           .pipe(take(1))
           .subscribe((vas: any) => {
             this.dataSource.data = Array.isArray(vas) ? vas : [];
-            this.vasCount = this.dataSource.data.length;
             this.cdr.markForCheck();
           });
       });

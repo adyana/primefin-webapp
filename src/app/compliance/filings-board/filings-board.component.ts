@@ -113,16 +113,12 @@ export class FilingsBoardComponent implements OnInit {
     ]
   });
 
-  /** Live filings count for the toolbar badge. */
-  filingsCount: number | null = null;
-
   /** Paginator for filings table. */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   ngOnInit(): void {
     this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { filings: any }) => {
       this.filingsDataSource.data = Array.isArray(data.filings) ? data.filings : [];
-      this.filingsCount = this.filingsDataSource.data.length;
       this.filingsDataSource.paginator = this.paginator;
     });
   }
@@ -178,7 +174,6 @@ export class FilingsBoardComponent implements OnInit {
       .pipe(take(1))
       .subscribe((filings: any) => {
         this.filingsDataSource.data = Array.isArray(filings) ? filings : [];
-        this.filingsCount = this.filingsDataSource.data.length;
         this.cdr.markForCheck();
       });
   }

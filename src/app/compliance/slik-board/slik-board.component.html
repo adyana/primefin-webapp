@@ -33,12 +33,7 @@
   </mat-card>
 
   <div class="mat-elevation-z8 table-container pf-board m-b-20">
-    <mifosx-page-toolbar
-      searchPlaceholder="labels.text.SearchByReference"
-      [count]="snapshotsCount"
-      countNoun="labels.menus.SLIK Snapshots"
-      (searchChange)="filterSnapshots($event)"
-    />
+    <mifosx-page-toolbar searchPlaceholder="labels.text.SearchByReference" (searchChange)="filterSnapshots($event)" />
     <table mat-table [dataSource]="snapshotsDataSource">
       <ng-container matColumnDef="period">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Period' | translate }}</th>
@@ -88,12 +83,7 @@
 
       <mat-card-content>
         <div class="mat-elevation-z8 table-container pf-board">
-          <mifosx-page-toolbar
-            searchPlaceholder="labels.text.SearchByReference"
-            [count]="rowsCount"
-            countNoun="labels.menus.SLIK Snapshots"
-            (searchChange)="filterRows($event)"
-          />
+          <mifosx-page-toolbar searchPlaceholder="labels.text.SearchByReference" (searchChange)="filterRows($event)" />
           <table mat-table [dataSource]="rowsDataSource">
             <ng-container matColumnDef="source">
               <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Source' | translate }}</th>

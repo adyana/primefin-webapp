@@ -97,9 +97,6 @@ export class QrisDashboardComponent implements OnInit {
     'value'
   ];
 
-  /** Live summary-row count for the toolbar badge. */
-  summaryCount: number | null = null;
-
   /** Paginator for summary table. */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
@@ -242,7 +239,6 @@ export class QrisDashboardComponent implements OnInit {
       { labelKey: 'labels.text.MDR Collected', detail: null, value: sum(salesCur, 'mdrAmount'), money: true }
     ];
     this.summaryDataSource.data = summary;
-    this.summaryCount = this.summaryDataSource.data.length;
     this.summaryDataSource.paginator = this.paginator;
     this.cdr.markForCheck();
   }

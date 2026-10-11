@@ -97,9 +97,6 @@ export class QrisTransactionsTabComponent implements OnInit {
     'status'
   ];
 
-  /** Live transactions count for the toolbar badge. */
-  transactionsCount: number | null = null;
-
   /** Paginator for transactions table. */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
@@ -126,7 +123,6 @@ export class QrisTransactionsTabComponent implements OnInit {
       )
       .subscribe((txns: any[]) => {
         this.dataSource.data = Array.isArray(txns) ? txns : [];
-        this.transactionsCount = this.dataSource.data.length;
         this.dataSource.paginator = this.paginator;
         this.cdr.markForCheck();
       });

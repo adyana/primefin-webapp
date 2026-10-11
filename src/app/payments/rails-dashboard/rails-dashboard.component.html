@@ -67,12 +67,7 @@
   </div>
 
   <div class="mat-elevation-z8 table-container pf-board">
-    <mifosx-page-toolbar
-      searchPlaceholder="labels.text.SearchByReference"
-      [count]="railsCount"
-      countNoun="labels.menus.Payment Rails"
-      (searchChange)="filterRails($event)"
-    />
+    <mifosx-page-toolbar searchPlaceholder="labels.text.SearchByReference" (searchChange)="filterRails($event)" />
     <table mat-table [dataSource]="railsDataSource">
       <ng-container matColumnDef="code">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Rail' | translate }}</th>

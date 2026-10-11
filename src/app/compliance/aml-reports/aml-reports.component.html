@@ -51,12 +51,7 @@
   </mat-card>
 
   <div class="mat-elevation-z8 table-container pf-board">
-    <mifosx-page-toolbar
-      searchPlaceholder="labels.text.SearchByReference"
-      [count]="reportsCount"
-      countNoun="labels.menus.AML Reports"
-      (searchChange)="filterReports($event)"
-    />
+    <mifosx-page-toolbar searchPlaceholder="labels.text.SearchByReference" (searchChange)="filterReports($event)" />
     <table mat-table [dataSource]="reportsDataSource">
       <ng-container matColumnDef="reportType">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Report Type' | translate }}</th>

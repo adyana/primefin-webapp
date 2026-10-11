@@ -110,9 +110,6 @@ export class CollectionsWorkbenchComponent implements OnInit {
   /** Last sweep counts (null = no sweep run yet this session). */
   sweepResult: any = null;
 
-  /** Live queue count for the toolbar badge. */
-  casesCount: number | null = null;
-
   /** Paginator for the queue table. */
   @ViewChild(MatPaginator) queuePaginator: MatPaginator;
 
@@ -157,7 +154,6 @@ export class CollectionsWorkbenchComponent implements OnInit {
         const stage = this.filtersForm.value.stage ?? 'ALL';
         const rows = Array.isArray(cases) ? cases : [];
         this.casesDataSource.data = stage === 'ALL' ? rows : rows.filter((row: any) => row.stage === stage);
-        this.casesCount = this.casesDataSource.data.length;
         this.attachPaginator();
         this.cdr.markForCheck();
       });

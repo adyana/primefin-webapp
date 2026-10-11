@@ -8,12 +8,7 @@
 
 <div class="container">
   <div class="mat-elevation-z8 table-container pf-board">
-    <mifosx-page-toolbar
-      searchPlaceholder="labels.text.SearchByReference"
-      [count]="batchesCount"
-      countNoun="labels.menus.Payment Batches"
-      (searchChange)="filterBatches($event)"
-    />
+    <mifosx-page-toolbar searchPlaceholder="labels.text.SearchByReference" (searchChange)="filterBatches($event)" />
     <table mat-table [dataSource]="batchesDataSource">
       <ng-container matColumnDef="reference">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Reference' | translate }}</th>

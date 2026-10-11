@@ -82,9 +82,6 @@ export class ApprovalsBoardComponent implements OnInit {
 
   queueDataSource = new MatTableDataSource<any>([]);
 
-  /** Live approval-queue count for the toolbar badge. */
-  queueCount: number | null = null;
-
   filterQueue(text: string): void {
     this.queueDataSource.filter = (text || '').trim().toLowerCase();
   }
@@ -109,7 +106,6 @@ export class ApprovalsBoardComponent implements OnInit {
   ngOnInit(): void {
     this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { queue: any }) => {
       this.queueDataSource.data = Array.isArray(data.queue?.pageItems) ? data.queue.pageItems : [];
-      this.queueCount = this.queueDataSource.data.length;
     });
   }
 

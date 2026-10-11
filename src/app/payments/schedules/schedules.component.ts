@@ -114,11 +114,6 @@ export class PaymentSchedulesComponent implements OnInit {
     'detail'
   ];
 
-  /** Live schedules count for the toolbar badge. */
-  schedulesCount: number | null = null;
-  /** Live runs count for the toolbar badge. */
-  runsCount: number | null = null;
-
   /** Paginator for schedules table (always rendered). */
   @ViewChild('schedulesPaginator', { static: true }) schedulesPaginator: MatPaginator;
   /** Paginator for runs table (rendered once a schedule is selected). */
@@ -145,7 +140,6 @@ export class PaymentSchedulesComponent implements OnInit {
   ngOnInit(): void {
     this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { schedules: any }) => {
       this.schedulesDataSource.data = Array.isArray(data.schedules) ? data.schedules : [];
-      this.schedulesCount = this.schedulesDataSource.data.length;
       this.schedulesDataSource.paginator = this.schedulesPaginator;
     });
   }
@@ -194,7 +188,6 @@ export class PaymentSchedulesComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((runs: any) => {
         this.runsDataSource.data = Array.isArray(runs) ? runs : [];
-        this.runsCount = this.runsDataSource.data.length;
         if (this.runsPaginator) {
           this.runsDataSource.paginator = this.runsPaginator;
         }
@@ -222,7 +215,6 @@ export class PaymentSchedulesComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((schedules: any) => {
         this.schedulesDataSource.data = Array.isArray(schedules) ? schedules : [];
-        this.schedulesCount = this.schedulesDataSource.data.length;
         this.schedulesDataSource.paginator = this.schedulesPaginator;
         this.cdr.markForCheck();
       });

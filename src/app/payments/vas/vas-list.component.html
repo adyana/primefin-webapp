@@ -20,12 +20,7 @@
 
 <div class="container">
   <div class="mat-elevation-z8 table-container pf-board">
-    <mifosx-page-toolbar
-      searchPlaceholder="labels.text.SearchByName"
-      [count]="vasCount"
-      countNoun="labels.menus.Virtual Accounts"
-      (searchChange)="applyFilter($event)"
-    />
+    <mifosx-page-toolbar searchPlaceholder="labels.text.SearchByName" (searchChange)="applyFilter($event)" />
     <table mat-table [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="vaNumber">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.VA Number' | translate }}</th>

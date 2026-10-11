@@ -19,12 +19,7 @@
   </div>
 
   <div class="mat-elevation-z8 table-container pf-board">
-    <mifosx-page-toolbar
-      searchPlaceholder="labels.text.SearchByReference"
-      [count]="membersCount"
-      countNoun="labels.menus.Payments"
-      (searchChange)="filterMembers($event)"
-    />
+    <mifosx-page-toolbar searchPlaceholder="labels.text.SearchByReference" (searchChange)="filterMembers($event)" />
     <table mat-table [dataSource]="membersDataSource">
       <ng-container matColumnDef="key">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Key' | translate }}</th>

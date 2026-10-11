@@ -109,9 +109,6 @@ export class RailsDashboardComponent implements OnInit {
   oldestQueuedHours: number | null = null;
   openBreaks = 0;
 
-  /** Live rails count for the toolbar badge. */
-  railsCount: number | null = null;
-
   /** Paginator for rails table. */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
@@ -140,7 +137,6 @@ export class RailsDashboardComponent implements OnInit {
         count: perRail[rail.code]?.count ?? 0,
         totalValue: perRail[rail.code]?.totalValue ?? 0
       }));
-      this.railsCount = this.railsDataSource.data.length;
       this.railsDataSource.paginator = this.paginator;
       this.queueDepth = throughput.rtgsQueueDepth ?? null;
       this.oldestQueuedHours = throughput.oldestQueuedHours ?? null;

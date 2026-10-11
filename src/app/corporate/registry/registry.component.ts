@@ -120,9 +120,6 @@ export class CorporateRegistryComponent implements OnInit {
   /** Paginator for the registry table. */
   @ViewChild(MatPaginator) registryPaginator: MatPaginator;
 
-  /** Live registry count for the toolbar badge. */
-  corporatesCount: number | null = null;
-
   ngOnInit(): void {
     this.filtersForm.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.reload());
     this.reload();
@@ -179,7 +176,6 @@ export class CorporateRegistryComponent implements OnInit {
       )
       .subscribe((corporates: any) => {
         this.corporatesDataSource.data = Array.isArray(corporates) ? corporates : [];
-        this.corporatesCount = this.corporatesDataSource.data.length;
         if (this.registryPaginator) {
           this.corporatesDataSource.paginator = this.registryPaginator;
         }

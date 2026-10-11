@@ -84,8 +84,6 @@ export class AttributionBoardComponent implements OnInit {
 
   attributionsDataSource = new MatTableDataSource<any>([]);
 
-  /** Live attributions count for the toolbar badge. */
-  attributionsCount: number | null = null;
   attributionColumns: string[] = [
     'entityType',
     'entityId',
@@ -174,7 +172,6 @@ export class AttributionBoardComponent implements OnInit {
       .pipe(take(1))
       .subscribe((rows: any) => {
         this.attributionsDataSource.data = Array.isArray(rows) ? rows : [];
-        this.attributionsCount = this.attributionsDataSource.data.length;
         this.cdr.markForCheck();
       });
     this.channelingService

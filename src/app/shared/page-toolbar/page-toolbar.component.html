@@ -29,13 +29,6 @@
     }
   </mat-form-field>
 
-  @if (count !== null) {
-    <span class="count-badge">
-      <strong>{{ count | number }}</strong>
-      {{ countNoun | translate | lowercase }}
-    </span>
-  }
-
   <div class="toolbar-spacer"></div>
 
   @if (showExport) {

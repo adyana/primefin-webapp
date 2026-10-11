@@ -130,8 +130,6 @@
         <div class="mat-elevation-z8 table-container pf-board">
           <mifosx-page-toolbar
             searchPlaceholder="labels.text.SearchByClientId"
-            [count]="exposuresCount"
-            countNoun="labels.inputs.Exposure"
             (searchChange)="filterExposures($event)"
           />
           <table mat-table [dataSource]="exposureDataSource">

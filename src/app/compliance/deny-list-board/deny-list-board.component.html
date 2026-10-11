@@ -8,12 +8,7 @@
 
 <div class="container">
   <div class="mat-elevation-z8 table-container pf-board m-b-20">
-    <mifosx-page-toolbar
-      searchPlaceholder="labels.text.SearchByName"
-      [count]="listsCount"
-      countNoun="labels.menus.Deny List"
-      (searchChange)="filterLists($event)"
-    />
+    <mifosx-page-toolbar searchPlaceholder="labels.text.SearchByName" (searchChange)="filterLists($event)" />
     <table mat-table [dataSource]="listsDataSource">
       <ng-container matColumnDef="code">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.List Code' | translate }}</th>
@@ -78,12 +73,7 @@
         </form>
 
         <div class="mat-elevation-z8 table-container pf-board m-b-20">
-          <mifosx-page-toolbar
-            searchPlaceholder="labels.text.SearchByName"
-            [count]="entriesCount"
-            countNoun="labels.menus.Deny List"
-            (searchChange)="filterEntries($event)"
-          />
+          <mifosx-page-toolbar searchPlaceholder="labels.text.SearchByName" (searchChange)="filterEntries($event)" />
           <table mat-table [dataSource]="entriesDataSource">
             <ng-container matColumnDef="subjectType">
               <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Subject Type' | translate }}</th>
@@ -143,12 +133,7 @@
 
     <mat-card-content>
       <div class="mat-elevation-z8 table-container pf-board">
-        <mifosx-page-toolbar
-          searchPlaceholder="labels.text.SearchByName"
-          [count]="hitsCount"
-          countNoun="labels.menus.Deny List"
-          (searchChange)="filterHits($event)"
-        />
+        <mifosx-page-toolbar searchPlaceholder="labels.text.SearchByName" (searchChange)="filterHits($event)" />
         <table mat-table [dataSource]="hitsDataSource">
           <ng-container matColumnDef="context">
             <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Context' | translate }}</th>
@@ -226,12 +211,7 @@
       </form>
 
       <div class="mat-elevation-z8 table-container pf-board">
-        <mifosx-page-toolbar
-          searchPlaceholder="labels.text.SearchByName"
-          [count]="allowCount"
-          countNoun="labels.menus.Deny List"
-          (searchChange)="filterAllow($event)"
-        />
+        <mifosx-page-toolbar searchPlaceholder="labels.text.SearchByName" (searchChange)="filterAllow($event)" />
         <table mat-table [dataSource]="allowDataSource">
           <ng-container matColumnDef="subjectType">
             <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Subject Type' | translate }}</th>

@@ -97,16 +97,12 @@ export class PaymentBreaksComponent implements OnInit {
     'actions'
   ];
 
-  /** Live breaks count for the toolbar badge. */
-  breaksCount: number | null = null;
-
   /** Paginator for breaks table. */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   ngOnInit(): void {
     this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { breaks: any }) => {
       this.breaksDataSource.data = Array.isArray(data.breaks) ? data.breaks : [];
-      this.breaksCount = this.breaksDataSource.data.length;
       this.breaksDataSource.paginator = this.paginator;
     });
     this.filterForm.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.reload());
@@ -140,7 +136,6 @@ export class PaymentBreaksComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((breaks: any) => {
         this.breaksDataSource.data = Array.isArray(breaks) ? breaks : [];
-        this.breaksCount = this.breaksDataSource.data.length;
         this.breaksDataSource.paginator = this.paginator;
         this.cdr.markForCheck();
       });

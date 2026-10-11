@@ -90,8 +90,6 @@ export class PipelineBoardComponent implements OnInit {
 
   applicationsDataSource = new MatTableDataSource<any>([]);
 
-  /** Live applications count for the toolbar badge. */
-  applicationsCount: number | null = null;
   applicationColumns: string[] = [
     'id',
     'clientId',
@@ -130,7 +128,6 @@ export class PipelineBoardComponent implements OnInit {
   ngOnInit(): void {
     this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { applications: any }) => {
       this.applicationsDataSource.data = Array.isArray(data.applications?.pageItems) ? data.applications.pageItems : [];
-      this.applicationsCount = this.applicationsDataSource.data.length;
     });
   }
 
@@ -196,7 +193,6 @@ export class PipelineBoardComponent implements OnInit {
       .pipe(take(1))
       .subscribe((page: any) => {
         this.applicationsDataSource.data = Array.isArray(page?.pageItems) ? page.pageItems : [];
-        this.applicationsCount = this.applicationsDataSource.data.length;
         this.cdr.markForCheck();
       });
   }

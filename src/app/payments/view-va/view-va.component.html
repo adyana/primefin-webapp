@@ -52,8 +52,6 @@
     <div class="mat-elevation-z8 table-container pf-board m-t-20">
       <mifosx-page-toolbar
         searchPlaceholder="labels.text.SearchByReference"
-        [count]="transactionsCount"
-        countNoun="labels.menus.Virtual Accounts"
         (searchChange)="filterTransactions($event)"
       />
       <table mat-table [dataSource]="transactionsDataSource">

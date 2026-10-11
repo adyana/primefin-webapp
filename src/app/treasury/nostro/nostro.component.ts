@@ -117,10 +117,6 @@ export class TreasuryNostroComponent implements OnInit {
   /** Last import/sweep counts (null = no run yet this session). */
   lastRun: any = null;
 
-  /** Live table counts for the toolbar badges. */
-  statementsCount: number | null = null;
-  breaksCount: number | null = null;
-
   /** Paginators for the statements, lines and breaks tables. */
   @ViewChild('statementsPaginator') statementsPaginator: MatPaginator;
   @ViewChild('linesPaginator') linesPaginator: MatPaginator;
@@ -180,7 +176,6 @@ export class TreasuryNostroComponent implements OnInit {
       )
       .subscribe((statements: any) => {
         this.statementsDataSource.data = Array.isArray(statements) ? statements : [];
-        this.statementsCount = this.statementsDataSource.data.length;
         if (this.statementsPaginator) {
           this.statementsDataSource.paginator = this.statementsPaginator;
         }
@@ -194,7 +189,6 @@ export class TreasuryNostroComponent implements OnInit {
       )
       .subscribe((breaks: any) => {
         this.breaksDataSource.data = Array.isArray(breaks) ? breaks : [];
-        this.breaksCount = this.breaksDataSource.data.length;
         if (this.breaksPaginator) {
           this.breaksDataSource.paginator = this.breaksPaginator;
         }

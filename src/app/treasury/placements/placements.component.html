@@ -58,12 +58,7 @@
   </mat-card>
 
   <div class="mat-elevation-z8 table-container pf-board">
-    <mifosx-page-toolbar
-      searchPlaceholder="labels.text.SearchByCounterparty"
-      [count]="placementCount"
-      countNoun="labels.menus.Placements"
-      (searchChange)="applySearch($event)"
-    />
+    <mifosx-page-toolbar searchPlaceholder="labels.text.SearchByCounterparty" (searchChange)="applySearch($event)" />
     <table mat-table [dataSource]="placementsDataSource">
       <ng-container matColumnDef="counterparty">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Counterparty' | translate }}</th>

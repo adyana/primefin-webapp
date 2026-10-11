@@ -102,8 +102,6 @@ export class PaymentCollectionsComponent implements OnInit {
 
   /** Row selected for review (null = no review form). */
   selectedRequest: any = null;
-  /** Live collections count for the toolbar badge. */
-  collectionsCount: number | null = null;
   /** Paginator for collections table. */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   reviewForm: FormGroup = this.formBuilder.group({
@@ -116,7 +114,6 @@ export class PaymentCollectionsComponent implements OnInit {
   ngOnInit(): void {
     this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { collections: any }) => {
       this.collectionsDataSource.data = Array.isArray(data.collections) ? data.collections : [];
-      this.collectionsCount = this.collectionsDataSource.data.length;
       this.collectionsDataSource.paginator = this.paginator;
     });
   }
@@ -160,7 +157,6 @@ export class PaymentCollectionsComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((collections: any) => {
         this.collectionsDataSource.data = Array.isArray(collections) ? collections : [];
-        this.collectionsCount = this.collectionsDataSource.data.length;
         this.collectionsDataSource.paginator = this.paginator;
         this.cdr.markForCheck();
       });

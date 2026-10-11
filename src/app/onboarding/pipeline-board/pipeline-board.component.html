@@ -45,8 +45,6 @@
   <div class="mat-elevation-z8 table-container pf-board m-b-20">
     <mifosx-page-toolbar
       searchPlaceholder="labels.text.SearchByApplication"
-      [count]="applicationsCount"
-      countNoun="labels.menus.Onboarding"
       (searchChange)="filterApplications($event)"
     />
     <table mat-table [dataSource]="applicationsDataSource">

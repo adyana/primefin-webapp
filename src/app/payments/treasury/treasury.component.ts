@@ -94,9 +94,6 @@ export class TreasuryComponent implements OnInit {
 
   rowsDataSource = new MatTableDataSource<any>([]);
 
-  /** Live rails count for the toolbar badge. */
-  railsCount: number | null = null;
-
   /** Paginator for rails table. */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   rowColumns: string[] = [
@@ -184,7 +181,6 @@ export class TreasuryComponent implements OnInit {
       };
     });
     this.rowsDataSource.data = rows;
-    this.railsCount = rows.length;
     const breached = rows.filter((r: any) => r.breached).length;
     const totalRequired = projections.reduce((s: number, p: any) => s + Number(p.required ?? 0), 0);
     this.kpis = [

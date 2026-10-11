@@ -63,12 +63,7 @@
 
 <div class="container">
   <div class="mat-elevation-z8 table-container pf-board">
-    <mifosx-page-toolbar
-      searchPlaceholder="labels.text.SearchByReference"
-      [count]="schedulesCount"
-      countNoun="labels.menus.Payment Schedules"
-      (searchChange)="filterSchedules($event)"
-    />
+    <mifosx-page-toolbar searchPlaceholder="labels.text.SearchByReference" (searchChange)="filterSchedules($event)" />
     <table mat-table [dataSource]="schedulesDataSource">
       <ng-container matColumnDef="code">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Schedule Code' | translate }}</th>
@@ -139,12 +134,7 @@
 
       <mat-card-content>
         <div class="mat-elevation-z8 table-container pf-board">
-          <mifosx-page-toolbar
-            searchPlaceholder="labels.text.SearchByReference"
-            [count]="runsCount"
-            countNoun="labels.menus.Payment Schedules"
-            (searchChange)="filterRuns($event)"
-          />
+          <mifosx-page-toolbar searchPlaceholder="labels.text.SearchByReference" (searchChange)="filterRuns($event)" />
           <table mat-table [dataSource]="runsDataSource">
             <ng-container matColumnDef="startedOn">
               <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Started On' | translate }}</th>

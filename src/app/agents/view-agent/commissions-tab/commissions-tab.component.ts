@@ -72,9 +72,6 @@ export class CommissionsTabComponent implements OnInit {
     'status'
   ];
 
-  /** Live commissions count for the toolbar badge. */
-  commissionsCount: number | null = null;
-
   /** Paginator for commissions table. */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
@@ -88,7 +85,6 @@ export class CommissionsTabComponent implements OnInit {
       )
       .subscribe((commissions: any[]) => {
         this.dataSource.data = Array.isArray(commissions) ? commissions : [];
-        this.commissionsCount = this.dataSource.data.length;
         this.cdr.markForCheck();
       });
   }
