@@ -9,6 +9,9 @@
 <div class="container" *ngIf="kase">
   <mat-card class="account-card m-b-20">
     <mifosx-account-header [statusCode]="kase.status" [statusTooltip]="kase.status">
+      <div accountImage class="pf-account-badge">
+        <fa-icon icon="archive"></fa-icon>
+      </div>
       <ng-container ngProjectAs="[accountTitle]">
         <b>{{ 'labels.menus.Collections' | translate }} — {{ kase.loanId }}</b>
         <mifosx-status-pill [status]="kase.stage" />

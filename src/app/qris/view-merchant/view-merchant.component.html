@@ -17,6 +17,9 @@
   @if (merchantData) {
     <mat-card class="account-card">
       <mifosx-account-header [statusCode]="merchantData.status" [statusTooltip]="merchantData.status">
+        <div accountImage class="pf-account-badge">
+          <fa-icon icon="briefcase"></fa-icon>
+        </div>
         <ng-container ngProjectAs="[accountTitle]">
           <b>{{ merchantData.name }} ({{ merchantData.code }})</b>
           <mifosx-status-pill [status]="merchantData.status" />

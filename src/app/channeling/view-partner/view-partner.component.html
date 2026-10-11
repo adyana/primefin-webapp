@@ -17,6 +17,9 @@
   @if (partnerData) {
     <mat-card class="account-card">
       <mifosx-account-header [statusCode]="partnerData.status" [statusTooltip]="partnerData.status">
+        <div accountImage class="pf-account-badge">
+          <fa-icon icon="link"></fa-icon>
+        </div>
         <ng-container ngProjectAs="[accountTitle]">
           <b>{{ partnerData.name }} ({{ partnerData.code }})</b>
           <mifosx-status-pill [status]="partnerData.status" />

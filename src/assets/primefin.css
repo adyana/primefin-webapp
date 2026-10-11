@@ -315,6 +315,29 @@ mifosx-account-header .account-overview tr:nth-child(even) {
   background-color: transparent !important;
 }
 
+/* PrimeFin: account-header title block always fills between image and
+   card edge — with space-between distribution a narrow title (short
+   entity names) would otherwise shove image + title to the right. */
+mifosx-account-header .header-title-group .account-card-title {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+}
+
+/* PrimeFin: entity badge filling the account-header image slot on
+   PrimeFin detail pages (no photos upstream-side). Matches the
+   client photo frame rhythm: left-anchored, rounded, quiet fill. */
+.pf-account-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 72px !important;
+  height: 72px !important;
+  border-radius: 20px !important;
+  background: rgba(255, 255, 255, 0.16) !important;
+  color: #fff !important;
+  font-size: 32px !important;
+}
+
 /* PrimeFin page standard: KPI readout strips on dashboard/cockpit
    cards — quiet surface so loose spans read as a header block. */
 .pf-kpis {

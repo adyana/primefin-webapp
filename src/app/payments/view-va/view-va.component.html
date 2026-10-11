@@ -17,6 +17,9 @@
   @if (vaData) {
     <mat-card class="account-card">
       <mifosx-account-header [statusCode]="vaData.status" [statusTooltip]="vaData.status">
+        <div accountImage class="pf-account-badge">
+          <fa-icon icon="wallet"></fa-icon>
+        </div>
         <ng-container ngProjectAs="[accountTitle]">
           <b>{{ vaData.name }} ({{ vaData.vaNumber }})</b>
           <mifosx-status-pill [status]="vaData.status" />

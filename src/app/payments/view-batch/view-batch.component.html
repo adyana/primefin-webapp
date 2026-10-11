@@ -10,6 +10,9 @@
   @if (batch) {
     <mat-card class="account-card m-b-20">
       <mifosx-account-header [statusCode]="batch.status" [statusTooltip]="batch.status">
+        <div accountImage class="pf-account-badge">
+          <fa-icon icon="coins"></fa-icon>
+        </div>
         <ng-container ngProjectAs="[accountTitle]">
           <b>{{ batch.reference }}</b>
           <mifosx-status-pill [status]="batch.status" />

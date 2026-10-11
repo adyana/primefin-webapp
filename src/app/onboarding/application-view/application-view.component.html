@@ -9,6 +9,9 @@
 <div class="container">
   <mat-card class="account-card m-b-20">
     <mifosx-account-header [statusCode]="currentStage ?? ''" [statusTooltip]="currentStage ?? ''">
+      <div accountImage class="pf-account-badge">
+        <fa-icon icon="file-alt"></fa-icon>
+      </div>
       <ng-container ngProjectAs="[accountTitle]">
         <b>{{ 'labels.heading.Application Detail' | translate }} — #{{ applicationId }}</b>
         @if (currentStage) {
