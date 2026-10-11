@@ -39,6 +39,7 @@ import {
 } from '@angular/material/table';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { RowActionsComponent, RowAction } from 'app/shared/row-actions/row-actions.component';
 
 /** Shared Page Standard */
 import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
@@ -81,7 +82,8 @@ import { ComplianceService } from '../compliance.service';
     MatRowDef,
     MatRow,
     MatButton,
-    MatPaginator
+    MatPaginator,
+    RowActionsComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -176,5 +178,22 @@ export class FilingsBoardComponent implements OnInit {
         this.filingsDataSource.data = Array.isArray(filings) ? filings : [];
         this.cdr.markForCheck();
       });
+  }
+  rowFilingActions(filing: any): RowAction[] {
+    return [
+      { id: 'countersign', labelKey: 'labels.buttons.Countersign', color: 'primary' },
+      { id: 'submit', labelKey: 'labels.buttons.Submit', color: 'primary' },
+      { id: 'download', labelKey: 'labels.buttons.Download', color: 'primary' }
+    ];
+  }
+
+  onRowAction(action: string, filing: any): void {
+    if (action === 'countersign') {
+      this.countersign(filing.id);
+    } else if (action === 'submit') {
+      this.submit(filing.id);
+    } else if (action === 'download') {
+      this.download(filing.id);
+    }
   }
 }

@@ -57,9 +57,7 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
         <td mat-cell *matCellDef="let brk">
-          <button mat-button color="primary" (click)="close(brk)">
-            {{ 'labels.buttons.Close' | translate }}
-          </button>
+          <mifosx-row-actions [actions]="rowBreakActions(brk)" (action)="onRowAction($event, brk)" />
         </td>
       </ng-container>
 

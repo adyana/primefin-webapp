@@ -90,15 +90,7 @@
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
         <td mat-cell *matCellDef="let row">
           <div class="layout-row">
-            <button mat-button color="accent" (click)="suspend(row)">
-              {{ 'labels.buttons.Suspend' | translate }}
-            </button>
-            <button mat-button color="primary" (click)="reactivate(row)">
-              {{ 'labels.buttons.Reactivate' | translate }}
-            </button>
-            <button mat-button color="warn" (click)="close(row)">
-              {{ 'labels.buttons.Close' | translate }}
-            </button>
+            <mifosx-row-actions [actions]="rowCorporateActions(row)" (action)="onRowAction($event, row)" />
           </div>
         </td>
       </ng-container>

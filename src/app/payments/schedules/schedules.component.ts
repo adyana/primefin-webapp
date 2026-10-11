@@ -41,6 +41,7 @@ import {
 } from '@angular/material/table';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { RowActionsComponent, RowAction } from 'app/shared/row-actions/row-actions.component';
 
 /** Shared Page Standard */
 import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
@@ -85,7 +86,8 @@ import { PaymentsService } from '../payments.service';
     MatRowDef,
     MatRow,
     MatButton,
-    MatPaginator
+    MatPaginator,
+    RowActionsComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -218,5 +220,22 @@ export class PaymentSchedulesComponent implements OnInit {
         this.schedulesDataSource.paginator = this.schedulesPaginator;
         this.cdr.markForCheck();
       });
+  }
+  rowScheduleActions(schedule: any): RowAction[] {
+    return [
+      { id: 'edit', labelKey: 'labels.buttons.Edit', color: 'primary', permission: 'UPDATE_PAYMENT' },
+      { id: 'run-now', labelKey: 'labels.buttons.Run Now', color: 'primary', permission: 'UPDATE_PAYMENT' },
+      { id: 'runs', labelKey: 'labels.buttons.Runs', color: 'primary', permission: 'READ_PAYMENT' }
+    ];
+  }
+
+  onRowAction(action: string, schedule: any): void {
+    if (action === 'edit') {
+      this.selectForEdit(schedule);
+    } else if (action === 'run-now') {
+      this.runNow(schedule);
+    } else if (action === 'runs') {
+      this.showRuns(schedule);
+    }
   }
 }

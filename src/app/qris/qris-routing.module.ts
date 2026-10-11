@@ -55,7 +55,7 @@ const routes: Routes = [
     {
       path: ':id',
       component: ViewMerchantComponent,
-      data: { title: 'QRIS Merchant', breadcrumb: 'Merchant', routeParamBreadcrumb: false },
+      data: { title: 'QRIS Merchant', breadcrumb: 'Merchant', routeParamBreadcrumb: 'id' },
       resolve: {
         merchant: QrisMerchantResolver
       }

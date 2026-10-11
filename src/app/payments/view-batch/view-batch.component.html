@@ -7,16 +7,52 @@
 -->
 
 <div class="container">
-  <div class="layout-row gap-20px alert-row">
-    <span
-      >{{ batch?.reference }} · {{ batch?.rail }} ·
-      @if (batch) {
-        <mifosx-status-pill [status]="batch.status" />
-      }
-    </span>
-    <button mat-button color="primary" (click)="send()">{{ 'labels.inputs.Send' | translate }}</button>
-    <button mat-button color="primary" (click)="loadDke()">{{ 'labels.buttons.Show DKE' | translate }}</button>
-  </div>
+  @if (batch) {
+    <mat-card class="account-card m-b-20">
+      <mifosx-account-header [statusCode]="batch.status" [statusTooltip]="batch.status">
+        <ng-container ngProjectAs="[accountTitle]">
+          <b>{{ batch.reference }}</b>
+          <mifosx-status-pill [status]="batch.status" />
+        </ng-container>
+
+        <button
+          accountMenu
+          mat-icon-button
+          [matMenuTriggerFor]="batchMenu"
+          [attr.aria-label]="'labels.buttons.Actions' | translate"
+          yPosition="below"
+        >
+          <mat-icon matListIcon class="actions-menu">
+            <fa-icon icon="bars" size="sm"></fa-icon>
+          </mat-icon>
+        </button>
+
+        <div accountMetadata>
+          <table class="account-overview">
+            <tbody>
+              <tr>
+                <td>{{ 'labels.inputs.Reference' | translate }}:</td>
+                <td>{{ batch.reference }}</td>
+              </tr>
+              <tr>
+                <td>{{ 'labels.inputs.Rail' | translate }}:</td>
+                <td>{{ batch.rail }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </mifosx-account-header>
+
+      <mat-menu #batchMenu="matMenu">
+        <button mat-menu-item (click)="send()">
+          {{ 'labels.inputs.Send' | translate }}
+        </button>
+        <button mat-menu-item (click)="loadDke()">
+          {{ 'labels.buttons.Show DKE' | translate }}
+        </button>
+      </mat-menu>
+    </mat-card>
+  }
 
   <div class="mat-elevation-z8 table-container pf-board">
     <mifosx-page-toolbar searchPlaceholder="labels.text.SearchByReference" (searchChange)="filterMembers($event)" />

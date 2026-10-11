@@ -7,19 +7,53 @@
 -->
 
 <div class="container">
-  <mat-card class="m-b-20">
-    <mat-card-title class="m-b-16">
-      {{ 'labels.heading.Application Detail' | translate }} — #{{ applicationId }}
-      @if (currentStage) {
-        <strong>{{ currentStage }}</strong>
-      }
-    </mat-card-title>
+  <mat-card class="account-card m-b-20">
+    <mifosx-account-header [statusCode]="currentStage ?? ''" [statusTooltip]="currentStage ?? ''">
+      <ng-container ngProjectAs="[accountTitle]">
+        <b>{{ 'labels.heading.Application Detail' | translate }} — #{{ applicationId }}</b>
+        @if (currentStage) {
+          <mifosx-status-pill [status]="currentStage" />
+        }
+      </ng-container>
 
-    <mat-card-content>
-      <button mat-raised-button color="primary" (click)="advance()">
+      <button
+        accountMenu
+        mat-icon-button
+        [matMenuTriggerFor]="applicationMenu"
+        [attr.aria-label]="'labels.buttons.Actions' | translate"
+        yPosition="below"
+      >
+        <mat-icon matListIcon class="actions-menu">
+          <fa-icon icon="bars" size="sm"></fa-icon>
+        </mat-icon>
+      </button>
+
+      <div accountMetadata>
+        <table class="account-overview">
+          <tbody>
+            <tr>
+              <td>{{ 'labels.inputs.Current Stage' | translate }}:</td>
+              <td>{{ currentStage ?? '—' }}</td>
+            </tr>
+            <tr>
+              <td>{{ 'labels.inputs.Stage' | translate }}:</td>
+              <td>{{ stagesDataSource.data.length }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </mifosx-account-header>
+
+    <mat-menu #applicationMenu="matMenu">
+      <button mat-menu-item (click)="advance()">
         {{ 'labels.buttons.Advance' | translate }}
       </button>
-      <form [formGroup]="bookForm" class="layout-row gap-20px m-t-16">
+    </mat-menu>
+  </mat-card>
+
+  <mat-card class="m-b-20">
+    <mat-card-content>
+      <form [formGroup]="bookForm" class="layout-row gap-20px">
         <mat-form-field class="flex-fill">
           <mat-label>{{ 'labels.inputs.Partner' | translate }} ({{ 'labels.text.Optional' | translate }})</mat-label>
           <mat-select formControlName="partnerCode">

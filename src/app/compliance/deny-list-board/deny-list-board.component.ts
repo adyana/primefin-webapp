@@ -39,6 +39,7 @@ import {
   MatRow
 } from '@angular/material/table';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { RowActionsComponent, RowAction } from 'app/shared/row-actions/row-actions.component';
 
 /** Shared Page Standard */
 import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
@@ -82,7 +83,8 @@ import { ComplianceService } from '../compliance.service';
     MatRowDef,
     MatRow,
     MatButton,
-    MatPaginator
+    MatPaginator,
+    RowActionsComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -336,5 +338,48 @@ export class DenyListBoardComponent implements OnInit {
         this.allowDataSource.paginator = this.allowPaginator;
         this.cdr.markForCheck();
       });
+  }
+  rowEntryActions(entry: any): RowAction[] {
+    return [
+      { id: 'delete', labelKey: 'labels.buttons.Delete', color: 'warn', permission: 'UPDATE_COMPLIANCE' }
+    ];
+  }
+
+  onEntryRowAction(action: string, entry: any): void {
+    if (action === 'delete') {
+      this.deleteEntry(entry);
+    }
+  }
+
+  rowHitActions(hit: any): RowAction[] {
+    return [
+      {
+        id: 'request-release',
+        labelKey: 'labels.buttons.Request Release',
+        color: 'primary',
+        permission: 'CREATE_COMPLIANCE'
+      }
+    ];
+  }
+
+  onHitRowAction(action: string, hit: any): void {
+    if (action === 'request-release') {
+      this.requestRelease(hit);
+    }
+  }
+
+  rowAllowActions(allow: any): RowAction[] {
+    return [
+      { id: 'approve', labelKey: 'labels.buttons.Approve', color: 'primary', permission: 'UPDATE_COMPLIANCE' },
+      { id: 'revoke', labelKey: 'labels.buttons.Revoke', color: 'warn', permission: 'UPDATE_COMPLIANCE' }
+    ];
+  }
+
+  onAllowRowAction(action: string, allow: any): void {
+    if (action === 'approve') {
+      this.approveAllow(allow);
+    } else if (action === 'revoke') {
+      this.revokeAllow(allow);
+    }
   }
 }

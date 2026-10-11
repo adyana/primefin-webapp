@@ -27,7 +27,7 @@ const routes: Routes = [
     {
       path: 'cases/:id',
       component: CollectionCaseDetailComponent,
-      data: { title: 'Collection Case', breadcrumb: 'Case', routeParamBreadcrumb: false }
+      data: { title: 'Collection Case', breadcrumb: 'Case', routeParamBreadcrumb: 'id' }
     }
   ])
 ];

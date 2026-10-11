@@ -37,6 +37,7 @@ import {
 } from '@angular/material/table';
 import { MatButton } from '@angular/material/button';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { RowActionsComponent, RowAction } from 'app/shared/row-actions/row-actions.component';
 
 /** Shared Page Standard */
 import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
@@ -73,7 +74,8 @@ import { PaymentsService } from '../payments.service';
     MatRowDef,
     MatRow,
     MatButton,
-    MatPaginator
+    MatPaginator,
+    RowActionsComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -139,5 +141,16 @@ export class PaymentBreaksComponent implements OnInit {
         this.breaksDataSource.paginator = this.paginator;
         this.cdr.markForCheck();
       });
+  }
+  rowBreakActions(brk: any): RowAction[] {
+    return [
+      { id: 'close', labelKey: 'labels.buttons.Close', color: 'primary' }
+    ];
+  }
+
+  onRowAction(action: string, brk: any): void {
+    if (action === 'close') {
+      this.close(brk);
+    }
   }
 }

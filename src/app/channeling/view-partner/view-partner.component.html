@@ -15,33 +15,32 @@
   </div>
 
   @if (partnerData) {
-    <mat-card>
-      <mat-card-title class="m-b-16">{{ partnerData.name }} ({{ partnerData.code }})</mat-card-title>
+    <mat-card class="account-card">
+      <mifosx-account-header [statusCode]="partnerData.status" [statusTooltip]="partnerData.status">
+        <ng-container ngProjectAs="[accountTitle]">
+          <b>{{ partnerData.name }} ({{ partnerData.code }})</b>
+          <mifosx-status-pill [status]="partnerData.status" />
+        </ng-container>
 
-      <mat-card-content>
-        <div class="layout-row gap-20px responsive-column">
-          <div class="flex-fill">
-            <p>
-              <strong>{{ 'labels.inputs.Status' | translate }}:</strong>
-              {{ partnerData.status }}
-            </p>
-            <p>
-              <strong>{{ 'labels.inputs.Contact' | translate }}:</strong>
-              {{ partnerData.contact }}
-            </p>
-          </div>
-          <div class="flex-fill">
-            <p>
-              <strong>{{ 'labels.inputs.SFTP Username' | translate }}:</strong>
-              {{ partnerData.sftpUsername }}
-            </p>
-            <p>
-              <strong>{{ 'labels.inputs.PGP Key Reference' | translate }}:</strong>
-              {{ partnerData.pgpKeyRef }}
-            </p>
-          </div>
+        <div accountMetadata>
+          <table class="account-overview">
+            <tbody>
+              <tr>
+                <td>{{ 'labels.inputs.Contact' | translate }}:</td>
+                <td>{{ partnerData.contact }}</td>
+              </tr>
+              <tr>
+                <td>{{ 'labels.inputs.SFTP Username' | translate }}:</td>
+                <td>{{ partnerData.sftpUsername }}</td>
+              </tr>
+              <tr>
+                <td>{{ 'labels.inputs.PGP Key Reference' | translate }}:</td>
+                <td>{{ partnerData.pgpKeyRef }}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-      </mat-card-content>
+      </mifosx-account-header>
     </mat-card>
     <mat-tab-group class="m-t-20">
       <mat-tab label="{{ 'labels.heading.Products' | translate }}">

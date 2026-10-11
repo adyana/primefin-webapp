@@ -78,15 +78,7 @@
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
         <td mat-cell *matCellDef="let filing">
           <div class="layout-row gap-8px">
-            <button mat-button color="primary" (click)="countersign(filing.id)">
-              {{ 'labels.buttons.Countersign' | translate }}
-            </button>
-            <button mat-button color="primary" (click)="submit(filing.id)">
-              {{ 'labels.buttons.Submit' | translate }}
-            </button>
-            <button mat-button color="primary" (click)="download(filing.id)">
-              {{ 'labels.buttons.Download' | translate }}
-            </button>
+            <mifosx-row-actions [actions]="rowFilingActions(filing)" (action)="onRowAction($event, filing)" />
           </div>
         </td>
       </ng-container>

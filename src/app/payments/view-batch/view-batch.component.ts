@@ -33,7 +33,11 @@ import {
   MatRowDef,
   MatRow
 } from '@angular/material/table';
-import { MatButton } from '@angular/material/button';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { MatIcon } from '@angular/material/icon';
+import { MatCard } from '@angular/material/card';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { MatOption } from '@angular/material/core';
@@ -43,6 +47,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 /** Shared Page Standard */
 import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
 import { StatusPillComponent } from '../../shared/status-pill/status-pill.component';
+import { AccountHeaderComponent } from '../../shared/account-header/account-header.component';
 
 /** Custom Services */
 import { PaymentsService } from '../payments.service';
@@ -59,6 +64,9 @@ import { PaymentsService } from '../payments.service';
     ReactiveFormsModule,
     PageToolbarComponent,
     StatusPillComponent,
+    AccountHeaderComponent,
+    FaIconComponent,
+    MatCard,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
@@ -71,6 +79,11 @@ import { PaymentsService } from '../payments.service';
     MatRow,
     MatPaginator,
     MatButton,
+    MatIconButton,
+    MatMenuTrigger,
+    MatMenu,
+    MatMenuItem,
+    MatIcon,
     MatFormField,
     MatLabel,
     MatInput,

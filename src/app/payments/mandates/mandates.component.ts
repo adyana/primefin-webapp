@@ -40,6 +40,7 @@ import {
 } from '@angular/material/table';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { RowActionsComponent, RowAction } from 'app/shared/row-actions/row-actions.component';
 
 /** Shared Page Standard */
 import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
@@ -80,7 +81,8 @@ import { PaymentsService } from '../payments.service';
     MatRow,
     MatButton,
     MatTooltip,
-    MatPaginator
+    MatPaginator,
+    RowActionsComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -170,5 +172,34 @@ export class PaymentMandatesComponent implements OnInit {
         this.mandatesDataSource.paginator = this.paginator;
         this.cdr.markForCheck();
       });
+  }
+  rowMandateActions(mandate: any): RowAction[] {
+    return [
+      {
+        id: 'collect',
+        labelKey: 'labels.buttons.Collect',
+        icon: 'download',
+        color: 'primary',
+        permission: 'UPDATE_PAYMENT'
+      },
+      {
+        id: 'suspend',
+        labelKey: 'labels.buttons.Suspend',
+        icon: 'pause',
+        color: 'accent',
+        permission: 'UPDATE_PAYMENT'
+      },
+      { id: 'revoke', labelKey: 'labels.buttons.Revoke', icon: 'ban', color: 'warn', permission: 'UPDATE_PAYMENT' }
+    ];
+  }
+
+  onRowAction(action: string, mandate: any): void {
+    if (action === 'collect') {
+      this.selectForCollect(mandate);
+    } else if (action === 'suspend') {
+      this.suspend(mandate);
+    } else if (action === 'revoke') {
+      this.revoke(mandate);
+    }
   }
 }

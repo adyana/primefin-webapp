@@ -67,7 +67,7 @@ const routes: Routes = [
     {
       path: ':id',
       component: ViewPartnerComponent,
-      data: { title: 'Channel Partner', breadcrumb: 'Partner', routeParamBreadcrumb: false },
+      data: { title: 'Channel Partner', breadcrumb: 'Partner', routeParamBreadcrumb: 'id' },
       resolve: {
         partner: ChannelPartnerResolver
       }

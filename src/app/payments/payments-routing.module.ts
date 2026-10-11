@@ -86,7 +86,7 @@ const routes: Routes = [
     {
       path: 'batches/:id',
       component: ViewPaymentBatchComponent,
-      data: { title: 'Payment Batch', breadcrumb: 'Batch', routeParamBreadcrumb: false },
+      data: { title: 'Payment Batch', breadcrumb: 'Batch', routeParamBreadcrumb: 'id' },
       resolve: {
         batch: PaymentBatchResolver
       }
@@ -159,7 +159,7 @@ const routes: Routes = [
     {
       path: 'vas/:id',
       component: ViewVaComponent,
-      data: { title: 'Virtual Account', breadcrumb: 'Account', routeParamBreadcrumb: false },
+      data: { title: 'Virtual Account', breadcrumb: 'Account', routeParamBreadcrumb: 'id' },
       resolve: {
         va: PaymentVaResolver
       }

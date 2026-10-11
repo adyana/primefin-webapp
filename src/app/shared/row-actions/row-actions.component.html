@@ -1,0 +1,71 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+@if (single) {
+  @for (a of visible; track a.id) {
+    @if (a.permission) {
+      <button
+        mat-button
+        [color]="a.color ?? 'primary'"
+        *mifosxHasPermission="a.permission"
+        [disabled]="a.disabled"
+        (click)="fire(a.id)"
+      >
+        {{ a.labelKey | translate }}
+      </button>
+    } @else {
+      <button mat-button [color]="a.color ?? 'primary'" [disabled]="a.disabled" (click)="fire(a.id)">
+        {{ a.labelKey | translate }}
+      </button>
+    }
+  }
+} @else if (!useMenu) {
+  <div class="row-actions">
+    @for (a of visible; track a.id) {
+      @if (a.permission) {
+        <button
+          mat-icon-button
+          [color]="a.color ?? 'primary'"
+          *mifosxHasPermission="a.permission"
+          [disabled]="a.disabled"
+          matTooltip="{{ a.labelKey | translate }}"
+          (click)="fire(a.id)"
+        >
+          <fa-icon [icon]="a.icon ?? 'circle'"></fa-icon>
+        </button>
+      } @else {
+        <button
+          mat-icon-button
+          [color]="a.color ?? 'primary'"
+          [disabled]="a.disabled"
+          matTooltip="{{ a.labelKey | translate }}"
+          (click)="fire(a.id)"
+        >
+          <fa-icon [icon]="a.icon ?? 'circle'"></fa-icon>
+        </button>
+      }
+    }
+  </div>
+} @else {
+  <button mat-button color="primary" [matMenuTriggerFor]="rowMenu">
+    {{ 'labels.buttons.Actions' | translate }}
+  </button>
+  <mat-menu #rowMenu="matMenu">
+    @for (a of visible; track a.id) {
+      @if (a.permission) {
+        <button mat-menu-item *mifosxHasPermission="a.permission" [disabled]="a.disabled" (click)="fire(a.id)">
+          {{ a.labelKey | translate }}
+        </button>
+      } @else {
+        <button mat-menu-item [disabled]="a.disabled" (click)="fire(a.id)">
+          {{ a.labelKey | translate }}
+        </button>
+      }
+    }
+  </mat-menu>
+}

@@ -39,6 +39,7 @@ import {
   MatRow
 } from '@angular/material/table';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { RowActionsComponent, RowAction } from 'app/shared/row-actions/row-actions.component';
 
 /** Shared Page Standard */
 import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
@@ -81,7 +82,8 @@ import { ComplianceService } from '../compliance.service';
     MatRowDef,
     MatRow,
     MatButton,
-    MatPaginator
+    MatPaginator,
+    RowActionsComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -185,5 +187,16 @@ export class AmlCasesComponent implements OnInit {
         this.casesDataSource.data = Array.isArray(cases) ? cases : [];
         this.cdr.markForCheck();
       });
+  }
+  rowCaseActions(kase: any): RowAction[] {
+    return [
+      { id: 'decide', labelKey: 'labels.buttons.Decide', color: 'primary', permission: 'UPDATE_AML' }
+    ];
+  }
+
+  onRowAction(action: string, kase: any): void {
+    if (action === 'decide') {
+      this.selectForDecision(kase);
+    }
   }
 }

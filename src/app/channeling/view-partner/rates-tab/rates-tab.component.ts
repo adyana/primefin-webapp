@@ -30,6 +30,7 @@ import {
 } from '@angular/material/table';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { RowActionsComponent, RowAction } from 'app/shared/row-actions/row-actions.component';
 
 /** Custom Services */
 import { ChannelingService } from '../../channeling.service';
@@ -59,7 +60,8 @@ import { ChannelingService } from '../../channeling.service';
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
-    MatRow
+    MatRow,
+    RowActionsComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -157,5 +159,16 @@ export class RatesTabComponent implements OnInit {
       .deleteRateBand(bandId)
       .pipe(take(1))
       .subscribe(() => this.refresh());
+  }
+  rowRateActions(row: any): RowAction[] {
+    return [
+      { id: 'remove', labelKey: 'labels.buttons.Remove', icon: 'trash', color: 'warn', permission: 'CREATE_CHANNEL' }
+    ];
+  }
+
+  onRowAction(action: string, row: any): void {
+    if (action === 'remove') {
+      this.remove(row.id);
+    }
   }
 }

@@ -38,6 +38,7 @@ import {
   MatRow
 } from '@angular/material/table';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { RowActionsComponent, RowAction } from 'app/shared/row-actions/row-actions.component';
 
 /** Shared Page Standard */
 import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
@@ -73,7 +74,8 @@ import { QrisService } from '../qris.service';
     MatRowDef,
     MatRow,
     MatButton,
-    MatPaginator
+    MatPaginator,
+    RowActionsComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -167,5 +169,16 @@ export class QrisMdrRulesComponent implements OnInit {
         this.rulesDataSource.paginator = this.paginator;
         this.cdr.markForCheck();
       });
+  }
+  rowRuleActions(rule: any): RowAction[] {
+    return [
+      { id: 'edit', labelKey: 'labels.buttons.Edit', color: 'primary', permission: 'UPDATE_QRIS' }
+    ];
+  }
+
+  onRowAction(action: string, rule: any): void {
+    if (action === 'edit') {
+      this.selectForEdit(rule);
+    }
   }
 }

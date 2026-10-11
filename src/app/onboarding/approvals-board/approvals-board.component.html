@@ -47,12 +47,7 @@
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
         <td mat-cell *matCellDef="let app">
           <div class="layout-row gap-8px">
-            <button mat-raised-button color="primary" [disabled]="!decideForm.valid" (click)="approve(app.id)">
-              {{ 'labels.buttons.Approve' | translate }}
-            </button>
-            <button mat-button color="warn" [disabled]="!decideForm.valid" (click)="reject(app.id)">
-              {{ 'labels.buttons.Reject' | translate }}
-            </button>
+            <mifosx-row-actions [actions]="rowQueueActions(app)" (action)="onRowAction($event, app)" />
           </div>
         </td>
       </ng-container>

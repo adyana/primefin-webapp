@@ -86,23 +86,7 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
         <td mat-cell *matCellDef="let app" (click)="$event.stopPropagation()">
-          <button mat-button color="primary" [matMenuTriggerFor]="rowMenu">
-            {{ 'labels.buttons.Actions' | translate }}
-          </button>
-          <mat-menu #rowMenu="matMenu">
-            <button mat-menu-item (click)="advance(app.id)">
-              {{ 'labels.buttons.Advance' | translate }}
-            </button>
-            <button mat-menu-item (click)="score(app.id)">
-              {{ 'labels.buttons.Score' | translate }}
-            </button>
-            <button mat-menu-item (click)="disburse(app.id)">
-              {{ 'labels.buttons.Disburse' | translate }}
-            </button>
-            <button mat-menu-item (click)="book(app.id)">
-              {{ 'labels.buttons.Book Loan' | translate }}
-            </button>
-          </mat-menu>
+          <mifosx-row-actions [actions]="rowApplicationActions(app)" (action)="onRowAction($event, app)" />
         </td>
       </ng-container>
 

@@ -41,6 +41,7 @@ import {
 } from '@angular/material/table';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { RowActionsComponent, RowAction } from 'app/shared/row-actions/row-actions.component';
 
 /** Shared Page Standard */
 import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
@@ -86,7 +87,8 @@ import { PaymentsService } from '../payments.service';
     MatRowDef,
     MatRow,
     MatButton,
-    MatPaginator
+    MatPaginator,
+    RowActionsComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -255,5 +257,19 @@ export class PaymentMatchingComponent implements OnInit {
         this.runsDataSource.paginator = this.runsPaginator;
         this.cdr.markForCheck();
       });
+  }
+  rowRuleActions(rule: any): RowAction[] {
+    return [
+      { id: 'edit', labelKey: 'labels.buttons.Edit', color: 'primary', permission: 'UPDATE_PAYMENT' },
+      { id: 'delete', labelKey: 'labels.buttons.Delete', color: 'warn', permission: 'UPDATE_PAYMENT' }
+    ];
+  }
+
+  onRowAction(action: string, rule: any): void {
+    if (action === 'edit') {
+      this.selectForEdit(rule);
+    } else if (action === 'delete') {
+      this.delete(rule);
+    }
   }
 }

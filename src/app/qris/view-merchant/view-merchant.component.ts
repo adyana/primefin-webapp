@@ -12,13 +12,17 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MatCard, MatCardTitle, MatCardContent } from '@angular/material/card';
-import { MatButton } from '@angular/material/button';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { MatIcon } from '@angular/material/icon';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { MatTabGroup, MatTab } from '@angular/material/tabs';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { take } from 'rxjs';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { AccountHeaderComponent } from '../../shared/account-header/account-header.component';
+import { StatusPillComponent } from '../../shared/status-pill/status-pill.component';
 import { QrisCodesTabComponent } from './codes-tab/codes-tab.component';
 import { QrisTransactionsTabComponent } from './transactions-tab/transactions-tab.component';
 
@@ -37,10 +41,17 @@ import { QrisService } from '../qris.service';
     ReactiveFormsModule,
     RouterLink,
     FaIconComponent,
+    AccountHeaderComponent,
+    StatusPillComponent,
     MatCard,
     MatCardTitle,
     MatCardContent,
     MatButton,
+    MatIconButton,
+    MatMenuTrigger,
+    MatMenu,
+    MatMenuItem,
+    MatIcon,
     MatFormField,
     MatLabel,
     MatInput,

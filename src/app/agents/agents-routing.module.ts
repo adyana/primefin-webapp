@@ -46,7 +46,7 @@ const routes: Routes = [
     {
       path: ':id',
       component: ViewAgentComponent,
-      data: { title: 'Agent', breadcrumb: 'Agent', routeParamBreadcrumb: false },
+      data: { title: 'Agent', breadcrumb: 'Agent', routeParamBreadcrumb: 'id' },
       resolve: {
         agent: AgentResolver
       }

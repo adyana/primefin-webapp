@@ -15,7 +15,9 @@ import { MatCard, MatCardContent, MatCardTitle } from '@angular/material/card';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatSelect, MatOption } from '@angular/material/select';
 import { MatInput } from '@angular/material/input';
-import { MatButton } from '@angular/material/button';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { MatIcon } from '@angular/material/icon';
 import {
   MatTableDataSource,
   MatTable,
@@ -30,6 +32,8 @@ import {
   MatRow
 } from '@angular/material/table';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { RowActionsComponent, RowAction } from 'app/shared/row-actions/row-actions.component';
 
 /** rxjs Imports */
 import { catchError, forkJoin, of } from 'rxjs';
@@ -39,6 +43,7 @@ import { RemedialService } from '../remedial.service';
 
 /** Shared Page Standard */
 import { StatusPillComponent } from '../../shared/status-pill/status-pill.component';
+import { AccountHeaderComponent } from '../../shared/account-header/account-header.component';
 
 /**
  * Collection case detail: assignment + legal/close/write-off actions,
@@ -51,6 +56,7 @@ import { StatusPillComponent } from '../../shared/status-pill/status-pill.compon
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     StatusPillComponent,
+    AccountHeaderComponent,
     ReactiveFormsModule,
     MatCard,
     MatCardTitle,
@@ -70,7 +76,13 @@ import { StatusPillComponent } from '../../shared/status-pill/status-pill.compon
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    MatButton
+    MatButton,
+    MatIconButton,
+    MatMenuTrigger,
+    MatMenu,
+    MatMenuItem,
+    MatIcon,
+    FaIconComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -292,5 +304,34 @@ export class CollectionCaseDetailComponent implements OnInit {
         this.restructuresDataSource.data = Array.isArray(result.restructures) ? result.restructures : [];
         this.cdr.markForCheck();
       });
+  }
+  rowPtpActions(ptp: any): RowAction[] {
+    return [
+      { id: 'mark-kept', labelKey: 'labels.buttons.Mark Kept', color: 'primary' },
+      { id: 'cancel', labelKey: 'labels.buttons.Cancel', color: 'warn' }
+    ];
+  }
+
+  onPtpRowAction(action: string, ptp: any): void {
+    if (action === 'mark-kept') {
+      this.markKept(ptp.id);
+    } else if (action === 'cancel') {
+      this.cancelPtp(ptp.id);
+    }
+  }
+
+  rowRestructureActions(restructure: any): RowAction[] {
+    return [
+      { id: 'sync-approved', labelKey: 'labels.buttons.Sync Approved', color: 'primary' },
+      { id: 'sync-rejected', labelKey: 'labels.buttons.Sync Rejected', color: 'warn' }
+    ];
+  }
+
+  onRestructureRowAction(action: string, restructure: any): void {
+    if (action === 'sync-approved') {
+      this.syncRestructure(restructure.id, 'APPROVED');
+    } else if (action === 'sync-rejected') {
+      this.syncRestructure(restructure.id, 'REJECTED');
+    }
   }
 }

@@ -39,6 +39,7 @@ import {
 } from '@angular/material/table';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { RowActionsComponent, RowAction } from 'app/shared/row-actions/row-actions.component';
 
 /** Shared Page Standard */
 import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
@@ -81,7 +82,8 @@ import { ComplianceService } from '../compliance.service';
     MatRowDef,
     MatRow,
     MatButton,
-    MatPaginator
+    MatPaginator,
+    RowActionsComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -219,5 +221,28 @@ export class SlikBoardComponent implements OnInit {
         this.snapshotsDataSource.data = Array.isArray(snapshots) ? snapshots : [];
         this.cdr.markForCheck();
       });
+  }
+  rowSnapshotActions(snapshot: any): RowAction[] {
+    return [
+      { id: 'rows', labelKey: 'labels.buttons.Rows', color: 'primary' },
+      { id: 'validate', labelKey: 'labels.buttons.Validate', color: 'primary' },
+      { id: 'submit', labelKey: 'labels.buttons.Submit', color: 'primary' },
+      { id: 'download', labelKey: 'labels.buttons.Download', color: 'primary' }
+    ];
+  }
+
+  onRowAction(action: string, snapshot: any): void {
+    if (action === 'rows') {
+      this.selectPeriod(snapshot.period);
+    } else if (action === 'validate') {
+      this.selectPeriod(snapshot.period);
+      this.validate();
+    } else if (action === 'submit') {
+      this.selectPeriod(snapshot.period);
+      this.submit();
+    } else if (action === 'download') {
+      this.selectPeriod(snapshot.period);
+      this.download();
+    }
   }
 }

@@ -84,33 +84,7 @@
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
         <td mat-cell *matCellDef="let mandate">
           <div class="layout-row">
-            <button
-              mat-icon-button
-              color="primary"
-              matTooltip="{{ 'labels.buttons.Collect' | translate }}"
-              (click)="selectForCollect(mandate)"
-              *mifosxHasPermission="'UPDATE_PAYMENT'"
-            >
-              <fa-icon icon="download"></fa-icon>
-            </button>
-            <button
-              mat-icon-button
-              color="accent"
-              matTooltip="{{ 'labels.buttons.Suspend' | translate }}"
-              (click)="suspend(mandate)"
-              *mifosxHasPermission="'UPDATE_PAYMENT'"
-            >
-              <fa-icon icon="pause"></fa-icon>
-            </button>
-            <button
-              mat-icon-button
-              color="warn"
-              matTooltip="{{ 'labels.buttons.Revoke' | translate }}"
-              (click)="revoke(mandate)"
-              *mifosxHasPermission="'UPDATE_PAYMENT'"
-            >
-              <fa-icon icon="ban"></fa-icon>
-            </button>
+            <mifosx-row-actions [actions]="rowMandateActions(mandate)" (action)="onRowAction($event, mandate)" />
           </div>
         </td>
       </ng-container>

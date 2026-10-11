@@ -38,6 +38,7 @@ import {
   MatRow
 } from '@angular/material/table';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { RowActionsComponent, RowAction } from 'app/shared/row-actions/row-actions.component';
 
 /** Shared Page Standard */
 import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
@@ -80,7 +81,8 @@ import { CorporateService } from '../corporate.service';
     MatRowDef,
     MatRow,
     MatButton,
-    MatPaginator
+    MatPaginator,
+    RowActionsComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -181,5 +183,22 @@ export class CorporateRegistryComponent implements OnInit {
         }
         this.cdr.markForCheck();
       });
+  }
+  rowCorporateActions(row: any): RowAction[] {
+    return [
+      { id: 'suspend', labelKey: 'labels.buttons.Suspend', color: 'accent' },
+      { id: 'reactivate', labelKey: 'labels.buttons.Reactivate', color: 'primary' },
+      { id: 'close', labelKey: 'labels.buttons.Close', color: 'warn' }
+    ];
+  }
+
+  onRowAction(action: string, row: any): void {
+    if (action === 'suspend') {
+      this.suspend(row);
+    } else if (action === 'reactivate') {
+      this.reactivate(row);
+    } else if (action === 'close') {
+      this.close(row);
+    }
   }
 }

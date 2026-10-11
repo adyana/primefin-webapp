@@ -39,6 +39,7 @@ import {
 } from '@angular/material/table';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { RowActionsComponent, RowAction } from 'app/shared/row-actions/row-actions.component';
 
 /** Shared Page Standard */
 import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
@@ -78,7 +79,8 @@ import { PaymentsService } from '../payments.service';
     MatRowDef,
     MatRow,
     MatButton,
-    MatPaginator
+    MatPaginator,
+    RowActionsComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -160,5 +162,16 @@ export class PaymentCollectionsComponent implements OnInit {
         this.collectionsDataSource.paginator = this.paginator;
         this.cdr.markForCheck();
       });
+  }
+  rowCollectionActions(request: any): RowAction[] {
+    return [
+      { id: 'review', labelKey: 'labels.buttons.Review', color: 'primary', permission: 'UPDATE_PAYMENT' }
+    ];
+  }
+
+  onRowAction(action: string, request: any): void {
+    if (action === 'review') {
+      this.selectForReview(request);
+    }
   }
 }

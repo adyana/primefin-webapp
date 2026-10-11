@@ -11,18 +11,21 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject, 
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { MatCard, MatCardContent, MatCardTitle } from '@angular/material/card';
+import { MatCard, MatCardContent } from '@angular/material/card';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatSelect, MatOption } from '@angular/material/select';
 import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell } from '@angular/material/table';
 import { MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
-import { MatButton } from '@angular/material/button';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { MatIcon } from '@angular/material/icon';
 import { switchMap, of } from 'rxjs';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /** Shared Page Standard */
 import { StatusPillComponent } from '../../shared/status-pill/status-pill.component';
+import { AccountHeaderComponent } from '../../shared/account-header/account-header.component';
 
 /** Custom Services */
 import { OnboardingService } from '../onboarding.service';
@@ -38,10 +41,10 @@ import { OnboardingService } from '../onboarding.service';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     StatusPillComponent,
+    AccountHeaderComponent,
     ReactiveFormsModule,
     FaIconComponent,
     MatCard,
-    MatCardTitle,
     MatCardContent,
     MatFormField,
     MatLabel,
@@ -57,7 +60,12 @@ import { OnboardingService } from '../onboarding.service';
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    MatButton
+    MatButton,
+    MatIconButton,
+    MatMenuTrigger,
+    MatMenu,
+    MatMenuItem,
+    MatIcon
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })

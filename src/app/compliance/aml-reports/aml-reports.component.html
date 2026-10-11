@@ -71,9 +71,7 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
         <td mat-cell *matCellDef="let report">
-          <button mat-button color="primary" (click)="download(report)" *mifosxHasPermission="'READ_AML'">
-            {{ 'labels.buttons.Download XML' | translate }}
-          </button>
+          <mifosx-row-actions [actions]="rowReportActions(report)" (action)="onRowAction($event, report)" />
         </td>
       </ng-container>
 

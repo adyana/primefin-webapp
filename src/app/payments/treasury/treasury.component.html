@@ -78,9 +78,7 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
         <td mat-cell *matCellDef="let row">
-          <button mat-button color="primary" (click)="selectForEdit(row)" *mifosxHasPermission="'UPDATE_PAYMENT'">
-            {{ 'labels.buttons.Configure' | translate }}
-          </button>
+          <mifosx-row-actions [actions]="rowRailActions(row)" (action)="onRowAction($event, row)" />
         </td>
       </ng-container>
 

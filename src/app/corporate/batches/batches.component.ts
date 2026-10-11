@@ -38,6 +38,7 @@ import {
   MatRow
 } from '@angular/material/table';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { RowActionsComponent, RowAction } from 'app/shared/row-actions/row-actions.component';
 
 /** rxjs Imports */
 import { catchError, of } from 'rxjs';
@@ -82,7 +83,8 @@ import { StatusPillComponent } from '../../shared/status-pill/status-pill.compon
     MatRowDef,
     MatRow,
     MatButton,
-    MatPaginator
+    MatPaginator,
+    RowActionsComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -248,6 +250,23 @@ export class CorporateBatchesComponent implements OnInit {
     this.batchesDataSource.filter = (text || '').trim().toLowerCase();
     if (this.batchesPaginator) {
       this.batchesDataSource.paginator.firstPage();
+    }
+  }
+  rowBatchActions(row: any): RowAction[] {
+    return [
+      { id: 'items', labelKey: 'labels.buttons.Items', color: 'primary' },
+      { id: 'submit', labelKey: 'labels.buttons.Submit', color: 'accent' },
+      { id: 'execute', labelKey: 'labels.buttons.Execute', color: 'warn' }
+    ];
+  }
+
+  onRowAction(action: string, row: any): void {
+    if (action === 'items') {
+      this.selectBatch(row);
+    } else if (action === 'submit') {
+      this.submit(row);
+    } else if (action === 'execute') {
+      this.execute(row);
     }
   }
 }

@@ -41,6 +41,7 @@ import {
   MatRow
 } from '@angular/material/table';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { RowActionsComponent, RowAction } from 'app/shared/row-actions/row-actions.component';
 
 /** Shared Page Standard */
 import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
@@ -86,7 +87,8 @@ import { ComplianceService } from '../compliance.service';
     MatRowDef,
     MatRow,
     MatButton,
-    MatPaginator
+    MatPaginator,
+    RowActionsComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -170,5 +172,16 @@ export class AmlReportsComponent implements OnInit {
         this.reportsDataSource.data = Array.isArray(reports) ? reports : [];
         this.cdr.markForCheck();
       });
+  }
+  rowReportActions(report: any): RowAction[] {
+    return [
+      { id: 'download', labelKey: 'labels.buttons.Download XML', color: 'primary', permission: 'READ_AML' }
+    ];
+  }
+
+  onRowAction(action: string, report: any): void {
+    if (action === 'download') {
+      this.download(report);
+    }
   }
 }

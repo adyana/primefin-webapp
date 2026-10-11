@@ -19,8 +19,10 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatCard, MatCardTitle, MatCardContent } from '@angular/material/card';
-import { MatButton } from '@angular/material/button';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { MatIcon } from '@angular/material/icon';
 import {
   MatTableDataSource,
   MatTable,
@@ -41,6 +43,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 /** Shared Page Standard */
 import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
 import { StatusPillComponent } from '../../shared/status-pill/status-pill.component';
+import { AccountHeaderComponent } from '../../shared/account-header/account-header.component';
 
 /** Custom Services */
 import { PaymentsService } from '../payments.service';
@@ -58,10 +61,15 @@ import { PaymentsService } from '../payments.service';
     FaIconComponent,
     PageToolbarComponent,
     StatusPillComponent,
+    AccountHeaderComponent,
     MatCard,
-    MatCardTitle,
     MatCardContent,
     MatButton,
+    MatIconButton,
+    MatMenuTrigger,
+    MatMenu,
+    MatMenuItem,
+    MatIcon,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,

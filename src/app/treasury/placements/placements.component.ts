@@ -38,6 +38,7 @@ import {
   MatRow
 } from '@angular/material/table';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { RowActionsComponent, RowAction } from 'app/shared/row-actions/row-actions.component';
 
 /** rxjs Imports */
 import { catchError, of } from 'rxjs';
@@ -80,7 +81,8 @@ import { StatusPillComponent } from '../../shared/status-pill/status-pill.compon
     MatRowDef,
     MatRow,
     MatButton,
-    MatPaginator
+    MatPaginator,
+    RowActionsComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -189,6 +191,20 @@ export class TreasuryPlacementsComponent implements OnInit {
     this.placementsDataSource.filter = (text || '').trim().toLowerCase();
     if (this.placementsDataSource.paginator) {
       this.placementsDataSource.paginator.firstPage();
+    }
+  }
+  rowPlacementActions(row: any): RowAction[] {
+    return [
+      { id: 'accrue', labelKey: 'labels.buttons.Accrue', color: 'accent' },
+      { id: 'mature', labelKey: 'labels.buttons.Mature', color: 'primary' }
+    ];
+  }
+
+  onRowAction(action: string, row: any): void {
+    if (action === 'accrue') {
+      this.accrue(row);
+    } else if (action === 'mature') {
+      this.mature(row);
     }
   }
 }

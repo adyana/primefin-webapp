@@ -93,9 +93,7 @@
             <ng-container matColumnDef="actions">
               <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
               <td mat-cell *matCellDef="let entry">
-                <button mat-button color="warn" (click)="deleteEntry(entry)" *mifosxHasPermission="'UPDATE_COMPLIANCE'">
-                  {{ 'labels.buttons.Delete' | translate }}
-                </button>
+                <mifosx-row-actions [actions]="rowEntryActions(entry)" (action)="onEntryRowAction($event, entry)" />
               </td>
             </ng-container>
 
@@ -153,14 +151,7 @@
           <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
             <td mat-cell *matCellDef="let hit">
-              <button
-                mat-button
-                color="primary"
-                (click)="requestRelease(hit)"
-                *mifosxHasPermission="'CREATE_COMPLIANCE'"
-              >
-                {{ 'labels.buttons.Request Release' | translate }}
-              </button>
+              <mifosx-row-actions [actions]="rowHitActions(hit)" (action)="onHitRowAction($event, hit)" />
             </td>
           </ng-container>
 
@@ -237,17 +228,7 @@
             <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
             <td mat-cell *matCellDef="let allow">
               <div class="layout-row gap-8px">
-                <button
-                  mat-button
-                  color="primary"
-                  (click)="approveAllow(allow)"
-                  *mifosxHasPermission="'UPDATE_COMPLIANCE'"
-                >
-                  {{ 'labels.buttons.Approve' | translate }}
-                </button>
-                <button mat-button color="warn" (click)="revokeAllow(allow)" *mifosxHasPermission="'UPDATE_COMPLIANCE'">
-                  {{ 'labels.buttons.Revoke' | translate }}
-                </button>
+                <mifosx-row-actions [actions]="rowAllowActions(allow)" (action)="onAllowRowAction($event, allow)" />
               </div>
             </td>
           </ng-container>

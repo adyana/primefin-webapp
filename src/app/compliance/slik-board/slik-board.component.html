@@ -49,18 +49,7 @@
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
         <td mat-cell *matCellDef="let snapshot">
           <div class="layout-row gap-8px">
-            <button mat-button color="primary" (click)="selectPeriod(snapshot.period)">
-              {{ 'labels.buttons.Rows' | translate }}
-            </button>
-            <button mat-button color="primary" (click)="selectPeriod(snapshot.period); validate()">
-              {{ 'labels.buttons.Validate' | translate }}
-            </button>
-            <button mat-button color="primary" (click)="selectPeriod(snapshot.period); submit()">
-              {{ 'labels.buttons.Submit' | translate }}
-            </button>
-            <button mat-button color="primary" (click)="selectPeriod(snapshot.period); download()">
-              {{ 'labels.buttons.Download' | translate }}
-            </button>
+            <mifosx-row-actions [actions]="rowSnapshotActions(snapshot)" (action)="onRowAction($event, snapshot)" />
           </div>
         </td>
       </ng-container>

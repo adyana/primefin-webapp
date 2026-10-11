@@ -299,6 +299,22 @@ body.dark-theme .pf-board .mat-mdc-cell {
   gap: 8px !important;
 }
 
+/* PrimeFin page standard: row action cells — icon groups and button
+   sets never mesh. Mirrors the mandates board icon group. */
+.pf-row-actions {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  flex-wrap: wrap !important;
+}
+
+/* PrimeFin: account-header metadata tables never zebra-stripe — the
+   upstream theme only neutralises even rows inside its own account
+   views, while _background.scss stripes every even tr globally. */
+mifosx-account-header .account-overview tr:nth-child(even) {
+  background-color: transparent !important;
+}
+
 /* PrimeFin page standard: KPI readout strips on dashboard/cockpit
    cards — quiet surface so loose spans read as a header block. */
 .pf-kpis {

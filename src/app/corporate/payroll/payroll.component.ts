@@ -38,6 +38,7 @@ import {
   MatRow
 } from '@angular/material/table';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { RowActionsComponent, RowAction } from 'app/shared/row-actions/row-actions.component';
 
 /** Shared Page Standard */
 import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
@@ -82,7 +83,8 @@ import { CorporateBatchService } from '../corporate-batch.service';
     MatRowDef,
     MatRow,
     MatButton,
-    MatPaginator
+    MatPaginator,
+    RowActionsComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -255,5 +257,19 @@ export class CorporatePayrollComponent implements OnInit {
         }
         this.cdr.markForCheck();
       });
+  }
+  rowRosterActions(row: any): RowAction[] {
+    return [
+      { id: 'reactivate', labelKey: 'labels.buttons.Reactivate', color: 'primary' },
+      { id: 'suspend', labelKey: 'labels.buttons.Suspend', color: 'warn' }
+    ];
+  }
+
+  onRowAction(action: string, row: any): void {
+    if (action === 'reactivate') {
+      this.setEmployeeActive(row, true);
+    } else if (action === 'suspend') {
+      this.setEmployeeActive(row, false);
+    }
   }
 }

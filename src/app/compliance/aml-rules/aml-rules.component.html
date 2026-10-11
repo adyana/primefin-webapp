@@ -91,9 +91,7 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
         <td mat-cell *matCellDef="let rule">
-          <button mat-button color="primary" (click)="selectForEdit(rule)" *mifosxHasPermission="'UPDATE_AML'">
-            {{ 'labels.buttons.Edit' | translate }}
-          </button>
+          <mifosx-row-actions [actions]="rowRuleActions(rule)" (action)="onRowAction($event, rule)" />
         </td>
       </ng-container>
 

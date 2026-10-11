@@ -66,4 +66,5 @@ export const STANDALONE_SHARED_IMPORTS = [
 export { M3ButtonComponent } from './shared/m3-ui/m3-button/m3-button.component';
 export { PageToolbarComponent } from './shared/page-toolbar/page-toolbar.component';
 export { StatusPillComponent } from './shared/status-pill/status-pill.component';
+export { RowActionsComponent } from './shared/row-actions/row-actions.component';
 export { HasPermissionDirective } from './directives/has-permission/has-permission.directive';

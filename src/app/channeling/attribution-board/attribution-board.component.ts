@@ -31,6 +31,7 @@ import {
 } from '@angular/material/table';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { RowActionsComponent, RowAction } from 'app/shared/row-actions/row-actions.component';
 
 /** Shared Page Standard */
 import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
@@ -71,7 +72,8 @@ import { ChannelingService } from '../channeling.service';
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    MatButton
+    MatButton,
+    RowActionsComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -181,5 +183,31 @@ export class AttributionBoardComponent implements OnInit {
         this.proposalsDataSource.data = Array.isArray(rows) ? rows : [];
         this.cdr.markForCheck();
       });
+  }
+  rowAttributionActions(row: any): RowAction[] {
+    return [
+      { id: 'remove', labelKey: 'labels.buttons.Remove', color: 'warn' }
+    ];
+  }
+
+  onRowAction(action: string, row: any): void {
+    if (action === 'remove') {
+      this.remove(row.id);
+    }
+  }
+
+  rowProposalActions(row: any): RowAction[] {
+    return [
+      { id: 'approve', labelKey: 'labels.buttons.Approve', color: 'primary' },
+      { id: 'reject', labelKey: 'labels.buttons.Reject', color: 'warn' }
+    ];
+  }
+
+  onProposalRowAction(action: string, row: any): void {
+    if (action === 'approve') {
+      this.approveProposal(row.id);
+    } else if (action === 'reject') {
+      this.rejectProposal(row.id);
+    }
   }
 }

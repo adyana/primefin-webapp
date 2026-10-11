@@ -31,6 +31,7 @@ import {
 } from '@angular/material/table';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { RowActionsComponent, RowAction } from 'app/shared/row-actions/row-actions.component';
 
 /** Shared Page Standard */
 import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
@@ -76,7 +77,8 @@ import { OnboardingService } from '../onboarding.service';
     MatButton,
     MatMenu,
     MatMenuTrigger,
-    MatMenuItem
+    MatMenuItem,
+    RowActionsComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -195,5 +197,25 @@ export class PipelineBoardComponent implements OnInit {
         this.applicationsDataSource.data = Array.isArray(page?.pageItems) ? page.pageItems : [];
         this.cdr.markForCheck();
       });
+  }
+  rowApplicationActions(app: any): RowAction[] {
+    return [
+      { id: 'advance', labelKey: 'labels.buttons.Advance', color: 'primary' },
+      { id: 'score', labelKey: 'labels.buttons.Score', color: 'primary' },
+      { id: 'disburse', labelKey: 'labels.buttons.Disburse', color: 'primary' },
+      { id: 'book', labelKey: 'labels.buttons.Book Loan', color: 'primary' }
+    ];
+  }
+
+  onRowAction(action: string, app: any): void {
+    if (action === 'advance') {
+      this.advance(app.id);
+    } else if (action === 'score') {
+      this.score(app.id);
+    } else if (action === 'disburse') {
+      this.disburse(app.id);
+    } else if (action === 'book') {
+      this.book(app.id);
+    }
   }
 }

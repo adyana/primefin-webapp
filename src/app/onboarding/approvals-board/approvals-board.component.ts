@@ -30,6 +30,7 @@ import {
 } from '@angular/material/table';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { RowActionsComponent, RowAction } from 'app/shared/row-actions/row-actions.component';
 
 /** Shared Page Standard */
 import { PageToolbarComponent } from '../../shared/page-toolbar/page-toolbar.component';
@@ -69,7 +70,8 @@ import { OnboardingService } from '../onboarding.service';
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    MatButton
+    MatButton,
+    RowActionsComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -137,5 +139,19 @@ export class ApprovalsBoardComponent implements OnInit {
         this.queueDataSource.data = Array.isArray(page?.pageItems) ? page.pageItems : [];
         this.cdr.markForCheck();
       });
+  }
+  rowQueueActions(app: any): RowAction[] {
+    return [
+      { id: 'approve', labelKey: 'labels.buttons.Approve', color: 'primary', disabled: !this.decideForm.valid },
+      { id: 'reject', labelKey: 'labels.buttons.Reject', color: 'warn', disabled: !this.decideForm.valid }
+    ];
+  }
+
+  onRowAction(action: string, app: any): void {
+    if (action === 'approve') {
+      this.approve(app.id);
+    } else if (action === 'reject') {
+      this.reject(app.id);
+    }
   }
 }

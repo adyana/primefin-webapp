@@ -10,11 +10,13 @@
 import { ChangeDetectionStrategy, Component, inject, DestroyRef } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { MatCard, MatCardTitle, MatCardContent } from '@angular/material/card';
+import { MatCard, MatCardContent } from '@angular/material/card';
 import { MatButton } from '@angular/material/button';
 import { MatTabGroup, MatTab } from '@angular/material/tabs';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { AccountHeaderComponent } from '../../shared/account-header/account-header.component';
+import { StatusPillComponent } from '../../shared/status-pill/status-pill.component';
 import { ProductsTabComponent } from './products-tab/products-tab.component';
 import { RatesTabComponent } from './rates-tab/rates-tab.component';
 import { CapsTabComponent } from './caps-tab/caps-tab.component';
@@ -32,8 +34,9 @@ import { FilesTabComponent } from './files-tab/files-tab.component';
     ...STANDALONE_SHARED_IMPORTS,
     RouterLink,
     FaIconComponent,
+    AccountHeaderComponent,
+    StatusPillComponent,
     MatCard,
-    MatCardTitle,
     MatCardContent,
     MatButton,
     MatTabGroup,

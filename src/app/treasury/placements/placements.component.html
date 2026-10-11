@@ -99,12 +99,7 @@
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
         <td mat-cell *matCellDef="let row">
           <div class="layout-row">
-            <button mat-button color="accent" (click)="accrue(row)">
-              {{ 'labels.buttons.Accrue' | translate }}
-            </button>
-            <button mat-button color="primary" (click)="mature(row)">
-              {{ 'labels.buttons.Mature' | translate }}
-            </button>
+            <mifosx-row-actions [actions]="rowPlacementActions(row)" (action)="onRowAction($event, row)" />
           </div>
         </td>
       </ng-container>
