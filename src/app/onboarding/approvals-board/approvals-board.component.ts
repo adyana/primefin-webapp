@@ -142,8 +142,20 @@ export class ApprovalsBoardComponent implements OnInit {
   }
   rowQueueActions(app: any): RowAction[] {
     return [
-      { id: 'approve', labelKey: 'labels.buttons.Approve', color: 'primary', disabled: !this.decideForm.valid },
-      { id: 'reject', labelKey: 'labels.buttons.Reject', color: 'warn', disabled: !this.decideForm.valid }
+      {
+        id: 'approve',
+        labelKey: 'labels.buttons.Approve',
+        icon: 'check',
+        color: 'primary',
+        disabled: !this.decideForm.valid
+      },
+      {
+        id: 'reject',
+        labelKey: 'labels.buttons.Reject',
+        icon: 'times',
+        color: 'warn',
+        disabled: !this.decideForm.valid
+      }
     ];
   }
 

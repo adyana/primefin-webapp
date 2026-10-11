@@ -9,5 +9,18 @@
 .row-actions {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 4px;
+}
+
+/* Dense icon group: smaller targets than the Material default, still
+   spaced. Applies to the icon buttons rendered by this component. */
+.row-actions .mat-mdc-icon-button {
+  width: 32px !important;
+  height: 32px !important;
+  padding: 4px !important;
+}
+
+.row-actions .mat-mdc-icon-button fa-icon {
+  font-size: 16px;
+  line-height: 1;
 }

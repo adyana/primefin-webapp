@@ -223,9 +223,21 @@ export class PaymentSchedulesComponent implements OnInit {
   }
   rowScheduleActions(schedule: any): RowAction[] {
     return [
-      { id: 'edit', labelKey: 'labels.buttons.Edit', color: 'primary', permission: 'UPDATE_PAYMENT' },
-      { id: 'run-now', labelKey: 'labels.buttons.Run Now', color: 'primary', permission: 'UPDATE_PAYMENT' },
-      { id: 'runs', labelKey: 'labels.buttons.Runs', color: 'primary', permission: 'READ_PAYMENT' }
+      {
+        id: 'edit',
+        labelKey: 'labels.buttons.Edit',
+        icon: 'pencil-alt',
+        color: 'primary',
+        permission: 'UPDATE_PAYMENT'
+      },
+      {
+        id: 'run-now',
+        labelKey: 'labels.buttons.Run Now',
+        icon: 'play',
+        color: 'primary',
+        permission: 'UPDATE_PAYMENT'
+      },
+      { id: 'runs', labelKey: 'labels.buttons.Runs', icon: 'list', color: 'primary', permission: 'READ_PAYMENT' }
     ];
   }
 
