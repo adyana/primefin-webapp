@@ -105,6 +105,14 @@ const routes: Routes = [
     loadChildren: () => import('./products/products.module').then((m) => m.ProductsModule)
   },
   {
+    path: 'deposito-accounts',
+    loadChildren: () => import('./deposito-accounts/deposito-accounts.module').then((m) => m.DepositoAccountsModule)
+  },
+  {
+    path: 'giro-accounts',
+    loadChildren: () => import('./giro-accounts/giro-accounts.module').then((m) => m.GiroAccountsModule)
+  },
+  {
     path: 'profile',
     loadChildren: () => import('./profile/profile.module').then((m) => m.ProfileModule)
   },

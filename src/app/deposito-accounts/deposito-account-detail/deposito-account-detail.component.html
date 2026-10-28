@@ -1,0 +1,248 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="page-container" *ngIf="depositoAccount">
+  <div class="page-header layout-row align-center justify-space-between responsive-column gap-16px">
+    <div>
+      <button
+        mat-icon-button
+        matTooltip="{{ 'tooltips.Back' | translate }}"
+        (click)="goBack()"
+        class="back-button"
+      >
+        <fa-icon icon="arrow-left" size="md"></fa-icon>
+      </button>
+      <h2>{{ 'labels.heading.Deposito Account' | translate }}: {{ depositoAccount.accountNo }}</h2>
+    </div>
+
+    <div class="header-actions layout-row gap-8px">
+      <span class="status-badge" [ngClass]="getStatusClass(depositoAccount.status)">
+        {{ ('labels.status.' + depositoAccount.status) | translate }}
+      </span>
+    </div>
+  </div>
+
+  <mat-card class="summary-card">
+    <mat-card-content>
+      <div class="summary-grid layout-row responsive-column gap-24px">
+
+        <!-- Account Info -->
+        <div class="summary-section flex-33">
+          <h3>{{ 'labels.heading.Account Information' | translate }}</h3>
+          <dl class="detail-list">
+            <dt>{{ 'labels.input.Account No' | translate }}</dt>
+            <dd>{{ depositoAccount.accountNo }}</dd>
+
+            <dt>{{ 'labels.input.Client' | translate }}</dt>
+            <dd>{{ depositoAccount.clientName }}</dd>
+
+            <dt>{{ 'labels.input.Product' | translate }}</dt>
+            <dd>{{ depositoAccount.productName }}</dd>
+
+            <dt>{{ 'labels.input.Currency' | translate }}</dt>
+            <dd>{{ depositoAccount.currencyCode }}</dd>
+
+            <dt>{{ 'labels.input.Opened Date' | translate }}</dt>
+            <dd>{{ formatDate(depositoAccount.openedDate) }}</dd>
+
+            <dt>{{ 'labels.input.Maturity Date' | translate }}</dt>
+            <dd>{{ formatDate(depositoAccount.maturityDate) }}</dd>
+
+            <dt>{{ 'labels.input.Tenor' | translate }}</dt>
+            <dd>{{ depositoAccount.tenorMonths }} {{ 'labels.input.Months' | translate }}</dd>
+
+            <dt>{{ 'labels.input.Interest Payment Frequency' | translate }}</dt>
+            <dd>{{ depositoAccount.interestPaymentFrequency }}</dd>
+          </dl>
+        </div>
+
+        <!-- Financial Info -->
+        <div class="summary-section flex-33">
+          <h3>{{ 'labels.heading.Financial Details' | translate }}</h3>
+          <dl class="detail-list">
+            <dt>{{ 'labels.input.Principal Amount' | translate }}</dt>
+            <dd class="amount">{{ formatCurrency(depositoAccount.principalAmount, depositoAccount.currencyCode) }}</dd>
+
+            <dt>{{ 'labels.input.Interest Rate' | translate }}</dt>
+            <dd>{{ depositoAccount.interestRatePct ? (depositoAccount.interestRatePct | number:'1.2-2') : '-' }}%</dd>
+
+            <dt>{{ 'labels.input.Auto Renewal Option' | translate }}</dt>
+            <dd>{{ depositoAccount.autoRenewalOption || '-' }}</dd>
+
+            <dt>{{ 'labels.input.Renewal Count' | translate }}</dt>
+            <dd>{{ depositoAccount.renewalCount }}</dd>
+
+            <dt>{{ 'labels.input.Max Renewals' | translate }}</dt>
+            <dd>{{ depositoAccount.maxRenewals || '-' }}</dd>
+
+            <dt>{{ 'labels.input.Next Interest Payment Date' | translate }}</dt>
+            <dd>{{ depositoAccount.nextInterestPaymentDate ? formatDate(depositoAccount.nextInterestPaymentDate) : '-' }}</dd>
+
+            <dt>{{ 'labels.input.Last Interest Calc Date' | translate }}</dt>
+            <dd>{{ depositoAccount.lastInterestCalcDate ? formatDate(depositoAccount.lastInterestCalcDate) : '-' }}</dd>
+          </dl>
+        </div>
+
+        <!-- Sharia Info (if applicable) -->
+        <div class="summary-section flex-33" *ngIf="depositoAccount.isSharia">
+          <h3>{{ 'labels.heading.Sharia Details' | translate }}</h3>
+          <dl class="detail-list">
+            <dt>{{ 'labels.input.Nisbah Bank' | translate }}</dt>
+            <dd>{{ depositoAccount.nisbahBankPct }}%</dd>
+
+            <dt>{{ 'labels.input.Nisbah Customer' | translate }}</dt>
+            <dd>{{ depositoAccount.nisbahCustomerPct }}%</dd>
+
+            <dt>{{ 'labels.input.Profit Sharing Frequency' | translate }}</dt>
+            <dd>{{ depositoAccount.profitSharingFrequency }}</dd>
+
+            <dt>{{ 'labels.input.Last Profit Calc Date' | translate }}</dt>
+            <dd>{{ depositoAccount.lastProfitCalcDate ? formatDate(depositoAccount.lastProfitCalcDate) : '-' }}</dd>
+
+            <dt>{{ 'labels.input.Next Profit Payment Date' | translate }}</dt>
+            <dd>{{ depositoAccount.nextProfitPaymentDate ? formatDate(depositoAccount.nextProfitPaymentDate) : '-' }}</dd>
+          </dl>
+        </div>
+
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Tabs for Details -->
+  <mat-card class="tabs-card">
+    <mat-tab-group (selectedTabChange)="onTabChange($event)" [selectedIndex]="selectedTabIndex">
+      <!-- General Tab -->
+      <mat-tab label="{{ 'labels.tabs.General' | translate }}">General</mat-tab>
+
+      <!-- Transactions Tab -->
+      <mat-tab label="{{ 'labels.tabs.Transactions' | translate }}">{{ transactions.length }} {{ 'labels.tabs.Items' | translate }}</mat-tab>
+
+      <!-- Schedule Tab (placeholder) -->
+      <mat-tab label="{{ 'labels.tabs.Schedule' | translate }}">Schedule</mat-tab>
+
+      <!-- Documents Tab (placeholder) -->
+      <mat-tab label="{{ 'labels.tabs.Documents' | translate }}">Documents</mat-tab>
+    </mat-tab-group>
+
+    <!-- General Tab Content -->
+    <div *ngIf="selectedTabIndex === 0" class="tab-content">
+      <mat-card class="detail-card">
+        <mat-card-header>
+          <mat-card-title>{{ 'labels.heading.Account Details' | translate }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <dl class="detail-list">
+            <dt>{{ 'labels.input.Created On' | translate }}</dt>
+            <dd>{{ formatDate(depositoAccount.createdOn) }}</dd>
+
+            <dt>{{ 'labels.input.Created By' | translate }}</dt>
+            <dd>{{ depositoAccount.createdBy }}</dd>
+
+            <dt>{{ 'labels.input.Last Modified On' | translate }}</dt>
+            <dd>{{ depositoAccount.lastModifiedOn ? formatDate(depositoAccount.lastModifiedOn) : '-' }}</dd>
+
+            <dt>{{ 'labels.input.Last Modified By' | translate }}</dt>
+            <dd>{{ depositoAccount.lastModifiedBy || '-' }}</dd>
+          </dl>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <!-- Transactions Tab Content -->
+    <div *ngIf="selectedTabIndex === 1" class="tab-content">
+      <mat-card class="detail-card">
+        <mat-card-header>
+          <mat-card-title>{{ 'labels.heading.Transactions' | translate }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="table-container">
+            <table mat-table [dataSource]="transactions" class="full-width-table">
+
+              <!-- Date Column -->
+              <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef>{{ 'labels.input.Date' | translate }}</th>
+                <td mat-cell *matCellDef="let txn">{{ formatDate(txn.date) }}</td>
+              </ng-container>
+
+              <!-- Type Column -->
+              <ng-container matColumnDef="type">
+                <th mat-header-cell *matHeaderCellDef>{{ 'labels.input.Type' | translate }}</th>
+                <td mat-cell *matCellDef="let txn">
+                  <span class="txn-badge" [ngClass]="getTransactionTypeClass(txn.type)">
+                    {{ txn.type }}
+                  </span>
+                </td>
+              </ng-container>
+
+              <!-- Amount Column -->
+              <ng-container matColumnDef="amount">
+                <th mat-header-cell *matHeaderCellDef>{{ 'labels.input.Amount' | translate }}</th>
+                <td mat-cell *matCellDef="let txn">
+                  <span [ngClass]="txn.amount >= 0 ? 'txn-credit' : 'txn-debit'">
+                    {{ formatCurrency(Math.abs(txn.amount), depositoAccount.currencyCode) }}
+                  </span>
+                </td>
+              </ng-container>
+
+              <!-- Running Balance Column -->
+              <ng-container matColumnDef="runningBalance">
+                <th mat-header-cell *matHeaderCellDef>{{ 'labels.input.Running Balance' | translate }}</th>
+                <td mat-cell *matCellDef="let txn">
+                  {{ formatCurrency(txn.runningBalance, depositoAccount.currencyCode) }}
+                </td>
+              </ng-container>
+
+              <!-- Description Column -->
+              <ng-container matColumnDef="description">
+                <th mat-header-cell *matHeaderCellDef>{{ 'labels.input.Description' | translate }}</th>
+                <td mat-cell *matCellDef="let txn">{{ txn.description || '-' }}</td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="txnDisplayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: txnDisplayedColumns;"></tr>
+
+              <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="5">
+                  <div class="no-data">
+                    <fa-icon icon="receipt" size="lg"></fa-icon>
+                    <p>{{ 'labels.text.No transactions found' | translate }}</p>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <!-- Schedule Tab Content (placeholder) -->
+    <div *ngIf="selectedTabIndex === 2" class="tab-content">
+      <mat-card class="detail-card">
+        <mat-card-content>
+          <div class="placeholder-content">
+            <fa-icon icon="calendar-alt" size="2xl"></fa-icon>
+            <p>{{ 'labels.text.Schedule view coming soon' | translate }}</p>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <!-- Documents Tab Content (placeholder) -->
+    <div *ngIf="selectedTabIndex === 3" class="tab-content">
+      <mat-card class="detail-card">
+        <mat-card-content>
+          <div class="placeholder-content">
+            <fa-icon icon="file-alt" size="2xl"></fa-icon>
+            <p>{{ 'labels.text.Documents view coming soon' | translate }}</p>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+  </mat-card>
+</div>

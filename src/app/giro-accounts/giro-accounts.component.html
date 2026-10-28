@@ -1,0 +1,168 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="page-container">
+  <mifosx-page-toolbar
+    [searchPlaceholder]="'labels.text.SearchGiroAccounts' | translate"
+    (searchChange)="onSearch($event)"
+  ></mifosx-page-toolbar>
+
+  <mat-card class="page-card">
+    <mat-card-content>
+      <!-- Loading indicator -->
+      @if (isLoading) {
+        <div class="loading-container">
+          <mat-spinner diameter="40"></mat-spinner>
+          <p>{{ 'labels.text.Loading data' | translate }}</p>
+        </div>
+      } @else {
+        <!-- Table -->
+        <div class="table-container">
+          <table mat-table [dataSource]="dataSource" matSort class="full-width-table">
+
+            <!-- Account Number Column -->
+            <ng-container matColumnDef="accountNo">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                {{ 'labels.input.Account No' | translate }}
+              </th>
+              <td mat-cell *matCellDef="let element">
+                <a [routerLink]="['/giro-accounts', element.id]" class="account-link">
+                  {{ element.accountNo }}
+                </a>
+              </td>
+            </ng-container>
+
+            <!-- Client Name Column -->
+            <ng-container matColumnDef="clientName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                {{ 'labels.input.Client Name' | translate }}
+              </th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.clientName || '-' }}
+              </td>
+            </ng-container>
+
+            <!-- Product Name Column -->
+            <ng-container matColumnDef="productName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                {{ 'labels.input.Product' | translate }}
+              </th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.productName || '-' }}
+              </td>
+            </ng-container>
+
+            <!-- Currency Column -->
+            <ng-container matColumnDef="currencyCode">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                {{ 'labels.input.Currency' | translate }}
+              </th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.currencyCode }}
+              </td>
+            </ng-container>
+
+            <!-- Balance Column -->
+            <ng-container matColumnDef="balance">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                {{ 'labels.input.Balance' | translate }}
+              </th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.balance | compactMoney: element.currencyCode }}
+              </td>
+            </ng-container>
+
+            <!-- Available Balance Column -->
+            <ng-container matColumnDef="availableBalance">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                {{ 'labels.input.Available Balance' | translate }}
+              </th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.availableBalance | compactMoney: element.currencyCode }}
+              </td>
+            </ng-container>
+
+            <!-- Min Balance Column -->
+            <ng-container matColumnDef="minBalance">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                {{ 'labels.input.Min Balance' | translate }}
+              </th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.minBalance | compactMoney: element.currencyCode }}
+              </td>
+            </ng-container>
+
+            <!-- Giro Type Column -->
+            <ng-container matColumnDef="giroType">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                {{ 'labels.input.Giro Type' | translate }}
+              </th>
+              <td mat-cell *matCellDef="let element">
+                <mifosx-status-pill [status]="element.giroType" tone="neutral"></mifosx-status-pill>
+              </td>
+            </ng-container>
+
+            <!-- Status Column -->
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                {{ 'labels.input.Status' | translate }}
+              </th>
+              <td mat-cell *matCellDef="let element">
+                <mifosx-status-pill [status]="element.status"></mifosx-status-pill>
+              </td>
+            </ng-container>
+
+            <!-- Action Column -->
+            <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef>
+                {{ 'labels.input.Action' | translate }}
+              </th>
+              <td mat-cell *matCellDef="let element">
+                <button
+                  mat-icon-button
+                  matTooltip="{{ 'tooltips.View' | translate }}"
+                  (click)="viewGiroAccount(element)"
+                  [disabled]="isLoading"
+                >
+                  <fa-icon icon="eye" size="sm"></fa-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <!-- Header row -->
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <!-- Data rows -->
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <!-- No data row -->
+            <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell" colspan="{{ displayedColumns.length }}">
+                <div class="no-data">
+                  <fa-icon icon="info-circle" size="lg"></fa-icon>
+                  <p>{{ 'labels.text.No giro accounts found' | translate }}</p>
+                </div>
+              </td>
+            </tr>
+
+          </table>
+
+          <!-- Paginator -->
+          @if (totalElements > 0) {
+            <mat-paginator
+              [length]="totalElements"
+              [pageSize]="10"
+              [pageSizeOptions]="pageSizeOptions"
+              showFirstLastButtons
+              aria-label="Select page of giro accounts">
+            </mat-paginator>
+          }
+
+        </div>
+      }
+    </mat-card-content>
+  </mat-card>
+</div>

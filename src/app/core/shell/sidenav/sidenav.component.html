@@ -173,6 +173,36 @@
           </mat-icon>
           <a matLine>{{ 'labels.menus.Notifications' | translate }}</a>
         </mat-list-item>
+        <ng-container *ngIf="mifosDepositoEnabled">
+          <mat-list-item
+            [routerLink]="['/deposito-accounts']"
+            [matTooltipPosition]="tooltipPosition"
+            matTooltip="{{ 'tooltips.Deposito Accounts' | translate }}"
+            routerLinkActive="active-menu"
+            [routerLinkActiveOptions]="{ exact: false }"
+            *mifosxHasPermission="'READ_DEPOSITOACCOUNT'"
+          >
+            <mat-icon matListIcon>
+              <fa-icon icon="briefcase" size="sm"></fa-icon>
+            </mat-icon>
+            <a matLine>{{ 'labels.menus.Deposito Accounts' | translate }}</a>
+          </mat-list-item>
+        </ng-container>
+        <ng-container *ngIf="mifosGiroEnabled">
+          <mat-list-item
+            [routerLink]="['/giro-accounts']"
+            [matTooltipPosition]="tooltipPosition"
+            matTooltip="{{ 'tooltips.Giro Accounts' | translate }}"
+            routerLinkActive="active-menu"
+            [routerLinkActiveOptions]="{ exact: false }"
+            *mifosxHasPermission="'READ_GIROACCOUNT'"
+          >
+            <mat-icon matListIcon>
+              <fa-icon icon="wallet" size="sm"></fa-icon>
+            </mat-icon>
+            <a matLine>{{ 'labels.menus.Giro Accounts' | translate }}</a>
+          </mat-list-item>
+        </ng-container>
         <mat-list-item
           [routerLink]="['/accounting/journal-entries/frequent-postings']"
           [matTooltipPosition]="tooltipPosition"

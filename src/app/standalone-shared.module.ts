@@ -28,6 +28,9 @@ import { DocumentationLinkPipe } from '@pipes/documentation-link.pipe';
 import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { HasPermissionDirective } from './directives/has-permission/has-permission.directive';
+import { PageToolbarComponent } from './shared/page-toolbar/page-toolbar.component';
+import { StatusPillComponent } from './shared/status-pill/status-pill.component';
+import { RowActionsComponent } from './shared/row-actions/row-actions.component';
 
 export const STANDALONE_SHARED_IMPORTS = [
   CommonModule,
@@ -53,6 +56,9 @@ export const STANDALONE_SHARED_IMPORTS = [
   MatDatepicker,
   MatButton,
   MatCheckbox,
+  PageToolbarComponent,
+  StatusPillComponent,
+  RowActionsComponent,
   CompactMoneyPipe,
   DateFormatPipe,
   DatatableDisplayLabelPipe,

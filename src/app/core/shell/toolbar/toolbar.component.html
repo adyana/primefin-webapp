@@ -104,7 +104,9 @@
         collectionsVisible ||
         corporateVisible ||
         treasuryVisible ||
-        eodVisible
+        eodVisible ||
+        depositoVisible ||
+        giroVisible
       ) {
         <a
           class="tab-link"
@@ -369,6 +371,16 @@
       {{ 'labels.menus.Treasury' | translate }}
     </button>
   }
+  @if (depositoVisible) {
+    <button mat-menu-item [matMenuTriggerFor]="depositoMenu" tabindex="0" *mifosxHasPermission="'READ_DEPOSITOACCOUNT'">
+      {{ 'labels.menus.Deposito' | translate }}
+    </button>
+  }
+  @if (giroVisible) {
+    <button mat-menu-item [matMenuTriggerFor]="giroMenu" tabindex="0" *mifosxHasPermission="'READ_GIROACCOUNT'">
+      {{ 'labels.menus.Giro' | translate }}
+    </button>
+  }
   @if (eodVisible) {
     <button mat-menu-item [routerLink]="['/eod']" tabindex="0" *mifosxHasPermission="'READ_EOD'">
       {{ 'labels.menus.EOD Cockpit' | translate }}
@@ -514,6 +526,27 @@
   </button>
   <button mat-menu-item [routerLink]="['/treasury/ratios']" tabindex="0" *mifosxHasPermission="'READ_TREASURY'">
     {{ 'labels.menus.Ratios' | translate }}
+  </button>
+</mat-menu>
+
+<mat-menu #depositoMenu="matMenu" [overlapTrigger]="false">
+  <button mat-menu-item [routerLink]="['/deposito-accounts']" tabindex="0" *mifosxHasPermission="'READ_DEPOSITOACCOUNT'">
+    {{ 'labels.menus.Deposito Accounts' | translate }}
+  </button>
+  <button mat-menu-item [routerLink]="['/products/fixed-deposit-products']" tabindex="0" *mifosxHasPermission="'READ_FIXEDDEPOSITPRODUCT'">
+    {{ 'labels.menus.Fixed Deposit Products' | translate }}
+  </button>
+  <button mat-menu-item [routerLink]="['/products/recurring-deposit-products']" tabindex="0" *mifosxHasPermission="'READ_RECURRINGDEPOSITPRODUCT'">
+    {{ 'labels.menus.Recurring Deposit Products' | translate }}
+  </button>
+</mat-menu>
+
+<mat-menu #giroMenu="matMenu" [overlapTrigger]="false">
+  <button mat-menu-item [routerLink]="['/giro-accounts']" tabindex="0" *mifosxHasPermission="'READ_GIROACCOUNT'">
+    {{ 'labels.menus.Giro Accounts' | translate }}
+  </button>
+  <button mat-menu-item [routerLink]="['/products/saving-products']" tabindex="0" *mifosxHasPermission="'READ_SAVINGSPRODUCT'">
+    {{ 'labels.menus.Savings Products (Giro)' | translate }}
   </button>
 </mat-menu>
 

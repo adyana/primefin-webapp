@@ -47,6 +47,10 @@ import { remittanceConfig } from '../../../remittances/remittance.config';
 
 import { catchError, finalize, of, take } from 'rxjs';
 
+/** Custom Components */
+import { DepositoAccountsComponent } from 'app/deposito-accounts/deposito-accounts.component';
+import { GiroAccountsComponent } from 'app/giro-accounts/giro-accounts.component';
+
 /**
  * Sidenav component.
  */
@@ -93,6 +97,10 @@ export class SidenavComponent implements OnInit, AfterViewInit {
   frequentActivities: any[] = frequentActivities;
   /** Whether remittance feature is enabled */
   mifosRemittanceEnabled = remittanceConfig.isRemittanceEnabled;
+  /** Whether deposito feature is enabled */
+  mifosDepositoEnabled = true;
+  /** Whether giro feature is enabled */
+  mifosGiroEnabled = true;
 
   /* Refernce of logo */
   @ViewChild('logo') logo: ElementRef<any>;

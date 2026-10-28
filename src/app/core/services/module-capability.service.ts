@@ -81,4 +81,14 @@ export class ModuleCapabilityService {
   eodAvailable(): Observable<boolean> {
     return this.probe('/v2/eod-health');
   }
+
+  /** @returns True when the deposito module answers. */
+  depositoAvailable(): Observable<boolean> {
+    return this.probe('/v2/deposito-health');
+  }
+
+  /** @returns True when the giro module answers. */
+  giroAvailable(): Observable<boolean> {
+    return this.probe('/v2/giro-health');
+  }
 }
