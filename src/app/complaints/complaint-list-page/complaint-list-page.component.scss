@@ -1,0 +1,98 @@
+/**
+ * Complaint list page component styles.
+ */
+.container {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.page-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--ds-text-1);
+}
+
+.filter-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding: 12px;
+  background: var(--ds-surface-alt);
+  border-radius: var(--ds-radius);
+  border: 1px solid var(--ds-border);
+}
+
+.filter-bar span {
+  align-self: center;
+  font-size: 0.875rem;
+  color: var(--ds-text-2);
+  font-weight: 500;
+}
+
+.filter-bar button.active {
+  font-weight: 600;
+  color: var(--ds-blue-600);
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.status-badge.status-open {
+  background: #fff3e0;
+  color: #e65100;
+}
+
+.status-badge.status-assigned {
+  background: #e3f2fd;
+  color: #1565c0;
+}
+
+.status-badge.status-escalated {
+  background: #ffebee;
+  color: #c62828;
+}
+
+.status-badge.status-resolved {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.status-badge.status-closed {
+  background: #f3e5f5;
+  color: #7b1fa2;
+}
+
+.status-badge.status-general {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.status-badge.status-billing {
+  background: #fff3e0;
+  color: #e65100;
+}
+
+.status-badge.status-service {
+  background: #e3f2fd;
+  color: #1565c0;
+}
+
+.status-badge.status-fraud {
+  background: #ffebee;
+  color: #c62828;
+}

@@ -386,6 +386,16 @@
       {{ 'labels.menus.EOD Cockpit' | translate }}
     </button>
   }
+  @if (ekycVisible) {
+    <button mat-menu-item [routerLink]="['/ekyc']" tabindex="0" *mifosxHasPermission="'CREATE_EKYC'">
+      {{ 'labels.menus.EkycOnboarding' | translate }}
+    </button>
+  }
+  @if (complaintVisible) {
+    <button mat-menu-item [routerLink]="['/complaints']" tabindex="0" *mifosxHasPermission="'READ_COMPLAINT'">
+      {{ 'labels.menus.Complaints' | translate }}
+    </button>
+  }
 </mat-menu>
 
 <mat-menu #channelingMenu="matMenu" [overlapTrigger]="false">

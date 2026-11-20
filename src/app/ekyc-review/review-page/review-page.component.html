@@ -1,0 +1,92 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0.
+-->
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0.
+-->
+
+<div class="container">
+  <div class="mat-elevation-z8">
+    <div class="header">
+      <button mat-button color="primary" (click)="backToQueue()">
+        <mat-icon>arrow_back</mat-icon>
+        {{ 'labels.ekycReview.BackToQueue' | translate }}
+      </button>
+      <h2>{{ 'labels.ekycReview.ReviewDetail' | translate }}</h2>
+    </div>
+
+    <div *ngIf="error" class="error">{{ error }}</div>
+
+    <div *ngIf="item" class="detail-card">
+      <div class="detail-row">
+        <span class="label">{{ 'labels.ekycReview.ID' | translate }}:</span>
+        <span class="value">{{ item.id }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="label">{{ 'labels.ekycReview.NIK' | translate }}:</span>
+        <span class="value">{{ item.nik }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="label">{{ 'labels.ekycReview.Status' | translate }}:</span>
+        <span class="status-badge status-{{ item.status | lowercase }}">{{ item.status }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="label">{{ 'labels.ekycReview.NextStep' | translate }}:</span>
+        <span class="value">{{ item.nextStep }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="label">{{ 'labels.ekycReview.Attempts' | translate }}:</span>
+        <span class="value">{{ item.attemptsRemaining }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="label">{{ 'labels.ekycReview.Adapter' | translate }}:</span>
+        <span class="value">{{ item.adapter }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="label">{{ 'labels.ekycReview.CreatedAt' | translate }}:</span>
+        <span class="value">{{ item.createdAt }}</span>
+      </div>
+
+      <div class="actions">
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="submitting || item.status !== 'PENDING'"
+          (click)="approve()"
+        >
+          {{ submitting ? 'labels.ekycReview.Approving' : ('labels.buttons.Approve' | translate) }}
+        </button>
+        <button mat-raised-button color="warn" [disabled]="submitting || item.status !== 'PENDING'" (click)="reject()">
+          {{ submitting ? 'labels.ekycReview.Rejecting' : ('labels.buttons.Reject' | translate) }}
+        </button>
+        <button
+          mat-raised-button
+          color="accent"
+          [disabled]="submitting || item.status !== 'PENDING'"
+          (click)="requestReattempt()"
+        >
+          {{ submitting ? 'labels.ekycReview.Requesting' : ('labels.buttons.RequestReattempt' | translate) }}
+        </button>
+      </div>
+
+      <div class="reason-section" *ngIf="item.status !== 'PENDING'">
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'labels.ekycReview.Reason' | translate }}</mat-label>
+          <textarea matInput [(ngModel)]="reason" rows="3"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div *ngIf="!item && !error" class="loading">
+      {{ 'labels.ekycReview.Loading' | translate }}
+    </div>
+  </div>
+</div>

@@ -104,6 +104,9 @@ export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChec
   eodVisible = true;
   depositoVisible = true;
   giroVisible = true;
+  /* eKYC and Complaint are always visible for super-user role; RBAC disabled */
+  ekycVisible = true;
+  complaintVisible = true;
 
   /* Reference of institution */
   @ViewChild('institution') institution: ElementRef<any>;

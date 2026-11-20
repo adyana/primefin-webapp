@@ -1,0 +1,94 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0.
+-->
+
+<div class="container">
+  <div class="page-header">
+    <h2>{{ 'labels.complaints.ListTitle' | translate }}</h2>
+    <button mat-raised-button color="primary" [routerLink]="['/complaints/file']">
+      {{ 'labels.buttons.FileComplaint' | translate }}
+    </button>
+  </div>
+
+  <div class="filter-bar">
+    <span>{{ 'labels.complaints.FilterByStatus' | translate }}:</span>
+    <button mat-button [class.active]="statusFilter === null" (click)="filterByStatus(null)">
+      {{ 'labels.complaints.All' | translate }}
+    </button>
+    <button mat-button [class.active]="statusFilter === 'OPEN'" (click)="filterByStatus('OPEN')">
+      {{ 'labels.complaints.Open' | translate }}
+    </button>
+    <button mat-button [class.active]="statusFilter === 'ASSIGNED'" (click)="filterByStatus('ASSIGNED')">
+      {{ 'labels.complaints.Assigned' | translate }}
+    </button>
+    <button mat-button [class.active]="statusFilter === 'ESCALATED'" (click)="filterByStatus('ESCALATED')">
+      {{ 'labels.complaints.Escalated' | translate }}
+    </button>
+    <button mat-button [class.active]="statusFilter === 'RESOLVED'" (click)="filterByStatus('RESOLVED')">
+      {{ 'labels.complaints.Resolved' | translate }}
+    </button>
+  </div>
+
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ 'labels.complaints.ID' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let item">{{ item.id }}</td>
+      </ng-container>
+      <ng-container matColumnDef="complaintType">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ 'labels.complaints.Type' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let item">{{ item.complaintType }}</td>
+      </ng-container>
+      <ng-container matColumnDef="subject">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ 'labels.complaints.Subject' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let item">{{ item.subject }}</td>
+      </ng-container>
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ 'labels.complaints.Status' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let item">
+          <span class="status-badge {{ statusClass(item.status) }}">{{ item.status }}</span>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="priority">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ 'labels.complaints.Priority' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let item">{{ item.priority }}</td>
+      </ng-container>
+      <ng-container matColumnDef="slaDeadline">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ 'labels.complaints.SlaDeadline' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let item">{{ item.slaDeadline }}</td>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.complaints.Actions' | translate }}</th>
+        <td mat-cell *matCellDef="let item">
+          <button mat-button color="primary" (click)="viewComplaint(item)">
+            {{ 'labels.buttons.View' | translate }}
+          </button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns" class="select-row" (click)="viewComplaint(row)"></tr>
+      <tr *matNoDataRow>
+        <td [attr.colspan]="displayedColumns.length">
+          {{ 'labels.complaints.NoData' | translate }}
+        </td>
+      </tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+  </div>
+</div>

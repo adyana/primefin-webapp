@@ -1,0 +1,107 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0.
+ */
+/**
+ * e-KYC Review Detail page styles.
+ */
+.container {
+  padding: 24px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.detail-card {
+  padding: 24px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fafafa;
+}
+
+.detail-row {
+  display: flex;
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+}
+
+.detail-row .label {
+  min-width: 160px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.detail-row .value {
+  flex: 1;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.status-badge.status-pending {
+  background: #fff3e0;
+  color: #e65100;
+}
+
+.status-badge.status-approved {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.status-badge.status-rejected {
+  background: #ffebee;
+  color: #c62828;
+}
+
+.status-badge.status-reattempt {
+  background: #e3f2fd;
+  color: #1565c0;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+.reason-section {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #ddd;
+}
+
+.error {
+  color: #d32f2f;
+  margin-bottom: 16px;
+}
+
+.loading {
+  color: rgba(0, 0, 0, 0.6);
+  font-style: italic;
+}
+
+mat-icon {
+  vertical-align: middle;
+}

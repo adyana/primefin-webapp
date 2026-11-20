@@ -1,0 +1,99 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0.
+-->
+
+<div class="container">
+  <div class="mat-elevation-z8">
+    <div *ngIf="!filed">
+      <h2>{{ 'labels.complaints.FileTitle' | translate }}</h2>
+      <p>{{ 'labels.complaints.FileDescription' | translate }}</p>
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>{{ 'labels.complaints.ClientId' | translate }} *</mat-label>
+            <input matInput formControlName="clientId" type="number" placeholder="1" />
+            <mat-error>{{ getError('clientId') }}</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>{{ 'labels.complaints.LoanId' | translate }}</mat-label>
+            <input matInput formControlName="loanId" type="number" placeholder="Optional" />
+            <mat-hint>{{ 'labels.complaints.LoanIdHint' | translate }}</mat-hint>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>{{ 'labels.complaints.ComplaintType' | translate }} *</mat-label>
+            <mat-select formControlName="complaintType">
+              <mat-option *ngFor="let type of complaintTypes" [value]="type">{{ type }}</mat-option>
+            </mat-select>
+            <mat-error>{{ getError('complaintType') }}</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>{{ 'labels.complaints.Priority' | translate }} *</mat-label>
+            <mat-select formControlName="priority">
+              <mat-option *ngFor="let p of priorities" [value]="p">{{ p }}</mat-option>
+            </mat-select>
+            <mat-error>{{ getError('priority') }}</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>{{ 'labels.complaints.Subject' | translate }} *</mat-label>
+            <input matInput formControlName="subject" placeholder="Enter complaint subject" />
+            <mat-error>{{ getError('subject') }}</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>{{ 'labels.complaints.Description' | translate }} *</mat-label>
+            <textarea matInput formControlName="description" rows="4" placeholder="Describe your complaint"></textarea>
+            <mat-error>{{ getError('description') }}</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>{{ 'labels.complaints.Channel' | translate }} *</mat-label>
+            <mat-select formControlName="channel">
+              <mat-option *ngFor="let c of channels" [value]="c">{{ c }}</mat-option>
+            </mat-select>
+            <mat-error>{{ getError('channel') }}</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-actions">
+          <button mat-raised-button color="primary" type="submit" [disabled]="submitting || form.invalid">
+            {{ submitting ? 'labels.complaints.Submitting' : ('labels.complaints.FileComplaintBtn' | translate) }}
+          </button>
+          <button mat-button type="button" (click)="form.reset()">{{ 'labels.buttons.Reset' | translate }}</button>
+        </div>
+
+        <div *ngIf="error" class="error">{{ error }}</div>
+      </form>
+    </div>
+
+    <div *ngIf="filed" class="success-card">
+      <mat-icon>check_circle</mat-icon>
+      <h3>{{ 'labels.complaints.FiledTitle' | translate }}</h3>
+      <p>
+        {{ 'labels.complaints.FiledMessage' | translate: { id: filedId ?? 0 } }}
+      </p>
+      <button mat-raised-button color="primary" (click)="fileAnother()">
+        {{ 'labels.complaints.FileAnother' | translate }}
+      </button>
+      <button mat-button (click)="router.navigate(['/complaints'])">
+        {{ 'labels.complaints.ViewAll' | translate }}
+      </button>
+    </div>
+  </div>
+</div>

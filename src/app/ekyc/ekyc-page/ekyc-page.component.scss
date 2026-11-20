@@ -1,0 +1,56 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0.
+ */
+/**
+ * e-KYC page component styles.
+ */
+.container {
+  padding: 24px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.step-content {
+  padding: 24px 0;
+}
+
+.step-content h3 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.step-content p {
+  margin-bottom: 20px;
+  line-height: 1.5;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.selfie-placeholder {
+  width: 200px;
+  height: 200px;
+  border: 2px dashed #ccc;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.error {
+  color: #d32f2f;
+  font-size: 0.875rem;
+  margin-top: 8px;
+}
+
+button {
+  margin-right: 8px;
+  margin-bottom: 8px;
+}

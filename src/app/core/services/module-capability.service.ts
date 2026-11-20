@@ -91,4 +91,14 @@ export class ModuleCapabilityService {
   giroAvailable(): Observable<boolean> {
     return this.probe('/v2/giro-health');
   }
+
+  /** @returns True when the eKYC module answers. */
+  ekycAvailable(): Observable<boolean> {
+    return this.probe('/v2/ekyc-health');
+  }
+
+  /** @returns True when the complaints module answers. */
+  complaintAvailable(): Observable<boolean> {
+    return this.probe('/v2/complaints-health');
+  }
 }

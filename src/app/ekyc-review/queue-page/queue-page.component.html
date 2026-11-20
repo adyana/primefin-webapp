@@ -1,0 +1,69 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0.
+-->
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0.
+-->
+
+<div class="container">
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ 'labels.ekycReview.ID' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let item">{{ item.id }}</td>
+      </ng-container>
+      <ng-container matColumnDef="nik">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ 'labels.ekycReview.NIK' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let item">{{ item.nik }}</td>
+      </ng-container>
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ 'labels.ekycReview.Status' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let item">
+          <span class="status-badge status-{{ item.status | lowercase }}">{{ item.status }}</span>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="attemptsRemaining">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ 'labels.ekycReview.Attempts' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let item">{{ item.attemptsRemaining }}</td>
+      </ng-container>
+      <ng-container matColumnDef="createdAt">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ 'labels.ekycReview.CreatedAt' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let item">{{ item.createdAt }}</td>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.ekycReview.Actions' | translate }}</th>
+        <td mat-cell *matCellDef="let item">
+          <button mat-button color="primary" (click)="openReview(item)">
+            {{ 'labels.buttons.Review' | translate }}
+          </button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns" class="select-row"></tr>
+      <tr *matNoDataRow>
+        <td [attr.colspan]="displayedColumns.length">
+          {{ 'labels.ekycReview.NoData' | translate }}
+        </td>
+      </tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+  </div>
+</div>

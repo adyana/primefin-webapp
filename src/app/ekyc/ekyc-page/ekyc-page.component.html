@@ -1,0 +1,118 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0.
+-->
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0.
+-->
+
+<div class="container">
+  <div class="mat-elevation-z8">
+    <!-- Step 0: Consent / Create Session -->
+    <mat-horizontal-stepper [selectedIndex]="currentStep" [linear]="true">
+      <!-- Consent Step -->
+      <mat-step [stepControl]="null" completed="currentStep > 0">
+        <ng-template matStepLabel>{{ 'labels.ekyc.Consent' | translate }}</ng-template>
+        <div class="step-content">
+          <h3>{{ 'labels.ekyc.OnboardingTitle' | translate }}</h3>
+          <p>{{ 'labels.ekyc.ConsentText' | translate }}</p>
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'labels.ekyc.NIKLabel' | translate }}</mat-label>
+            <input matInput [(ngModel)]="nik" placeholder="16-digit NIK" maxlength="16" />
+          </mat-form-field>
+          <button
+            mat-raised-button
+            color="primary"
+            [disabled]="submitting || nik.length !== 16"
+            (click)="createSession()"
+          >
+            {{ submitting ? 'labels.ekyc.Creating' : ('labels.ekyc.StartOnboarding' | translate) }}
+          </button>
+          <div *ngIf="error" class="error">{{ error }}</div>
+        </div>
+      </mat-step>
+
+      <!-- NIK Verification Step -->
+      <mat-step [stepControl]="null" completed="currentStep > 1">
+        <ng-template matStepLabel>{{ 'labels.ekyc.NIKVerification' | translate }}</ng-template>
+        <div class="step-content">
+          <h3>{{ 'labels.ekyc.NIKTitle' | translate }}</h3>
+          <p>{{ 'labels.ekyc.NIKInstructions' | translate }}</p>
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'labels.ekyc.NIKLabel' | translate }}</mat-label>
+            <input matInput [(ngModel)]="nik" placeholder="16-digit NIK" maxlength="16" />
+          </mat-form-field>
+          <button mat-raised-button color="primary" [disabled]="submitting" (click)="submitNik()">
+            {{ submitting ? 'labels.ekyc.Verifying' : ('labels.ekyc.VerifyNIK' | translate) }}
+          </button>
+          <button mat-button (click)="refreshStatus()">{{ 'labels.ekyc.Refresh' | translate }}</button>
+          <div *ngIf="error" class="error">{{ error }}</div>
+        </div>
+      </mat-step>
+
+      <!-- Face Match Step -->
+      <mat-step [stepControl]="null" completed="currentStep > 2">
+        <ng-template matStepLabel>{{ 'labels.ekyc.FaceMatch' | translate }}</ng-template>
+        <div class="step-content">
+          <h3>{{ 'labels.ekyc.FaceTitle' | translate }}</h3>
+          <p>{{ 'labels.ekyc.FaceInstructions' | translate }}</p>
+          <div class="selfie-placeholder">{{ 'labels.ekyc.SelfiePlaceholder' | translate }}</div>
+          <button mat-raised-button color="primary" [disabled]="submitting" (click)="submitFace()">
+            {{ submitting ? 'labels.ekyc.Matching' : ('labels.ekyc.SubmitFace' | translate) }}
+          </button>
+          <div *ngIf="error" class="error">{{ error }}</div>
+        </div>
+      </mat-step>
+
+      <!-- Documents Step -->
+      <mat-step [stepControl]="null" completed="currentStep > 3">
+        <ng-template matStepLabel>{{ 'labels.ekyc.Documents' | translate }}</ng-template>
+        <div class="step-content">
+          <h3>{{ 'labels.ekyc.DocumentsTitle' | translate }}</h3>
+          <p>{{ 'labels.ekyc.DocumentsInstructions' | translate }}</p>
+          <button mat-raised-button color="primary" [disabled]="submitting" (click)="submitDocuments()">
+            {{ submitting ? 'labels.ekyc.Uploading' : ('labels.ekyc.UploadDocuments' | translate) }}
+          </button>
+          <div *ngIf="error" class="error">{{ error }}</div>
+        </div>
+      </mat-step>
+
+      <!-- Final Submit Step -->
+      <mat-step [stepControl]="null" completed="currentStep > 4">
+        <ng-template matStepLabel>{{ 'labels.ekyc.FinalSubmit' | translate }}</ng-template>
+        <div class="step-content">
+          <h3>{{ 'labels.ekyc.ReviewTitle' | translate }}</h3>
+          <p>{{ 'labels.ekyc.ReviewText' | translate }}</p>
+          <button mat-raised-button color="primary" [disabled]="submitting" (click)="finalSubmit()">
+            {{ submitting ? 'labels.ekyc.Submitting' : ('labels.ekyc.FinalSubmitBtn' | translate) }}
+          </button>
+          <div *ngIf="error" class="error">{{ error }}</div>
+        </div>
+      </mat-step>
+
+      <!-- Status Step -->
+      <mat-step [stepControl]="null" completed="currentStep > 5">
+        <ng-template matStepLabel>{{ 'labels.ekyc.Status' | translate }}</ng-template>
+        <div class="step-content">
+          <h3>{{ 'labels.ekyc.StatusTitle' | translate }}</h3>
+          <p>
+            {{ 'labels.ekyc.StatusText' | translate: { status: sessionStatus ?? 'UNKNOWN' } }}
+          </p>
+          <button mat-raised-button color="primary" (click)="refreshStatus()">
+            {{ 'labels.ekyc.Refresh' | translate }}
+          </button>
+          <button mat-button color="warn" (click)="abandonSession()">
+            {{ 'labels.ekyc.Abandon' | translate }}
+          </button>
+        </div>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </div>
+</div>

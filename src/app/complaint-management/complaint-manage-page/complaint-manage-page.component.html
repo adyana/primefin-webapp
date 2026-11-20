@@ -1,0 +1,102 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0.
+-->
+
+<div class="container">
+  <div class="mat-elevation-z8">
+    <div class="header">
+      <button mat-button color="primary" (click)="backToQueue()">
+        <mat-icon>arrow_back</mat-icon>
+        {{ 'labels.complaintManagement.BackToQueue' | translate }}
+      </button>
+      <h2>{{ 'labels.complaintManagement.ManageTitle' | translate }}</h2>
+    </div>
+
+    <div *ngIf="error" class="error">{{ error }}</div>
+    <div *ngIf="success" class="success">{{ success }}</div>
+
+    <div *ngIf="complaint && !error" class="detail-card">
+      <div class="detail-row">
+        <span class="label">{{ 'labels.complaints.ID' | translate }}:</span>
+        <span class="value">{{ complaint.id }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="label">{{ 'labels.complaints.ClientId' | translate }}:</span>
+        <span class="value">{{ complaint.clientId }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="label">{{ 'labels.complaints.Type' | translate }}:</span>
+        <span class="value">{{ complaint.complaintType }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="label">{{ 'labels.complaints.Subject' | translate }}:</span>
+        <span class="value">{{ complaint.subject }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="label">{{ 'labels.complaints.Status' | translate }}:</span>
+        <span class="status-badge {{ statusClass(complaint.status) }}">{{ complaint.status }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="label">{{ 'labels.complaints.Priority' | translate }}:</span>
+        <span class="value">{{ complaint.priority }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="label">{{ 'labels.complaints.SlaDeadline' | translate }}:</span>
+        <span class="value">{{ complaint.slaDeadline }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="label">{{ 'labels.complaints.AssigneeId' | translate }}:</span>
+        <span class="value">{{ complaint.assigneeId ?? 'Unassigned' }}</span>
+      </div>
+
+      <div class="actions">
+        <h3>{{ 'labels.complaintManagement.Actions' | translate }}</h3>
+
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="submitting || !isActionAvailable('assign')"
+          (click)="assignComplaint()"
+        >
+          {{ submitting ? 'labels.complaintManagement.Assigning' : ('labels.buttons.Assign' | translate) }}
+        </button>
+
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="submitting || !isActionAvailable('resolve')"
+          (click)="resolveComplaint()"
+        >
+          {{ submitting ? 'labels.complaintManagement.Resolving' : ('labels.buttons.Resolve' | translate) }}
+        </button>
+
+        <button
+          mat-raised-button
+          color="accent"
+          [disabled]="submitting || !isActionAvailable('escalate')"
+          (click)="escalateComplaint()"
+        >
+          {{ submitting ? 'labels.complaintManagement.Escalating' : ('labels.buttons.Escalate' | translate) }}
+        </button>
+
+        <div *ngIf="isActionAvailable('resolve') || isActionAvailable('escalate')" class="notes-field">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>{{ 'labels.complaintManagement.Notes' | translate }}</mat-label>
+            <textarea matInput formControlName="notes" rows="3" placeholder="Enter notes"></textarea>
+            <mat-error *ngIf="notesForm.get('notes')?.errors?.['required'] && notesForm.get('notes')?.touched">
+              {{ 'labels.complaintManagement.NotesRequired' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="!complaint && !error" class="loading">
+      {{ 'labels.complaintManagement.Loading' | translate }}
+    </div>
+  </div>
+</div>

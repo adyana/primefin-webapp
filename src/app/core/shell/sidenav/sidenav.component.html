@@ -252,6 +252,58 @@
           </mat-icon>
           <a matLine>{{ 'labels.menus.Keyboard Shortcuts' | translate }}</a>
         </mat-list-item>
+        <mat-list-item
+          [routerLink]="['/ekyc']"
+          [matTooltipPosition]="tooltipPosition"
+          matTooltip="{{ 'tooltips.EkycOnboarding' | translate }}"
+          routerLinkActive="active-menu"
+          [routerLinkActiveOptions]="{ exact: false }"
+          *mifosxHasPermission="'CREATE_EKYC'"
+        >
+          <mat-icon matListIcon>
+            <fa-icon icon="id-badge" size="sm"></fa-icon>
+          </mat-icon>
+          <a matLine>{{ 'labels.menus.EkycOnboarding' | translate }}</a>
+        </mat-list-item>
+        <mat-list-item
+          [routerLink]="['/ekyc-review']"
+          [matTooltipPosition]="tooltipPosition"
+          matTooltip="{{ 'tooltips.EkycReviewQueue' | translate }}"
+          routerLinkActive="active-menu"
+          [routerLinkActiveOptions]="{ exact: false }"
+          *mifosxHasPermission="'READ_EKYC_REVIEW'"
+        >
+          <mat-icon matListIcon>
+            <fa-icon icon="users" size="sm"></fa-icon>
+          </mat-icon>
+          <a matLine>{{ 'labels.menus.EkycReviewQueue' | translate }}</a>
+        </mat-list-item>
+        <mat-list-item
+          [routerLink]="['/complaints']"
+          [matTooltipPosition]="tooltipPosition"
+          matTooltip="{{ 'tooltips.Complaints' | translate }}"
+          routerLinkActive="active-menu"
+          [routerLinkActiveOptions]="{ exact: false }"
+          *mifosxHasPermission="'READ_COMPLAINT'"
+        >
+          <mat-icon matListIcon>
+            <fa-icon icon="comments" size="sm"></fa-icon>
+          </mat-icon>
+          <a matLine>{{ 'labels.menus.Complaints' | translate }}</a>
+        </mat-list-item>
+        <mat-list-item
+          [routerLink]="['/complaint-management']"
+          [matTooltipPosition]="tooltipPosition"
+          matTooltip="{{ 'tooltips.ComplaintQueue' | translate }}"
+          routerLinkActive="active-menu"
+          [routerLinkActiveOptions]="{ exact: false }"
+          *mifosxHasPermission="'UPDATE_COMPLAINT'"
+        >
+          <mat-icon matListIcon>
+            <fa-icon icon="user" size="sm"></fa-icon>
+          </mat-icon>
+          <a matLine>{{ 'labels.menus.ComplaintQueue' | translate }}</a>
+        </mat-list-item>
         <mat-list-item [matTooltipPosition]="tooltipPosition" matTooltip="{{ 'tooltips.Help' | translate }}">
           <mat-icon matListIcon (click)="help()">
             <fa-icon icon="question-circle" size="sm"></fa-icon>

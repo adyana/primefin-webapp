@@ -149,6 +149,22 @@ const routes: Routes = [
     loadChildren: () => import('./users/users.module').then((m) => m.UsersModule)
   },
   {
+    path: 'ekyc',
+    loadChildren: () => import('./ekyc/ekyc.module').then((m) => m.EkycModule)
+  },
+  {
+    path: 'ekyc-review',
+    loadChildren: () => import('./ekyc-review/ekyc-review.module').then((m) => m.EkycReviewModule)
+  },
+  {
+    path: 'complaints',
+    loadChildren: () => import('./complaints/complaints.module').then((m) => m.ComplaintsModule)
+  },
+  {
+    path: 'complaint-management',
+    loadChildren: () => import('./complaint-management/complaint-management.module').then((m) => m.ComplaintManagementModule)
+  },
+  {
     path: 'callback',
     component: CallbackComponent
   },
