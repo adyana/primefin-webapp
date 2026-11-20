@@ -10,7 +10,8 @@
 import { Injectable, inject } from '@angular/core';
 
 /** rxjs Imports */
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 /** Custom Services */
 import { ComplaintsService } from './complaints.service';
@@ -24,9 +25,12 @@ export class ComplaintsResolver {
 
   /**
    * Returns the complaints list data.
+   * Gracefully returns empty list on failure so route navigation is not blocked.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.complaintsService.getComplaints();
+    return this.complaintsService.getComplaints().pipe(
+      catchError(() => of({}))
+    );
   }
 }

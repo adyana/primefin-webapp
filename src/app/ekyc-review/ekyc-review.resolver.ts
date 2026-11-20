@@ -17,7 +17,8 @@
 import { Injectable, inject } from '@angular/core';
 
 /** rxjs Imports */
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 /** Custom Services */
 import { EkycReviewService } from './ekyc-review.service';
@@ -31,9 +32,12 @@ export class EkycReviewResolver {
 
   /**
    * Returns the e-KYC review queue data.
+   * Gracefully returns empty queue on failure so route navigation is not blocked.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.ekycReviewService.getReviewQueue();
+    return this.ekycReviewService.getReviewQueue().pipe(
+      catchError(() => of({}))
+    );
   }
 }

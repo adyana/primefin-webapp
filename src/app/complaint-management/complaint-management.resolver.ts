@@ -10,7 +10,8 @@
 import { Injectable, inject } from '@angular/core';
 
 /** rxjs Imports */
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 /** Custom Services */
 import { ComplaintsService } from '../complaints/complaints.service';
@@ -24,10 +25,13 @@ export class ComplaintManagementResolver {
 
   /**
    * Returns the complaint management queue data (all complaints for officers).
+   * Gracefully returns empty queue on failure so route navigation is not blocked.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
     // Officer view: get all complaints (no status filter)
-    return this.complaintsService.getComplaints();
+    return this.complaintsService.getComplaints().pipe(
+      catchError(() => of({}))
+    );
   }
 }
